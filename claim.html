@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RealMotionVideo — Your listings, already filming</title>
+<title>RealMotionVideo — Claim your free video</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -200,10 +200,6 @@
   section.reel {
     padding: 88px 0 96px;
     border-bottom: 1px solid var(--hairline);
-  }
-
-  section.reel.reel-alt {
-    padding-top: 0;
   }
 
   .section-head {
@@ -532,6 +528,11 @@
     padding: 15px;
     border-radius: 3px;
     transition: background 0.2s ease;
+    border: none;
+    width: 100%;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.98rem;
   }
 
   .btn-block:hover { background: var(--brass-bright); }
@@ -582,6 +583,217 @@
     color: var(--paper-dim);
     letter-spacing: 0.02em;
   }
+  /* ---------- CLAIM FLOW ---------- */
+
+  .claim-step { display: none; }
+  .claim-step.active { display: block; }
+
+  .claim-narrow {
+    max-width: 560px;
+  }
+
+  .commit-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 56px;
+    align-items: start;
+  }
+
+  @media (max-width: 820px) {
+    .commit-grid { grid-template-columns: 1fr; gap: 30px; }
+  }
+
+  .claim-progress {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--paper-dim);
+    margin-bottom: 18px;
+  }
+
+  .commit-question {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    line-height: 1.28;
+    max-width: 22ch;
+    margin-top: 14px;
+  }
+
+  .commit-sub {
+    margin-top: 0;
+    color: var(--paper-dim);
+    font-size: 1rem;
+    max-width: 46ch;
+  }
+
+  .commit-actions {
+    margin-top: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 420px;
+  }
+
+  .commit-btn {
+    text-align: left;
+    background: var(--panel);
+    border: 1px solid var(--hairline-strong);
+    color: var(--paper);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.98rem;
+    font-weight: 500;
+    padding: 16px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+  }
+
+  .commit-btn:hover {
+    border-color: var(--brass);
+    background: rgba(194, 154, 91, 0.08);
+    transform: translateY(-1px);
+  }
+
+  .commit-btn.confident {
+    border-color: var(--brass-dim);
+  }
+
+  .commit-btn .label {
+    display: block;
+    font-weight: 600;
+  }
+
+  .commit-btn .hint {
+    display: block;
+    margin-top: 3px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--paper-dim);
+    font-weight: 400;
+  }
+
+  .claim-ack {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--brass);
+    margin-top: 12px;
+    letter-spacing: 0.02em;
+  }
+
+  .url-field {
+    margin-top: 30px;
+  }
+
+  .url-field label {
+    display: block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.76rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--paper-dim);
+    margin-bottom: 10px;
+  }
+
+  .url-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .url-input {
+    flex: 1 1 320px;
+    background: var(--panel);
+    border: 1px solid var(--hairline-strong);
+    color: var(--paper);
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    padding: 15px 16px;
+    border-radius: 4px;
+    outline: none;
+    transition: border-color 0.2s ease;
+  }
+
+  .url-input::placeholder { color: var(--brass-dim); }
+
+  .url-input:focus { border-color: var(--brass); }
+
+  .btn-submit {
+    background: var(--brass);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.98rem;
+    border: none;
+    padding: 0 26px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.15s ease;
+    min-width: 150px;
+  }
+
+  .btn-submit:hover {
+    background: var(--brass-bright);
+    transform: translateY(-1px);
+  }
+
+  .btn-submit:disabled {
+    opacity: 0.6;
+    cursor: default;
+    transform: none;
+  }
+
+  .url-note {
+    margin-top: 14px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.76rem;
+    color: var(--paper-dim);
+  }
+
+  .url-error {
+    margin-top: 14px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.76rem;
+    color: var(--rec);
+    display: none;
+  }
+
+  .url-error.active { display: block; }
+
+  .change-answer {
+    margin-top: 22px;
+    background: none;
+    border: none;
+    color: var(--paper-dim);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.74rem;
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .claim-sent { display: none; }
+  .claim-sent.active { display: block; }
+
+  .claim-sent h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); max-width: 18ch; }
+
+  .claim-sent p {
+    margin-top: 14px;
+    color: var(--paper-dim);
+    max-width: 42ch;
+  }
+
+  .fallback-note {
+    margin-top: 22px;
+    padding: 16px 18px;
+    background: var(--panel);
+    border: 1px solid var(--hairline-strong);
+    border-radius: 4px;
+    font-size: 0.92rem;
+    color: var(--paper-dim);
+    max-width: 42ch;
+  }
+
+  .fallback-note strong { color: var(--paper); }
 
 </style>
 </head>
@@ -589,8 +801,8 @@
 
 <nav>
   <div class="wrap nav-inner">
-    <a class="wordmark" href="#top"><span class="dot"></span>RealMotionVideo</a>
-    <a class="nav-cta" href="claim.html">Send a listing →</a>
+    <a class="wordmark" href="index.html"><span class="dot"></span>RealMotionVideo</a>
+    <a class="nav-cta" href="index.html">← Back home</a>
   </div>
 </nav>
 
@@ -600,173 +812,63 @@
     <h1 class="headline">You already have the photos.<br>We turn them <em>into video.</em></h1>
     <p class="sub">Send us the listing. We send back a cinematic vertical video for Instagram, Facebook and TikTok — built entirely from the photography you've already taken.</p>
     <div class="hero-actions">
-      <a class="btn-primary" href="claim.html">Send us your first listing</a>
       <span class="hero-note">Reply within 24 hours</span>
     </div>
   </div>
 </header>
 
-<section class="reel">
+<section class="reel" id="claim">
   <div class="wrap">
-    <div class="section-head">
-      <div>
-        <span class="section-eyebrow">From the cutting room</span>
-        <h2 class="section-title">Four UK listings. Four cuts.</h2>
-      </div>
-      <p class="section-desc">A sample of the kind of video your listings become — no two properties are treated the same way twice.</p>
-    </div>
 
-    <div class="filmstrip">
-      <div class="filmstrip-track">
-
-        <!-- FRAME 1 — Country estate, gated entrance -->
-        <div class="frame">
-          <div class="frame-media ready" onclick="toggleClip(this)">
-            <video src="https://videos.realmotionvideo.com/prop4.mp4" loop playsinline preload="metadata"></video>
-            <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
-            <div class="frame-caption">
-              <span class="place">Country Estate</span>
-              <span>2:00</span>
-            </div>
-          </div>
-          <div class="frame-tag">
-            <span>UK · Luxury</span>
-            <span class="rec">CUT 01</span>
+    <!-- STEP 1: pre-commitment question, two-column like the offer section -->
+    <div class="claim-step active" id="step-commit">
+      <div class="claim-progress">Step 1 of 2</div>
+      <div class="commit-grid">
+        <div class="commit-left">
+          <span class="section-eyebrow">Before we start</span>
+          <h2 class="commit-question">If the video's genuinely good — would you use RealMotionVideo going forward?</h2>
+        </div>
+        <div class="commit-right">
+          <p class="commit-sub">Just being upfront: this first one's free, no obligation either way. We're just curious where you stand before we get to work.</p>
+          <div class="commit-actions">
+            <button type="button" class="commit-btn confident" onclick="chooseCommit('confident')">
+              <span class="label">Yes — if it delivers, count me in</span>
+              <span class="hint">I'm ready to use it for future listings</span>
+            </button>
+            <button type="button" class="commit-btn" onclick="chooseCommit('cautious')">
+              <span class="label">Maybe — I'll judge it on the results</span>
+              <span class="hint">Show me first, I'll decide after</span>
+            </button>
           </div>
         </div>
-
-        <!-- FRAME 2 — Detached home, columned entrance -->
-        <div class="frame">
-          <div class="frame-media ready" onclick="toggleClip(this)">
-            <video src="https://videos.realmotionvideo.com/prop1.mp4" loop playsinline preload="metadata"></video>
-            <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
-            <div class="frame-caption">
-              <span class="place">Detached Home</span>
-              <span>1:14</span>
-            </div>
-          </div>
-          <div class="frame-tag">
-            <span>UK · Luxury</span>
-            <span class="rec">CUT 02</span>
-          </div>
-        </div>
-
-        <!-- FRAME 3 — New-build detached, garage and driveway -->
-        <div class="frame">
-          <div class="frame-media ready" onclick="toggleClip(this)">
-            <video src="https://videos.realmotionvideo.com/prop3.mp4" loop playsinline preload="metadata"></video>
-            <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
-            <div class="frame-caption">
-              <span class="place">New Build Home</span>
-              <span>1:25</span>
-            </div>
-          </div>
-          <div class="frame-tag">
-            <span>UK · Mid-market</span>
-            <span class="rec">CUT 03</span>
-          </div>
-        </div>
-
-        <!-- FRAME 4 — End-terrace, driveway -->
-        <div class="frame">
-          <div class="frame-media ready" onclick="toggleClip(this)">
-            <video src="https://videos.realmotionvideo.com/prop2.mp4" loop playsinline preload="metadata"></video>
-            <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
-            <div class="frame-caption">
-              <span class="place">City Home</span>
-              <span>1:05</span>
-            </div>
-          </div>
-          <div class="frame-tag">
-            <span>UK · Mid-market</span>
-            <span class="rec">CUT 04</span>
-          </div>
-        </div>
-
       </div>
     </div>
-  </div>
-</section>
 
-<section class="reel reel-alt">
-  <div class="wrap">
-    <div class="section-head">
-      <div>
-        <span class="section-eyebrow">Now filming Costa del Sol</span>
-        <h2 class="section-title">Four Spain listings. Four cuts.</h2>
+    <!-- STEP 2: listing URL -->
+    <div class="claim-step claim-narrow" id="step-url">
+      <div class="claim-progress">Step 2 of 2</div>
+      <span class="section-eyebrow">Almost there</span>
+      <h2 class="section-title">Send us the listing. That's it.</h2>
+      <p class="claim-ack" id="claim-ack"></p>
+      <div class="url-field">
+        <label for="listing-url">Listing URL</label>
+        <div class="url-row">
+          <input type="url" id="listing-url" class="url-input" placeholder="https://www.rightmove.co.uk/properties/...">
+          <button type="button" class="btn-submit" id="submit-btn" onclick="submitListing()">Send my listing</button>
+        </div>
+        <p class="url-note">No photos to upload, no forms to fill in. Just the link — we'll take it from there. Reply within 24 hours.</p>
+        <p class="url-error" id="url-error">Something went wrong sending that — please try again, or email us directly at chris@realmotionvideo.com.</p>
       </div>
-      <p class="section-desc">Same process, same turnaround — for agencies working the Spanish and Gibraltar coast.</p>
+      <button type="button" class="change-answer" onclick="goBackToCommit()">← Change my answer</button>
     </div>
 
-    <div class="filmstrip">
-      <div class="filmstrip-track">
-
-        <!-- SPAIN FRAME 1 -->
-        <div class="frame">
-          <div class="frame-media ready" onclick="toggleClip(this)">
-            <video src="https://videos.realmotionvideo.com/spain1.mp4" loop playsinline preload="metadata"></video>
-            <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
-            <div class="frame-caption">
-              <span class="place">Costa del Sol Villa</span>
-              <span>1:01</span>
-            </div>
-          </div>
-          <div class="frame-tag">
-            <span>Spain · Luxury</span>
-            <span class="rec">CUT 01</span>
-          </div>
-        </div>
-
-        <!-- SPAIN FRAME 2 -->
-        <div class="frame">
-          <div class="frame-media ready" onclick="toggleClip(this)">
-            <video src="https://videos.realmotionvideo.com/spain2.mp4" loop playsinline preload="metadata"></video>
-            <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
-            <div class="frame-caption">
-              <span class="place">Marbella Apartment</span>
-              <span>0:38</span>
-            </div>
-          </div>
-          <div class="frame-tag">
-            <span>Spain · Mid-market</span>
-            <span class="rec">CUT 02</span>
-          </div>
-        </div>
-
-        <!-- SPAIN FRAME 3 -->
-        <div class="frame">
-          <div class="frame-media ready" onclick="toggleClip(this)">
-            <video src="https://videos.realmotionvideo.com/spain3.mp4" loop playsinline preload="metadata"></video>
-            <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
-            <div class="frame-caption">
-              <span class="place">Estepona Townhouse</span>
-              <span>1:39</span>
-            </div>
-          </div>
-          <div class="frame-tag">
-            <span>Spain · Mid-market</span>
-            <span class="rec">CUT 03</span>
-          </div>
-        </div>
-
-        <!-- SPAIN FRAME 4 -->
-        <div class="frame">
-          <div class="frame-media ready" onclick="toggleClip(this)">
-            <video src="https://videos.realmotionvideo.com/spain4.mp4" loop playsinline preload="metadata"></video>
-            <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
-            <div class="frame-caption">
-              <span class="place">Gibraltar Residence</span>
-              <span>0:15</span>
-            </div>
-          </div>
-          <div class="frame-tag">
-            <span>Gibraltar · Luxury</span>
-            <span class="rec">CUT 04</span>
-          </div>
-        </div>
-
-      </div>
+    <!-- STEP 3: confirmation -->
+    <div class="claim-step claim-sent claim-narrow" id="step-sent">
+      <div class="claim-progress">Sent</div>
+      <h2>Got it — on its way to us.</h2>
+      <p>Your listing has been received. We'll get started and reply within 24 hours.</p>
     </div>
+
   </div>
 </section>
 
@@ -809,7 +911,7 @@
         <li>Delivered within <strong>48 hours</strong> of you sending the listing</li>
         <li>No filming, no editing, no new photography required</li>
       </ul>
-      <a class="btn-block" href="start.html">Get started</a>
+      <a class="btn-block" href="mailto:chris@realmotionvideo.com?subject=RealMotionVideo%20%E2%80%94%20I%27d%20like%20to%20start">Get started</a>
       <div class="offer-fine">No contract. Cancel any month.</div>
     </div>
   </div>
@@ -817,11 +919,8 @@
 
 <section class="closing">
   <div class="wrap">
-    <h2>Send us one listing. See what it becomes.</h2>
-    <p class="sub">If you'd rather talk it through first, just reply and tell us about your listings — we'll make the first video before you commit to anything.</p>
-    <div class="closing-actions">
-      <a class="btn-primary" href="claim.html">Send us your first listing</a>
-    </div>
+    <h2>Still deciding? No pressure.</h2>
+    <p class="sub">Scroll back up whenever you're ready — the form's right there, and the offer isn't going anywhere.</p>
   </div>
 </section>
 
@@ -833,22 +932,68 @@
 </footer>
 
 <script>
-  function toggleClip(el) {
-    const video = el.querySelector('video');
-    if (!video) return;
-    const allMedia = document.querySelectorAll('.frame-media');
-    if (video.paused) {
-      allMedia.forEach(m => {
-        const v = m.querySelector('video');
-        if (v && v !== video) { v.pause(); v.currentTime = 0; }
-        m.classList.remove('playing');
+  let commitLevel = null;
+
+  // Real submission endpoint (n8n webhook -> Airtable ClaimSubmissions table).
+  // Replaces the old mailto: link, which silently did nothing for any visitor
+  // without a default email app configured (most Gmail/Outlook-in-browser users).
+  const CLAIM_WEBHOOK_URL = 'https://vmi3486297.contaboserver.net/webhook/claim-submission';
+
+  function chooseCommit(level) {
+    commitLevel = level;
+    document.getElementById('claim-ack').textContent =
+      level === 'confident'
+        ? "Noted — we'll aim to impress."
+        : "Fair enough — let's show you first.";
+    document.getElementById('step-commit').classList.remove('active');
+    document.getElementById('step-url').classList.add('active');
+  }
+
+  function goBackToCommit() {
+    document.getElementById('step-url').classList.remove('active');
+    document.getElementById('step-commit').classList.add('active');
+  }
+
+  async function submitListing() {
+    const input = document.getElementById('listing-url');
+    const button = document.getElementById('submit-btn');
+    const errorEl = document.getElementById('url-error');
+    const url = input.value.trim();
+
+    errorEl.classList.remove('active');
+
+    if (!url) {
+      input.focus();
+      input.style.borderColor = '#b23a2e';
+      return;
+    }
+
+    button.disabled = true;
+    button.textContent = 'Sending…';
+
+    try {
+      const response = await fetch(CLAIM_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          listingUrl: url,
+          commitLevel: commitLevel || 'unspecified'
+        })
       });
-      video.muted = false;
-      video.play();
-      el.classList.add('playing');
-    } else {
-      video.pause();
-      el.classList.remove('playing');
+
+      if (!response.ok) {
+        throw new Error('Non-OK response: ' + response.status);
+      }
+
+      // Success — show the confirmation step.
+      document.getElementById('step-url').classList.remove('active');
+      document.getElementById('step-sent').classList.add('active');
+    } catch (err) {
+      // Network failure, server down, etc. Give the visitor a manual fallback
+      // instead of silently failing the way the old mailto: version did.
+      errorEl.classList.add('active');
+      button.disabled = false;
+      button.textContent = 'Send my listing';
     }
   }
 </script>
