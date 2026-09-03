@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RealMotionVideo — Claim your free video</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #121316;
+    --bg-alt: #1a1b1f;
+    --panel: #1e1f24;
+    --paper: #ede6d8;
+    --paper-dim: #cfc7b6;
+    --ink: #17170f;
+    --brass: #c29a5b;
+    --brass-bright: #d9b477;
+    --brass-dim: #8c7247;
+    --verdigris: #4b6a61;
+    --rec: #b23a2e;
+    --hairline: rgba(237, 230, 216, 0.12);
+    --hairline-strong: rgba(237, 230, 216, 0.22);
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--paper);
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.55;
+  }
+
+  ::selection { background: var(--brass); color: var(--ink); }
+
+  h1, h2, h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  a { color: inherit; }
+
+  .wrap {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  @media (max-width: 640px) {
+    .wrap { padding: 0 20px; }
+  }
+
+  /* ---------- NAV ---------- */
+
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(18, 19, 22, 0.86);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 0;
+  }
+
+  .wordmark {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    letter-spacing: 0.01em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+  }
+
+  .wordmark .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--rec);
+    box-shadow: 0 0 0 3px rgba(178, 58, 46, 0.18);
+  }
+
+  .nav-cta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--paper);
+    text-decoration: none;
+    border: 1px solid var(--hairline-strong);
+    padding: 9px 16px;
+    border-radius: 3px;
+    transition: border-color 0.2s ease, background 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .nav-cta:hover {
+    border-color: var(--brass);
+    background: rgba(194, 154, 91, 0.08);
+  }
+
+  /* ---------- HERO ---------- */
+
+  header.hero {
+    padding: 84px 0 64px;
+    border-bottom: 1px solid var(--hairline);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.76rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brass);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 22px;
+  }
+
+  .eyebrow::before {
+    content: '';
+    width: 18px;
+    height: 1px;
+    background: var(--brass);
+  }
+
+  h1.headline {
+    font-size: clamp(2.4rem, 5.4vw, 4.1rem);
+    line-height: 1.05;
+    max-width: 15ch;
+    color: var(--paper);
+  }
+
+  h1.headline em {
+    font-style: italic;
+    color: var(--brass-bright);
+  }
+
+  .sub {
+    margin-top: 26px;
+    max-width: 46ch;
+    font-size: 1.12rem;
+    color: var(--paper-dim);
+  }
+
+  .hero-actions {
+    margin-top: 38px;
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--brass);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.98rem;
+    text-decoration: none;
+    padding: 15px 26px;
+    border-radius: 3px;
+    display: inline-block;
+    transition: background 0.2s ease, transform 0.15s ease;
+  }
+
+  .btn-primary:hover {
+    background: var(--brass-bright);
+    transform: translateY(-1px);
+  }
+
+  .hero-note {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--paper-dim);
+    letter-spacing: 0.02em;
+  }
+
+  /* ---------- FILMSTRIP / SAMPLES ---------- */
+
+  section.reel {
+    padding: 88px 0 96px;
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+    margin-bottom: 44px;
+    flex-wrap: wrap;
+  }
+
+  .section-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.76rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin-bottom: 14px;
+    display: block;
+  }
+
+  h2.section-title {
+    font-size: clamp(1.7rem, 3vw, 2.3rem);
+    max-width: 20ch;
+  }
+
+  .section-desc {
+    max-width: 34ch;
+    color: var(--paper-dim);
+    font-size: 0.98rem;
+  }
+
+  .filmstrip {
+    position: relative;
+    padding: 22px 0;
+  }
+
+  .filmstrip::before,
+  .filmstrip::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 14px;
+    background-image: repeating-linear-gradient(
+      to right,
+      var(--bg-alt) 0px,
+      var(--bg-alt) 8px,
+      transparent 8px,
+      transparent 20px
+    );
+    opacity: 0.9;
+  }
+
+  .filmstrip::before { top: 0; }
+  .filmstrip::after { bottom: 0; }
+
+  .filmstrip-track {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+  }
+
+  @media (max-width: 860px) {
+    .filmstrip-track { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 480px) {
+    .filmstrip-track { grid-template-columns: 1fr; }
+  }
+
+  .frame {
+    background: var(--panel);
+    border: 1px solid var(--hairline);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .frame-media {
+    aspect-ratio: 9 / 16;
+    position: relative;
+    background: linear-gradient(155deg, #23262b 0%, #16171a 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .frame-media.ready {
+    background:
+      linear-gradient(180deg, rgba(18,19,22,0) 45%, rgba(18,19,22,0.92) 100%),
+      radial-gradient(circle at 30% 20%, rgba(194,154,91,0.22), transparent 55%),
+      linear-gradient(155deg, #2b2d33 0%, #17181b 100%);
+    cursor: pointer;
+  }
+
+  .frame-media.playing .play-badge {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .frame-media video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    inset: 0;
+  }
+
+  .play-badge {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: rgba(237, 230, 216, 0.94);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    position: relative;
+    pointer-events: none;
+  }
+
+  .play-badge svg { width: 15px; height: 15px; fill: var(--ink); margin-left: 2px; }
+
+  .frame-caption {
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    z-index: 2;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--paper);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .frame-caption .place {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--paper);
+  }
+
+  .frame-tag {
+    padding: 10px 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--paper-dim);
+    border-top: 1px solid var(--hairline);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .frame-tag .rec {
+    color: var(--rec);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .frame-tag .rec::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--rec);
+  }
+
+  /* ---------- HOW IT WORKS ---------- */
+
+  section.process {
+    padding: 88px 0;
+    border-bottom: 1px solid var(--hairline);
+    background: var(--bg-alt);
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--hairline);
+    border: 1px solid var(--hairline);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 44px;
+  }
+
+  @media (max-width: 760px) {
+    .steps { grid-template-columns: 1fr; }
+  }
+
+  .step {
+    background: var(--bg-alt);
+    padding: 40px 32px;
+  }
+
+  .step-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--brass);
+    margin-bottom: 22px;
+  }
+
+  .step h3 {
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+
+  .step p {
+    color: var(--paper-dim);
+    font-size: 0.94rem;
+    margin: 0;
+  }
+
+  /* ---------- OFFER ---------- */
+
+  section.offer {
+    padding: 96px 0;
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .offer-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 56px;
+    align-items: start;
+  }
+
+  @media (max-width: 820px) {
+    .offer-grid { grid-template-columns: 1fr; gap: 44px; }
+  }
+
+  .offer-copy h2 { font-size: clamp(1.8rem, 3.4vw, 2.5rem); max-width: 16ch; }
+
+  .offer-copy p {
+    margin-top: 20px;
+    color: var(--paper-dim);
+    max-width: 42ch;
+    font-size: 1.02rem;
+  }
+
+  .offer-card {
+    background: var(--panel);
+    border: 1px solid var(--hairline-strong);
+    border-radius: 6px;
+    padding: 40px;
+    position: relative;
+  }
+
+  .offer-card::before {
+    content: 'RATE CARD';
+    position: absolute;
+    top: -11px;
+    left: 32px;
+    background: var(--bg);
+    padding: 0 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    color: var(--brass);
+  }
+
+  .offer-name {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    color: var(--paper-dim);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .offer-price {
+    font-family: 'Fraunces', serif;
+    font-size: 3rem;
+    font-weight: 600;
+    color: var(--paper);
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  .offer-price span {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    color: var(--paper-dim);
+    font-weight: 400;
+  }
+
+  .offer-list {
+    list-style: none;
+    margin: 30px 0 34px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .offer-list li {
+    display: flex;
+    gap: 12px;
+    font-size: 0.95rem;
+    color: var(--paper-dim);
+  }
+
+  .offer-list li::before {
+    content: '—';
+    color: var(--brass);
+    flex-shrink: 0;
+  }
+
+  .offer-list strong { color: var(--paper); font-weight: 500; }
+
+  .btn-block {
+    display: block;
+    text-align: center;
+    background: var(--brass);
+    color: var(--ink);
+    font-weight: 600;
+    text-decoration: none;
+    padding: 15px;
+    border-radius: 3px;
+    transition: background 0.2s ease;
+    border: none;
+    width: 100%;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.98rem;
+  }
+
+  .btn-block:hover { background: var(--brass-bright); }
+
+  .offer-fine {
+    margin-top: 16px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--paper-dim);
+    text-align: center;
+  }
+
+  /* ---------- CLOSING CTA ---------- */
+
+  section.closing {
+    padding: 100px 0 110px;
+    text-align: center;
+  }
+
+  section.closing h2 {
+    font-size: clamp(1.9rem, 4vw, 2.9rem);
+    max-width: 18ch;
+    margin: 0 auto;
+  }
+
+  section.closing p.sub {
+    margin: 20px auto 0;
+    text-align: center;
+  }
+
+  .closing-actions { margin-top: 36px; display: flex; justify-content: center; }
+
+  /* ---------- FOOTER ---------- */
+
+  footer {
+    border-top: 1px solid var(--hairline);
+    padding: 28px 0;
+  }
+
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--paper-dim);
+    letter-spacing: 0.02em;
+  }
+  /* ---------- CLAIM FLOW ---------- */
+
+  .claim-step { display: none; }
+  .claim-step.active { display: block; }
+
+  .claim-narrow {
+    max-width: 560px;
+  }
+
+  .commit-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 56px;
+    align-items: start;
+  }
+
+  @media (max-width: 820px) {
+    .commit-grid { grid-template-columns: 1fr; gap: 30px; }
+  }
+
+  .claim-progress {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--paper-dim);
+    margin-bottom: 18px;
+  }
+
+  .commit-question {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    line-height: 1.28;
+    max-width: 22ch;
+    margin-top: 14px;
+  }
+
+  .commit-sub {
+    margin-top: 0;
+    color: var(--paper-dim);
+    font-size: 1rem;
+    max-width: 46ch;
+  }
+
+  .commit-actions {
+    margin-top: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 420px;
+  }
+
+  .commit-btn {
+    text-align: left;
+    background: var(--panel);
+    border: 1px solid var(--hairline-strong);
+    color: var(--paper);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.98rem;
+    font-weight: 500;
+    padding: 16px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+  }
+
+  .commit-btn:hover {
+    border-color: var(--brass);
+    background: rgba(194, 154, 91, 0.08);
+    transform: translateY(-1px);
+  }
+
+  .commit-btn.confident {
+    border-color: var(--brass-dim);
+  }
+
+  .commit-btn .label {
+    display: block;
+    font-weight: 600;
+  }
+
+  .commit-btn .hint {
+    display: block;
+    margin-top: 3px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--paper-dim);
+    font-weight: 400;
+  }
+
+  .claim-ack {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--brass);
+    margin-top: 12px;
+    letter-spacing: 0.02em;
+  }
+
+  .url-field {
+    margin-top: 30px;
+  }
+
+  .url-field label {
+    display: block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.76rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--paper-dim);
+    margin-bottom: 10px;
+  }
+
+  .url-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .url-input {
+    flex: 1 1 320px;
+    background: var(--panel);
+    border: 1px solid var(--hairline-strong);
+    color: var(--paper);
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    padding: 15px 16px;
+    border-radius: 4px;
+    outline: none;
+    transition: border-color 0.2s ease;
+  }
+
+  .url-input::placeholder { color: var(--brass-dim); }
+
+  .url-input:focus { border-color: var(--brass); }
+
+  .btn-submit {
+    background: var(--brass);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.98rem;
+    border: none;
+    padding: 0 26px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.15s ease;
+    min-width: 150px;
+  }
+
+  .btn-submit:hover {
+    background: var(--brass-bright);
+    transform: translateY(-1px);
+  }
+
+  .btn-submit:disabled {
+    opacity: 0.6;
+    cursor: default;
+    transform: none;
+  }
+
+  .url-note {
+    margin-top: 14px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.76rem;
+    color: var(--paper-dim);
+  }
+
+  .url-error {
+    margin-top: 14px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.76rem;
+    color: var(--rec);
+    display: none;
+  }
+
+  .url-error.active { display: block; }
+
+  .change-answer {
+    margin-top: 22px;
+    background: none;
+    border: none;
+    color: var(--paper-dim);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.74rem;
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .claim-sent { display: none; }
+  .claim-sent.active { display: block; }
+
+  .claim-sent h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); max-width: 18ch; }
+
+  .claim-sent p {
+    margin-top: 14px;
+    color: var(--paper-dim);
+    max-width: 42ch;
+  }
+
+  .fallback-note {
+    margin-top: 22px;
+    padding: 16px 18px;
+    background: var(--panel);
+    border: 1px solid var(--hairline-strong);
+    border-radius: 4px;
+    font-size: 0.92rem;
+    color: var(--paper-dim);
+    max-width: 42ch;
+  }
+
+  .fallback-note strong { color: var(--paper); }
+
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-inner">
+    <a class="wordmark" href="index.html"><span class="dot"></span>RealMotionVideo</a>
+    <a class="nav-cta" href="index.html">← Back home</a>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="eyebrow">No filming · No editing · No new photography</div>
+    <h1 class="headline">You already have the photos.<br>We turn them <em>into video.</em></h1>
+    <p class="sub">Send us the listing. We send back a cinematic vertical video for Instagram, Facebook and TikTok — built entirely from the photography you've already taken.</p>
+    <div class="hero-actions">
+      <span class="hero-note">Reply within 24 hours</span>
+    </div>
+  </div>
+</header>
+
+<section class="reel" id="claim">
+  <div class="wrap">
+
+    <!-- STEP 1: pre-commitment question, two-column like the offer section -->
+    <div class="claim-step active" id="step-commit">
+      <div class="claim-progress">Step 1 of 2</div>
+      <div class="commit-grid">
+        <div class="commit-left">
+          <span class="section-eyebrow">Before we start</span>
+          <h2 class="commit-question">If the video's genuinely good — would you use RealMotionVideo going forward?</h2>
+        </div>
+        <div class="commit-right">
+          <p class="commit-sub">Just being upfront: this first one's free, no obligation either way. We're just curious where you stand before we get to work.</p>
+          <div class="commit-actions">
+            <button type="button" class="commit-btn confident" onclick="chooseCommit('confident')">
+              <span class="label">Yes — if it delivers, count me in</span>
+              <span class="hint">I'm ready to use it for future listings</span>
+            </button>
+            <button type="button" class="commit-btn" onclick="chooseCommit('cautious')">
+              <span class="label">Maybe — I'll judge it on the results</span>
+              <span class="hint">Show me first, I'll decide after</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2: listing URL -->
+    <div class="claim-step claim-narrow" id="step-url">
+      <div class="claim-progress">Step 2 of 2</div>
+      <span class="section-eyebrow">Almost there</span>
+      <h2 class="section-title">Send us the listing. That's it.</h2>
+      <p class="claim-ack" id="claim-ack"></p>
+      <div class="url-field">
+        <label for="listing-url">Listing URL</label>
+        <div class="url-row">
+          <input type="url" id="listing-url" class="url-input" placeholder="https://www.rightmove.co.uk/properties/...">
+          <button type="button" class="btn-submit" id="submit-btn" onclick="submitListing()">Send my listing</button>
+        </div>
+        <p class="url-note">No photos to upload, no forms to fill in. Just the link — we'll take it from there. Reply within 24 hours.</p>
+        <p class="url-error" id="url-error">Something went wrong sending that — please try again, or email us directly at chris@realmotionvideo.com.</p>
+      </div>
+      <button type="button" class="change-answer" onclick="goBackToCommit()">← Change my answer</button>
+    </div>
+
+    <!-- STEP 3: confirmation -->
+    <div class="claim-step claim-sent claim-narrow" id="step-sent">
+      <div class="claim-progress">Sent</div>
+      <h2>Got it — on its way to us.</h2>
+      <p>Your listing has been received. We'll get started and reply within 24 hours.</p>
+    </div>
+
+  </div>
+</section>
+
+<section class="process">
+  <div class="wrap">
+    <span class="section-eyebrow">How it works</span>
+    <h2 class="section-title">Three steps. Nothing to install.</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h3>Send the listing</h3>
+        <p>Forward the Rightmove or agency listing link, or just the photos. That's the only thing we need from you.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h3>We produce the video</h3>
+        <p>Your existing photography becomes a branded vertical video — no site visit, no reshoot, no new equipment.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h3>You post it</h3>
+        <p>Delivered ready for Instagram, Facebook and TikTok. Post it yourself, or hand it to whoever runs your socials.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="offer">
+  <div class="wrap offer-grid">
+    <div class="offer-copy">
+      <h2>One plan. No tiers to work through.</h2>
+      <p>Most agencies send four to six new listings a month worth turning into video. This is priced for that, not for the ones you'll never use.</p>
+    </div>
+    <div class="offer-card">
+      <div class="offer-name">RealMotionVideo</div>
+      <div class="offer-price">£199<span>/ month</span></div>
+      <ul class="offer-list">
+        <li>Up to <strong>6 listings a month</strong> turned into vertical video</li>
+        <li>Branded to your agency, ready for Instagram, Facebook and TikTok</li>
+        <li>Delivered within <strong>48 hours</strong> of you sending the listing</li>
+        <li>No filming, no editing, no new photography required</li>
+      </ul>
+      <a class="btn-block" href="mailto:chris@realmotionvideo.com?subject=RealMotionVideo%20%E2%80%94%20I%27d%20like%20to%20start">Get started</a>
+      <div class="offer-fine">No contract. Cancel any month.</div>
+    </div>
+  </div>
+</section>
+
+<section class="closing">
+  <div class="wrap">
+    <h2>Still deciding? No pressure.</h2>
+    <p class="sub">Scroll back up whenever you're ready — the form's right there, and the offer isn't going anywhere.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-inner">
+    <span>RealMotionVideo</span>
+    <span>chris@realmotionvideo.com</span>
+  </div>
+</footer>
+
+<script>
+  let commitLevel = null;
+
+  // Real submission endpoint (n8n webhook -> Airtable ClaimSubmissions table).
+  // Replaces the old mailto: link, which silently did nothing for any visitor
+  // without a default email app configured (most Gmail/Outlook-in-browser users).
+  const CLAIM_WEBHOOK_URL = 'https://vmi3486297.contaboserver.net/webhook/claim-submission';
+
+  function chooseCommit(level) {
+    commitLevel = level;
+    document.getElementById('claim-ack').textContent =
+      level === 'confident'
+        ? "Noted — we'll aim to impress."
+        : "Fair enough — let's show you first.";
+    document.getElementById('step-commit').classList.remove('active');
+    document.getElementById('step-url').classList.add('active');
+  }
+
+  function goBackToCommit() {
+    document.getElementById('step-url').classList.remove('active');
+    document.getElementById('step-commit').classList.add('active');
+  }
+
+  async function submitListing() {
+    const input = document.getElementById('listing-url');
+    const button = document.getElementById('submit-btn');
+    const errorEl = document.getElementById('url-error');
+    const url = input.value.trim();
+
+    errorEl.classList.remove('active');
+
+    if (!url) {
+      input.focus();
+      input.style.borderColor = '#b23a2e';
+      return;
+    }
+
+    button.disabled = true;
+    button.textContent = 'Sending…';
+
+    try {
+      const response = await fetch(CLAIM_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          listingUrl: url,
+          commitLevel: commitLevel || 'unspecified'
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Non-OK response: ' + response.status);
+      }
+
+      // Success — show the confirmation step.
+      document.getElementById('step-url').classList.remove('active');
+      document.getElementById('step-sent').classList.add('active');
+    } catch (err) {
+      // Network failure, server down, etc. Give the visitor a manual fallback
+      // instead of silently failing the way the old mailto: version did.
+      errorEl.classList.add('active');
+      button.disabled = false;
+      button.textContent = 'Send my listing';
+    }
+  }
+</script>
+</body>
+</html>

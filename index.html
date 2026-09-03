@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RealMotionVideo — Your listings, already filming</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #121316;
+    --bg-alt: #1a1b1f;
+    --panel: #1e1f24;
+    --paper: #ede6d8;
+    --paper-dim: #cfc7b6;
+    --ink: #17170f;
+    --brass: #c29a5b;
+    --brass-bright: #d9b477;
+    --brass-dim: #8c7247;
+    --verdigris: #4b6a61;
+    --rec: #b23a2e;
+    --hairline: rgba(237, 230, 216, 0.12);
+    --hairline-strong: rgba(237, 230, 216, 0.22);
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--paper);
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.55;
+  }
+
+  ::selection { background: var(--brass); color: var(--ink); }
+
+  h1, h2, h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  a { color: inherit; }
+
+  .wrap {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  @media (max-width: 640px) {
+    .wrap { padding: 0 20px; }
+  }
+
+  /* ---------- NAV ---------- */
+
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(18, 19, 22, 0.86);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 0;
+  }
+
+  .wordmark {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    letter-spacing: 0.01em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+  }
+
+  .wordmark .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--rec);
+    box-shadow: 0 0 0 3px rgba(178, 58, 46, 0.18);
+  }
+
+  .nav-cta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--paper);
+    text-decoration: none;
+    border: 1px solid var(--hairline-strong);
+    padding: 9px 16px;
+    border-radius: 3px;
+    transition: border-color 0.2s ease, background 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .nav-cta:hover {
+    border-color: var(--brass);
+    background: rgba(194, 154, 91, 0.08);
+  }
+
+  /* ---------- HERO ---------- */
+
+  header.hero {
+    padding: 84px 0 64px;
+    border-bottom: 1px solid var(--hairline);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.76rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brass);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 22px;
+  }
+
+  .eyebrow::before {
+    content: '';
+    width: 18px;
+    height: 1px;
+    background: var(--brass);
+  }
+
+  h1.headline {
+    font-size: clamp(2.4rem, 5.4vw, 4.1rem);
+    line-height: 1.05;
+    max-width: 15ch;
+    color: var(--paper);
+  }
+
+  h1.headline em {
+    font-style: italic;
+    color: var(--brass-bright);
+  }
+
+  .sub {
+    margin-top: 26px;
+    max-width: 46ch;
+    font-size: 1.12rem;
+    color: var(--paper-dim);
+  }
+
+  .hero-actions {
+    margin-top: 38px;
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--brass);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.98rem;
+    text-decoration: none;
+    padding: 15px 26px;
+    border-radius: 3px;
+    display: inline-block;
+    transition: background 0.2s ease, transform 0.15s ease;
+  }
+
+  .btn-primary:hover {
+    background: var(--brass-bright);
+    transform: translateY(-1px);
+  }
+
+  .hero-note {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--paper-dim);
+    letter-spacing: 0.02em;
+  }
+
+  /* ---------- FILMSTRIP / SAMPLES ---------- */
+
+  section.reel {
+    padding: 88px 0 96px;
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+    margin-bottom: 44px;
+    flex-wrap: wrap;
+  }
+
+  .section-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.76rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin-bottom: 14px;
+    display: block;
+  }
+
+  h2.section-title {
+    font-size: clamp(1.7rem, 3vw, 2.3rem);
+    max-width: 20ch;
+  }
+
+  .section-desc {
+    max-width: 34ch;
+    color: var(--paper-dim);
+    font-size: 0.98rem;
+  }
+
+  .filmstrip {
+    position: relative;
+    padding: 22px 0;
+  }
+
+  .filmstrip::before,
+  .filmstrip::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 14px;
+    background-image: repeating-linear-gradient(
+      to right,
+      var(--bg-alt) 0px,
+      var(--bg-alt) 8px,
+      transparent 8px,
+      transparent 20px
+    );
+    opacity: 0.9;
+  }
+
+  .filmstrip::before { top: 0; }
+  .filmstrip::after { bottom: 0; }
+
+  .filmstrip-track {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+  }
+
+  @media (max-width: 860px) {
+    .filmstrip-track { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 480px) {
+    .filmstrip-track { grid-template-columns: 1fr; }
+  }
+
+  .frame {
+    background: var(--panel);
+    border: 1px solid var(--hairline);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .frame-media {
+    aspect-ratio: 9 / 16;
+    position: relative;
+    background: linear-gradient(155deg, #23262b 0%, #16171a 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .frame-media.ready {
+    background:
+      linear-gradient(180deg, rgba(18,19,22,0) 45%, rgba(18,19,22,0.92) 100%),
+      radial-gradient(circle at 30% 20%, rgba(194,154,91,0.22), transparent 55%),
+      linear-gradient(155deg, #2b2d33 0%, #17181b 100%);
+    cursor: pointer;
+  }
+
+  .frame-media.playing .play-badge {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .frame-media video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    inset: 0;
+  }
+
+  .play-badge {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: rgba(237, 230, 216, 0.94);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    position: relative;
+    pointer-events: none;
+  }
+
+  .play-badge svg { width: 15px; height: 15px; fill: var(--ink); margin-left: 2px; }
+
+  .frame-caption {
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    z-index: 2;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--paper);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .frame-caption .place {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--paper);
+  }
+
+  .frame-tag {
+    padding: 10px 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--paper-dim);
+    border-top: 1px solid var(--hairline);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .frame-tag .rec {
+    color: var(--rec);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .frame-tag .rec::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--rec);
+  }
+
+  /* ---------- HOW IT WORKS ---------- */
+
+  section.process {
+    padding: 88px 0;
+    border-bottom: 1px solid var(--hairline);
+    background: var(--bg-alt);
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--hairline);
+    border: 1px solid var(--hairline);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 44px;
+  }
+
+  @media (max-width: 760px) {
+    .steps { grid-template-columns: 1fr; }
+  }
+
+  .step {
+    background: var(--bg-alt);
+    padding: 40px 32px;
+  }
+
+  .step-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--brass);
+    margin-bottom: 22px;
+  }
+
+  .step h3 {
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+
+  .step p {
+    color: var(--paper-dim);
+    font-size: 0.94rem;
+    margin: 0;
+  }
+
+  /* ---------- OFFER ---------- */
+
+  section.offer {
+    padding: 96px 0;
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .offer-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 56px;
+    align-items: start;
+  }
+
+  @media (max-width: 820px) {
+    .offer-grid { grid-template-columns: 1fr; gap: 44px; }
+  }
+
+  .offer-copy h2 { font-size: clamp(1.8rem, 3.4vw, 2.5rem); max-width: 16ch; }
+
+  .offer-copy p {
+    margin-top: 20px;
+    color: var(--paper-dim);
+    max-width: 42ch;
+    font-size: 1.02rem;
+  }
+
+  .offer-card {
+    background: var(--panel);
+    border: 1px solid var(--hairline-strong);
+    border-radius: 6px;
+    padding: 40px;
+    position: relative;
+  }
+
+  .offer-card::before {
+    content: 'RATE CARD';
+    position: absolute;
+    top: -11px;
+    left: 32px;
+    background: var(--bg);
+    padding: 0 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    color: var(--brass);
+  }
+
+  .offer-name {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    color: var(--paper-dim);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .offer-price {
+    font-family: 'Fraunces', serif;
+    font-size: 3rem;
+    font-weight: 600;
+    color: var(--paper);
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  .offer-price span {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    color: var(--paper-dim);
+    font-weight: 400;
+  }
+
+  .offer-list {
+    list-style: none;
+    margin: 30px 0 34px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .offer-list li {
+    display: flex;
+    gap: 12px;
+    font-size: 0.95rem;
+    color: var(--paper-dim);
+  }
+
+  .offer-list li::before {
+    content: '—';
+    color: var(--brass);
+    flex-shrink: 0;
+  }
+
+  .offer-list strong { color: var(--paper); font-weight: 500; }
+
+  .btn-block {
+    display: block;
+    text-align: center;
+    background: var(--brass);
+    color: var(--ink);
+    font-weight: 600;
+    text-decoration: none;
+    padding: 15px;
+    border-radius: 3px;
+    transition: background 0.2s ease;
+  }
+
+  .btn-block:hover { background: var(--brass-bright); }
+
+  .offer-fine {
+    margin-top: 16px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--paper-dim);
+    text-align: center;
+  }
+
+  /* ---------- CLOSING CTA ---------- */
+
+  section.closing {
+    padding: 100px 0 110px;
+    text-align: center;
+  }
+
+  section.closing h2 {
+    font-size: clamp(1.9rem, 4vw, 2.9rem);
+    max-width: 18ch;
+    margin: 0 auto;
+  }
+
+  section.closing p.sub {
+    margin: 20px auto 0;
+    text-align: center;
+  }
+
+  .closing-actions { margin-top: 36px; display: flex; justify-content: center; }
+
+  /* ---------- FOOTER ---------- */
+
+  footer {
+    border-top: 1px solid var(--hairline);
+    padding: 28px 0;
+  }
+
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--paper-dim);
+    letter-spacing: 0.02em;
+  }
+
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-inner">
+    <a class="wordmark" href="#top"><span class="dot"></span>RealMotionVideo</a>
+    <a class="nav-cta" href="claim.html">Send a listing →</a>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="eyebrow">No filming · No editing · No new photography</div>
+    <h1 class="headline">You already have the photos.<br>We turn them <em>into video.</em></h1>
+    <p class="sub">Send us the listing. We send back a cinematic vertical video for Instagram, Facebook and TikTok — built entirely from the photography you've already taken.</p>
+    <div class="hero-actions">
+      <a class="btn-primary" href="claim.html">Send us your first listing</a>
+      <span class="hero-note">Reply within 24 hours</span>
+    </div>
+  </div>
+</header>
+
+<section class="reel">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="section-eyebrow">From the cutting room</span>
+        <h2 class="section-title">Four listings. Four cuts.</h2>
+      </div>
+      <p class="section-desc">A sample of the kind of video your listings become — no two properties are treated the same way twice.</p>
+    </div>
+
+    <div class="filmstrip">
+      <div class="filmstrip-track">
+
+        <!-- FRAME 1 — Country estate, gated entrance -->
+        <div class="frame">
+          <div class="frame-media ready" onclick="toggleClip(this)">
+            <video src="https://videos.realmotionvideo.com/prop4.mp4" loop playsinline preload="metadata"></video>
+            <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
+            <div class="frame-caption">
+              <span class="place">Country Estate</span>
+              <span>2:00</span>
+            </div>
+          </div>
+          <div class="frame-tag">
+            <span>UK · Luxury</span>
+            <span class="rec">CUT 01</span>
+          </div>
+        </div>
+
+        <!-- FRAME 2 — Detached home, columned entrance -->
+        <div class="frame">
+          <div class="frame-media ready" onclick="toggleClip(this)">
+            <video src="https://videos.realmotionvideo.com/prop1.mp4" loop playsinline preload="metadata"></video>
+            <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
+            <div class="frame-caption">
+              <span class="place">Detached Home</span>
+              <span>1:14</span>
+            </div>
+          </div>
+          <div class="frame-tag">
+            <span>UK · Luxury</span>
+            <span class="rec">CUT 02</span>
+          </div>
+        </div>
+
+        <!-- FRAME 3 — New-build detached, garage and driveway -->
+        <div class="frame">
+          <div class="frame-media ready" onclick="toggleClip(this)">
+            <video src="https://videos.realmotionvideo.com/prop3.mp4" loop playsinline preload="metadata"></video>
+            <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
+            <div class="frame-caption">
+              <span class="place">New Build Home</span>
+              <span>1:25</span>
+            </div>
+          </div>
+          <div class="frame-tag">
+            <span>UK · Mid-market</span>
+            <span class="rec">CUT 03</span>
+          </div>
+        </div>
+
+        <!-- FRAME 4 — End-terrace, driveway -->
+        <div class="frame">
+          <div class="frame-media ready" onclick="toggleClip(this)">
+            <video src="https://videos.realmotionvideo.com/prop2.mp4" loop playsinline preload="metadata"></video>
+            <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
+            <div class="frame-caption">
+              <span class="place">City Home</span>
+              <span>1:05</span>
+            </div>
+          </div>
+          <div class="frame-tag">
+            <span>UK · Mid-market</span>
+            <span class="rec">CUT 04</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="process">
+  <div class="wrap">
+    <span class="section-eyebrow">How it works</span>
+    <h2 class="section-title">Three steps. Nothing to install.</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h3>Send the listing</h3>
+        <p>Forward the Rightmove or agency listing link, or just the photos. That's the only thing we need from you.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h3>We produce the video</h3>
+        <p>Your existing photography becomes a branded vertical video — no site visit, no reshoot, no new equipment.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h3>You post it</h3>
+        <p>Delivered ready for Instagram, Facebook and TikTok. Post it yourself, or hand it to whoever runs your socials.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="offer">
+  <div class="wrap offer-grid">
+    <div class="offer-copy">
+      <h2>One plan. No tiers to work through.</h2>
+      <p>Most agencies send four to six new listings a month worth turning into video. This is priced for that, not for the ones you'll never use.</p>
+    </div>
+    <div class="offer-card">
+      <div class="offer-name">RealMotionVideo</div>
+      <div class="offer-price">£199<span>/ month</span></div>
+      <ul class="offer-list">
+        <li>Up to <strong>6 listings a month</strong> turned into vertical video</li>
+        <li>Branded to your agency, ready for Instagram, Facebook and TikTok</li>
+        <li>Delivered within <strong>48 hours</strong> of you sending the listing</li>
+        <li>No filming, no editing, no new photography required</li>
+      </ul>
+      <a class="btn-block" href="start.html">Get started</a>
+      <div class="offer-fine">No contract. Cancel any month.</div>
+    </div>
+  </div>
+</section>
+
+<section class="closing">
+  <div class="wrap">
+    <h2>Send us one listing. See what it becomes.</h2>
+    <p class="sub">If you'd rather talk it through first, just reply and tell us about your listings — we'll make the first video before you commit to anything.</p>
+    <div class="closing-actions">
+      <a class="btn-primary" href="claim.html">Send us your first listing</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-inner">
+    <span>RealMotionVideo</span>
+    <span>chris@realmotionvideo.com</span>
+  </div>
+</footer>
+
+<script>
+  function toggleClip(el) {
+    const video = el.querySelector('video');
+    if (!video) return;
+    const allMedia = document.querySelectorAll('.frame-media');
+    if (video.paused) {
+      allMedia.forEach(m => {
+        const v = m.querySelector('video');
+        if (v && v !== video) { v.pause(); v.currentTime = 0; }
+        m.classList.remove('playing');
+      });
+      video.muted = false;
+      video.play();
+      el.classList.add('playing');
+    } else {
+      video.pause();
+      el.classList.remove('playing');
+    }
+  }
+</script>
+</body>
+</html>
