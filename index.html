@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,6 +37,7 @@
     font-family: 'Inter', sans-serif;
     -webkit-font-smoothing: antialiased;
     line-height: 1.55;
+    overflow-x: hidden;
   }
 
   ::selection { background: var(--brass); color: var(--ink); }
@@ -267,12 +269,66 @@
     gap: 18px;
   }
 
+  /* Single/featured-item variant of the filmstrip, used when a reel
+     only has one or two cuts so far (e.g. a new vertical just starting) */
+  .filmstrip-track.filmstrip-track--featured {
+    grid-template-columns: minmax(0, 320px);
+    justify-content: start;
+  }
+
+  /* Paired variant — one vertical cut and one landscape cut shown
+     side by side, sharing the same height so the landscape cut reads
+     as large as the vertical one instead of looking squeezed in */
+  .filmstrip-track.filmstrip-track--paired {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    flex-wrap: nowrap;
+  }
+
+  .filmstrip-track.filmstrip-track--paired .frame {
+    flex: 0 1 auto;
+    min-width: 0;
+  }
+
+  /* These two percentages are mathematically derived so that a 9:16
+     card and a 16:9 card end up the same rendered height at any
+     container width, without relying on viewport-unit guesswork. */
+  .filmstrip-track.filmstrip-track--paired .frame:nth-child(1) {
+    flex-basis: 24%;
+  }
+
+  .filmstrip-track.filmstrip-track--paired .frame:nth-child(2) {
+    flex-basis: 76%;
+  }
+
+  .filmstrip-track.filmstrip-track--paired .frame-media {
+    width: 100%;
+    height: auto;
+  }
+
   @media (max-width: 860px) {
     .filmstrip-track { grid-template-columns: repeat(2, 1fr); }
+    .filmstrip-track.filmstrip-track--featured { grid-template-columns: minmax(0, 320px); }
+    .filmstrip-track.filmstrip-track--paired { flex-direction: column; }
+    .filmstrip-track.filmstrip-track--paired .frame {
+      width: 100%;
+      flex-basis: auto;
+    }
+    .filmstrip-track.filmstrip-track--paired .frame-media {
+      height: auto;
+      width: 100%;
+    }
   }
 
   @media (max-width: 480px) {
     .filmstrip-track { grid-template-columns: 1fr; }
+    .filmstrip-track.filmstrip-track--featured { grid-template-columns: 1fr; }
+  }
+
+  /* Landscape variant of the frame media, used for the horizontal cut */
+  .frame-media.frame-media--landscape {
+    aspect-ratio: 16 / 9;
   }
 
   .frame {
@@ -348,6 +404,20 @@
     font-weight: 600;
     font-size: 0.85rem;
     color: var(--paper);
+  }
+
+  /* Secondary spec line, used on cards that need a short technical
+     detail under the main caption (e.g. an automobile's spec) */
+  .frame-spec {
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: 32px;
+    z-index: 2;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.66rem;
+    letter-spacing: 0.01em;
+    color: var(--paper-dim);
   }
 
   .frame-tag {
@@ -590,7 +660,7 @@
 <nav>
   <div class="wrap nav-inner">
     <a class="wordmark" href="#top"><span class="dot"></span>RealMotionVideo</a>
-    <a class="nav-cta" href="claim.html">Send a listing →</a>
+    <a class="nav-cta" href="claim.html">Send us the link →</a>
   </div>
 </nav>
 
@@ -598,10 +668,10 @@
   <div class="wrap">
     <div class="eyebrow">No filming · No editing · No new photography</div>
     <h1 class="headline">You already have the photos.<br>We turn them <em>into video.</em></h1>
-    <p class="sub">Send us the listing. We send back a cinematic vertical video for Instagram, Facebook and TikTok — built entirely from the photography you've already taken.</p>
+    <p class="sub">Send us the listing — a property or a vehicle. We send back a cinematic vertical video for Instagram, Facebook and TikTok, built entirely from the photography you've already taken.</p>
     <div class="hero-actions">
-      <a class="btn-primary" href="claim.html">Send us your first listing</a>
-      <span class="hero-note">Reply within 24 hours</span>
+      <a class="btn-primary" href="claim.html">Send us the web link to where your images are</a>
+      <span class="hero-note">We reply within 24 hours</span>
     </div>
   </div>
 </header>
@@ -770,6 +840,58 @@
   </div>
 </section>
 
+<section class="reel reel-alt">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="section-eyebrow">Now filming luxury automobiles</span>
+        <h2 class="section-title">Luxury Autos — Allow Your Vehicles To Sell Themselves Through Video</h2>
+      </div>
+      <p class="section-desc">Same process, same turnaround — for dealers and private sellers moving high-end stock.</p>
+    </div>
+
+    <div class="filmstrip">
+      <div class="filmstrip-track filmstrip-track--paired">
+
+        <!-- AUTOMOBILE FRAME 1 — Ferrari 488, vertical cut -->
+        <div class="frame">
+          <div class="frame-media ready" onclick="toggleClip(this)">
+            <video src="https://videos.realmotionvideo.com/ferrari%20vertical.mp4" loop playsinline preload="metadata"></video>
+            <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
+            <div class="frame-spec">3.9T V8 Spider F1 DCT Euro 6 (s/s)</div>
+            <div class="frame-caption">
+              <span class="place">Ferrari 488</span>
+              <span>0:00</span>
+            </div>
+          </div>
+          <div class="frame-tag">
+            <span>UK · Luxury Auto</span>
+            <span class="rec">CUT 01 · VERTICAL</span>
+          </div>
+        </div>
+
+        <!-- AUTOMOBILE FRAME 2 — Ferrari 488, landscape cut -->
+        <div class="frame">
+          <div class="frame-media frame-media--landscape ready" onclick="toggleClip(this)">
+            <video src="https://videos.realmotionvideo.com/ferrari.mp4" loop playsinline preload="metadata"></video>
+            <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
+            <div class="frame-spec">3.9T V8 Spider F1 DCT Euro 6 (s/s)</div>
+            <div class="frame-caption">
+              <span class="place">Ferrari 488</span>
+              <span>0:00</span>
+            </div>
+          </div>
+          <div class="frame-tag">
+            <span>UK · Luxury Auto</span>
+            <span class="rec">CUT 01 · LANDSCAPE</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="process">
   <div class="wrap">
     <span class="section-eyebrow">How it works</span>
@@ -778,7 +900,7 @@
       <div class="step">
         <div class="step-num">01</div>
         <h3>Send the listing</h3>
-        <p>Forward the Rightmove or agency listing link, or just the photos. That's the only thing we need from you.</p>
+        <p>Forward the Rightmove or agency listing link, a dealer stock page, or just the photos. That's the only thing we need from you.</p>
       </div>
       <div class="step">
         <div class="step-num">02</div>
@@ -798,14 +920,14 @@
   <div class="wrap offer-grid">
     <div class="offer-copy">
       <h2>One plan. No tiers to work through.</h2>
-      <p>Most agencies send four to six new listings a month worth turning into video. This is priced for that, not for the ones you'll never use.</p>
+      <p>Most agencies and dealers send four to six new listings a month worth turning into video. This is priced for that, not for the ones you'll never use.</p>
     </div>
     <div class="offer-card">
       <div class="offer-name">RealMotionVideo</div>
       <div class="offer-price">£199<span>/ month</span></div>
       <ul class="offer-list">
         <li>Up to <strong>6 listings a month</strong> turned into vertical video</li>
-        <li>Branded to your agency, ready for Instagram, Facebook and TikTok</li>
+        <li>Branded to your agency or dealership, ready for Instagram, Facebook and TikTok</li>
         <li>Delivered within <strong>48 hours</strong> of you sending the listing</li>
         <li>No filming, no editing, no new photography required</li>
       </ul>
@@ -820,7 +942,7 @@
     <h2>Send us one listing. See what it becomes.</h2>
     <p class="sub">If you'd rather talk it through first, just reply and tell us about your listings — we'll make the first video before you commit to anything.</p>
     <div class="closing-actions">
-      <a class="btn-primary" href="claim.html">Send us your first listing</a>
+      <a class="btn-primary" href="claim.html">Send us the link to your images</a>
     </div>
   </div>
 </section>
