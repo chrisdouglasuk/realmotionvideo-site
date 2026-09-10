@@ -545,6 +545,34 @@
 
   .btn-block:hover { background: var(--brass-bright); }
 
+  .cta-row {
+    display: flex;
+    gap: 12px;
+  }
+
+  .cta-row .btn-block,
+  .cta-row .btn-primary {
+    flex: 1;
+  }
+
+  .btn-secondary {
+    display: block;
+    text-align: center;
+    background: transparent;
+    color: var(--paper);
+    font-weight: 600;
+    text-decoration: none;
+    padding: 15px;
+    border-radius: 3px;
+    border: 1px solid var(--hairline-strong);
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--brass);
+    background: rgba(194, 154, 91, 0.08);
+  }
+
   .offer-fine {
     margin-top: 16px;
     font-family: 'IBM Plex Mono', monospace;
@@ -618,7 +646,7 @@
 <nav>
   <div class="wrap nav-inner">
     <a class="wordmark" href="#top"><span class="dot"></span>RealMotionVideo</a>
-    <a class="nav-cta" href="mailto:chris@realmotionvideo.com?subject=Phantom%20Motor%20Company%20%E2%80%94%20Showroom%20Video">Talk to us →</a>
+    <a class="nav-cta" href="tel:+447398225970">Call Chris →</a>
   </div>
 </nav>
 
@@ -720,7 +748,11 @@
         <li>No filming, no editing, no new photography required</li>
         <li>Built around how you move stock — not a fixed monthly tier</li>
       </ul>
-      <a class="btn-block" href="mailto:chris@realmotionvideo.com?subject=Phantom%20Motor%20Company%20%E2%80%94%20Showroom%20Video">Talk to us →</a>
+      <div class="cta-row">
+        <a class="btn-block" href="tel:+447398225970">Call →</a>
+        <a class="btn-secondary" href="https://wa.me/447398225970?text=Hi%20Chris%2C%20I%27d%20like%20to%20discuss%20a%20showroom%20video%20for%20Phantom%20Motor%20Company">WhatsApp →</a>
+      </div>
+      <div class="offer-fine" style="margin-top: 10px;">Chris Douglas — 07398 225970</div>
       <div class="offer-fine">No contract. Scaled to your showroom.</div>
     </div>
   </div>
@@ -731,8 +763,10 @@
     <h2>Imagine this across your showroom.</h2>
     <p class="sub">From newly arrived stock to flagship vehicles, your existing photography can become ready-to-publish video without another photoshoot.</p>
     <div class="closing-actions">
-      <a class="btn-primary" href="mailto:chris@realmotionvideo.com?subject=Phantom%20Motor%20Company%20%E2%80%94%20Showroom%20Video">Let's discuss your showroom →</a>
+      <a class="btn-primary" href="tel:+447398225970">Call →</a>
+      <a class="btn-secondary" href="https://wa.me/447398225970?text=Hi%20Chris%2C%20I%27d%20like%20to%20discuss%20a%20showroom%20video%20for%20Phantom%20Motor%20Company" style="margin-left: 12px;">WhatsApp →</a>
     </div>
+    <p style="margin-top: 18px; font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; color: var(--paper-dim);">Chris Douglas — 07398 225970</p>
   </div>
 </section>
 
