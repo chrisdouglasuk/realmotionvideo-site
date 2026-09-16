@@ -709,17 +709,27 @@
 </head>
 <body>
 <script>
-  fetch('https://ntfy.sh/rmv-dealer-pageviews-8f2k1x', {
-    method: 'POST',
-    body: 'Phantom Motor Company page viewed — ' + new Date().toLocaleString('en-GB')
-  }).catch(function(){});
+  var DEALER_LABEL = 'Phantom Motor Company';
+
+  function ntfyPing(message) {
+    fetch('https://ntfy.sh/rmv-dealer-pageviews-8f2k1x', {
+      method: 'POST',
+      body: message + ' — ' + new Date().toLocaleString('en-GB')
+    }).catch(function(){});
+  }
+
+  ntfyPing(DEALER_LABEL + ' page viewed');
+
+  function pingContact(method) {
+    ntfyPing(DEALER_LABEL + ' clicked ' + method);
+  }
 </script>
 
 
 <nav>
   <div class="wrap nav-inner">
     <a class="wordmark" href="#top"><span class="dot"></span>RealMotionVideo</a>
-    <a class="nav-cta" href="tel:+447398225970">Let's talk →</a>
+    <a class="nav-cta" href="tel:+447398225970" onclick="pingContact('Call (nav)')">Let's talk →</a>
   </div>
 </nav>
 
@@ -823,8 +833,8 @@
         <li>Built around how you move stock — not a fixed monthly tier</li>
       </ul>
       <div class="cta-row">
-        <a class="btn-block" href="tel:+447398225970">Call →</a>
-        <a class="btn-secondary" href="https://wa.me/447398225970?text=Hi%20Chris%2C%20I%27d%20like%20to%20discuss%20a%20showroom%20video%20for%20Phantom%20Motor%20Company">WhatsApp →</a>
+        <a class="btn-block" href="tel:+447398225970" onclick="pingContact('Call (offer)')">Call →</a>
+        <a class="btn-secondary" href="https://wa.me/447398225970?text=Hi%20Chris%2C%20I%27d%20like%20to%20discuss%20a%20showroom%20video%20for%20Phantom%20Motor%20Company" onclick="pingContact('WhatsApp (offer)')">WhatsApp →</a>
       </div>
       <div class="offer-fine" style="margin-top: 10px;">Chris Douglas — 07398 225970</div>
       <div class="offer-fine">No contract. Scaled to your showroom.</div>
@@ -837,8 +847,8 @@
     <h2>Imagine this across your showroom.</h2>
     <p class="sub">From newly arrived stock to flagship vehicles, your existing photography can become ready-to-publish video without another photoshoot.</p>
     <div class="closing-actions">
-      <a class="btn-primary" href="tel:+447398225970">Call →</a>
-      <a class="btn-secondary" href="https://wa.me/447398225970?text=Hi%20Chris%2C%20I%27d%20like%20to%20discuss%20a%20showroom%20video%20for%20Phantom%20Motor%20Company" style="margin-left: 12px;">WhatsApp →</a>
+      <a class="btn-primary" href="tel:+447398225970" onclick="pingContact('Call (closing)')">Call →</a>
+      <a class="btn-secondary" href="https://wa.me/447398225970?text=Hi%20Chris%2C%20I%27d%20like%20to%20discuss%20a%20showroom%20video%20for%20Phantom%20Motor%20Company" style="margin-left: 12px;" onclick="pingContact('WhatsApp (closing)')">WhatsApp →</a>
     </div>
     <p style="margin-top: 18px; font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; color: var(--paper-dim);">Chris Douglas — 07398 225970</p>
   </div>
