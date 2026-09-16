@@ -840,17 +840,27 @@
 </head>
 <body>
 <script>
-  fetch('https://ntfy.sh/rmv-dealer-pageviews-8f2k1x', {
-    method: 'POST',
-    body: 'Bure Valley Classics page viewed — ' + new Date().toLocaleString('en-GB')
-  }).catch(function(){});
+  var DEALER_LABEL = 'Bure Valley Classics';
+
+  function ntfyPing(message) {
+    fetch('https://ntfy.sh/rmv-dealer-pageviews-8f2k1x', {
+      method: 'POST',
+      body: message + ' — ' + new Date().toLocaleString('en-GB')
+    }).catch(function(){});
+  }
+
+  ntfyPing(DEALER_LABEL + ' page viewed');
+
+  function pingContact(method) {
+    ntfyPing(DEALER_LABEL + ' clicked ' + method);
+  }
 </script>
 
 
 <nav>
   <div class="wrap nav-inner">
     <a class="wordmark" href="#top"><span class="dot"></span>RealMotionVideo</a>
-    <a class="nav-cta" href="tel:+447398225970">Let's talk →</a>
+    <a class="nav-cta" href="tel:+447398225970" onclick="pingContact('Call (nav)')">Let's talk →</a>
   </div>
 </nav>
 
@@ -962,8 +972,8 @@
     <h2>Ready to bring this to your whole showroom?</h2>
     <p class="sub">Cinematic-grade video, watermark-free, for every vehicle you move — priced around your stock, not a fixed tier. Same process as the pilot you just watched.</p>
     <div class="cta-mega-actions">
-      <a class="btn-primary btn-huge" href="tel:+447398225970">Call now →</a>
-      <a class="btn-secondary btn-huge" href="https://wa.me/447398225970?text=Hi%20Chris%2C%20I%27d%20like%20to%20discuss%20a%20showroom%20video%20for%20Bure%20Valley%20Classics">WhatsApp now →</a>
+      <a class="btn-primary btn-huge" href="tel:+447398225970" onclick="pingContact('Call')">Call now →</a>
+      <a class="btn-secondary btn-huge" href="https://wa.me/447398225970?text=Hi%20Chris%2C%20I%27d%20like%20to%20discuss%20a%20showroom%20video%20for%20Bure%20Valley%20Classics" onclick="pingContact('WhatsApp')">WhatsApp now →</a>
     </div>
     <p class="cta-mega-fine">Chris Douglas — 07398 225970</p>
     <div class="cta-mega-meta">
