@@ -351,6 +351,64 @@
     color: var(--paper-dim);
   }
 
+  /* ---------- STATS ---------- */
+
+  section.stats {
+    padding: 36px 0;
+    border-bottom: 1px solid var(--hairline);
+    background: var(--bg-alt);
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+
+  @media (max-width: 640px) {
+    .stats-grid {
+      grid-template-columns: 1fr;
+      gap: 22px;
+    }
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat-number {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 2.3rem;
+    color: var(--brass-bright);
+    line-height: 1;
+  }
+
+  .stat-label {
+    margin-top: 8px;
+    font-size: 0.85rem;
+    color: var(--paper-dim);
+    max-width: 22ch;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .stats-note {
+    margin-top: 22px;
+    text-align: center;
+    font-size: 0.86rem;
+    color: var(--paper);
+  }
+
+  .stats-source {
+    margin-top: 10px;
+    text-align: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.66rem;
+    letter-spacing: 0.02em;
+    color: var(--paper-dim);
+  }
+
   /* ---------- SHOWCASE ---------- */
 
   section.showcase {
@@ -1048,10 +1106,31 @@
         <input type="tel" id="signupPhone" placeholder="Phone number" required>
         <button type="submit">Request a callback →</button>
       </form>
-      <div class="hero-cta-fine">Or call directly: 07398 225970</div>
+      <div class="hero-cta-fine">Packages from £50 per vehicle · Or call directly: 07398 225970</div>
     </div>
   </div>
 </header>
+
+<section class="stats">
+  <div class="wrap">
+    <div class="stats-grid">
+      <div class="stat">
+        <div class="stat-number">67%</div>
+        <div class="stat-label">of auto shoppers took action after watching an automotive video ad</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">32%</div>
+        <div class="stat-label">went on to contact a dealership directly</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">26%</div>
+        <div class="stat-label">booked a test drive</div>
+      </div>
+    </div>
+    <p class="stats-note">Action rates over-index among <strong>luxury shoppers and buyers</strong>.</p>
+    <p class="stats-source">Source: Cox Automotive GfK Content Influence Study, 2023</p>
+  </div>
+</section>
 
 <section class="showcase">
   <div class="wrap">
@@ -1140,7 +1219,7 @@
 <section class="cta-mega">
   <div class="wrap">
     <h2>Ready to bring this to your whole showroom?</h2>
-    <p class="sub">Cinematic-grade video, watermark-free, for every vehicle you move — priced around your stock, not a fixed tier. Same process as the pilot you just watched.</p>
+    <p class="sub">Cinematic-grade video, watermark-free, for every vehicle you move — from £50 per vehicle, priced around your stock, not a fixed tier. Same process as the pilot you just watched.</p>
     <div class="cta-mega-actions">
       <a class="btn-primary btn-huge" href="tel:+447398225970" onclick="pingContact('Call')">Call now →</a>
       <a class="btn-secondary btn-huge" href="https://wa.me/447398225970?text=Hi%20Chris%2C%20I%27d%20like%20to%20discuss%20a%20showroom%20video%20for%20Bure%20Valley%20Classics" onclick="pingContact('WhatsApp')">WhatsApp now →</a>
