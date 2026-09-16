@@ -217,16 +217,63 @@
     margin: 0 0 18px;
   }
 
+  .hero-cta-primary {
+    display: block;
+    width: 100%;
+    text-align: center;
+    background: var(--brass);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 1.02rem;
+    text-decoration: none;
+    padding: 17px;
+    border-radius: 3px;
+    box-sizing: border-box;
+    transition: background 0.2s ease, transform 0.15s ease;
+  }
+
+  .hero-cta-primary:hover {
+    background: var(--brass-bright);
+    transform: translateY(-1px);
+  }
+
+  .hero-cta-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 18px 0;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--paper-dim);
+  }
+
+  .hero-cta-divider::before,
+  .hero-cta-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--hairline-strong);
+  }
+
+  .hero-cta-secondary-label {
+    font-size: 0.84rem;
+    color: var(--paper-dim);
+    margin: 0 0 12px;
+  }
+
   .hero-cta-card input {
     width: 100%;
     background: var(--bg);
     border: 1px solid var(--hairline-strong);
     color: var(--paper);
     font-family: 'Inter', sans-serif;
-    font-size: 0.92rem;
-    padding: 12px 14px;
+    font-size: 0.88rem;
+    padding: 10px 12px;
     border-radius: 3px;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     box-sizing: border-box;
   }
 
@@ -241,20 +288,21 @@
 
   .hero-cta-card button {
     width: 100%;
-    background: var(--brass);
-    color: var(--ink);
+    background: transparent;
+    color: var(--paper);
     font-family: 'Inter', sans-serif;
     font-weight: 600;
-    font-size: 0.96rem;
-    border: none;
-    padding: 14px;
+    font-size: 0.86rem;
+    border: 1px solid var(--hairline-strong);
+    padding: 11px;
     border-radius: 3px;
     cursor: pointer;
-    transition: background 0.2s ease;
+    transition: border-color 0.2s ease, background 0.2s ease;
   }
 
   .hero-cta-card button:hover {
-    background: var(--brass-bright);
+    border-color: var(--brass);
+    background: rgba(194, 154, 91, 0.08);
   }
 
   .hero-cta-fine {
@@ -985,11 +1033,14 @@
     <div class="hero-cta-card">
       <div class="hero-cta-label">Get started</div>
       <h3>Bring this to your showroom</h3>
-      <p>Enter your details and we'll open WhatsApp with everything ready to send — no forms to wait on, straight through to Chris.</p>
+      <p>Message Chris directly — no forms, no waiting.</p>
+      <a class="hero-cta-primary" href="https://wa.me/447398225970?text=Hi%20Chris%2C%20I%27d%20like%20to%20discuss%20a%20showroom%20video%20for%20Bure%20Valley%20Classics" onclick="pingContact('WhatsApp (hero)')">WhatsApp Chris now →</a>
+      <div class="hero-cta-divider">or</div>
+      <p class="hero-cta-secondary-label">Prefer we message you first?</p>
       <form id="heroSignupForm" onsubmit="return submitHeroForm(event)">
         <input type="text" id="signupName" placeholder="Your name" required>
         <input type="tel" id="signupPhone" placeholder="Phone number" required>
-        <button type="submit">Sign me up →</button>
+        <button type="submit">Request a callback →</button>
       </form>
       <div class="hero-cta-fine">Or call directly: 07398 225970</div>
     </div>
