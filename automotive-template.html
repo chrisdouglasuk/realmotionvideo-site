@@ -798,6 +798,74 @@
     color: var(--brass-bright);
     border-color: var(--brass);
   }
+
+  /* ---------- MEGA CTA ---------- */
+
+  section.cta-mega {
+    padding: 96px 0 108px;
+    text-align: center;
+    background: var(--bg-alt);
+  }
+
+  section.cta-mega h2 {
+    font-size: clamp(2.1rem, 4.4vw, 3.2rem);
+    max-width: 20ch;
+    margin: 0 auto;
+    line-height: 1.15;
+  }
+
+  section.cta-mega p.sub {
+    margin: 22px auto 0;
+    max-width: 54ch;
+    font-size: 1.15rem;
+    color: var(--paper-dim);
+  }
+
+  .cta-mega-actions {
+    margin-top: 44px;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .btn-huge {
+    padding: 22px 44px !important;
+    font-size: 1.1rem !important;
+  }
+
+  .cta-mega-fine {
+    margin-top: 26px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--paper);
+  }
+
+  .cta-mega-meta {
+    margin-top: 18px;
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.74rem;
+    color: var(--paper-dim);
+  }
+
+  .cta-mega-meta .capacity {
+    color: var(--brass);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .cta-mega-meta .capacity::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--brass);
+  }
 </style>
 </head>
 <body>
@@ -912,41 +980,19 @@
   </div>
 </section>
 
-<section class="offer">
-  <div class="wrap offer-grid">
-    <div class="offer-copy">
-      <h2>Built around your stock, not a fixed tier.</h2>
-      <p>From an individual flagship arrival to your regular monthly turnover, this is priced around how you actually move stock — not a one-size plan built for someone else's volume.</p>
-      <div class="offer-capacity">Taking on a small number of dealerships this month</div>
-    </div>
-    <div class="offer-card">
-      <div class="offer-name">RealMotionVideo</div>
-      <div class="offer-headline">From individual flagship vehicles to regular monthly stock.</div>
-      <ul class="offer-list">
-        <li>Watermark-free, <strong>cinematic-grade production</strong> — extended, multi-scene, built to feel like genuine filming, all from your existing photos</li>
-        <li>Packages tailored to <strong>vehicle volume</strong> and the formats you need</li>
-        <li>Branded to your dealership, ready for your website, showroom and social</li>
-        <li>Built around how you move stock — not a fixed monthly tier</li>
-      </ul>
-      <div class="cta-row">
-        <a class="btn-block" href="tel:+447398225970">Call →</a>
-        <a class="btn-secondary" href="https://wa.me/447398225970?text=Hi%20Chris%2C%20I%27d%20like%20to%20discuss%20a%20showroom%20video%20for%20{{DEALER_NAME_URLENC}}">WhatsApp →</a>
-      </div>
-      <div class="offer-fine">Chris Douglas — 07398 225970</div>
-      <div class="offer-deadline">Pilot pricing holds for 14 days from delivery.</div>
-    </div>
-  </div>
-</section>
-
-<section class="closing">
+<section class="cta-mega">
   <div class="wrap">
-    <h2>Imagine this across your showroom.</h2>
-    <p class="sub">From newly arrived stock to flagship vehicles, your existing photography can become ready-to-publish video without another photoshoot.</p>
-    <div class="closing-actions">
-      <a class="btn-primary" href="tel:+447398225970">Call →</a>
-      <a class="btn-secondary" href="https://wa.me/447398225970?text=Hi%20Chris%2C%20I%27d%20like%20to%20discuss%20a%20showroom%20video%20for%20{{DEALER_NAME_URLENC}}">WhatsApp →</a>
+    <h2>Ready to bring this to your whole showroom?</h2>
+    <p class="sub">Cinematic-grade video, watermark-free, for every vehicle you move — priced around your stock, not a fixed tier. Same process as the pilot you just watched.</p>
+    <div class="cta-mega-actions">
+      <a class="btn-primary btn-huge" href="tel:+447398225970">Call now →</a>
+      <a class="btn-secondary btn-huge" href="https://wa.me/447398225970?text=Hi%20Chris%2C%20I%27d%20like%20to%20discuss%20a%20showroom%20video%20for%20{{DEALER_NAME_URLENC}}">WhatsApp now →</a>
     </div>
-    <p style="margin-top: 18px; font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; color: var(--paper-dim);">Chris Douglas — 07398 225970</p>
+    <p class="cta-mega-fine">Chris Douglas — 07398 225970</p>
+    <div class="cta-mega-meta">
+      <span class="capacity">Taking on a small number of dealerships this month</span>
+      <span>Pilot pricing holds for 14 days from delivery</span>
+    </div>
   </div>
 </section>
 
