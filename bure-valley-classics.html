@@ -997,9 +997,15 @@
     event.preventDefault();
     var name = document.getElementById('signupName').value.trim();
     var phone = document.getElementById('signupPhone').value.trim();
-    ntfyPing(DEALER_LABEL + ' submitted sign-up form: ' + name + ' / ' + phone);
-    var message = 'Hi Chris, I\'m ' + name + ' from ' + DEALER_LABEL + ' (' + phone + '). I\'d like to discuss a showroom video.';
-    window.open('https://wa.me/447398225970?text=' + encodeURIComponent(message), '_blank');
+    ntfyPing(DEALER_LABEL + ' requested a callback: ' + name + ' / ' + phone);
+
+    var form = document.getElementById('heroSignupForm');
+    var confirmation = document.createElement('p');
+    confirmation.className = 'hero-cta-secondary-label';
+    confirmation.style.color = 'var(--brass-bright)';
+    confirmation.textContent = 'Thanks, ' + name + ' — Chris will call you on ' + phone + ' shortly.';
+    form.replaceWith(confirmation);
+
     return false;
   }
 </script>
