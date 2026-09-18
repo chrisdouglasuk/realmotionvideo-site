@@ -18,19 +18,22 @@
   {{TRUST_SIGNAL}}        update this as more dealers sign — NOTE: never
                            list the dealer viewing their own page here
 
-  This template includes a fixed "Client-tier examples" section (Aston
-  Martin DB12, Ferrari 488, Rolls-Royce Dawn — delivered for Phantom
-  Motor Company) right after the Pilot vs. Client table. NOT a
-  placeholder — stays the same on every page unless you have better
-  examples to swap in.
+  Fixed content (not placeholders) baked into every page:
+  - "Client-tier examples" section (Aston Martin DB12, Ferrari 488,
+    Rolls-Royce Dawn — delivered for Phantom Motor Company)
+  - Pilot vs. client comparison table (no Watermark row — removed 18 Sep)
+  - Stats section (Cox Automotive GfK study) — no luxury-shopper note
+  - Animated rotating-beam border on the hero sign-up card
+  - Hero card: "Get started" is the dominant heading (h1-sized, white),
+    primary action is "Chat with us live →" (WhatsApp), secondary path
+    is "Have a question?" / "Submit your question →" (silent callback,
+    no redirect)
 
-  The Pilot vs. Client table's "Formats" and "Discoverability" rows
-  reflect the real partner offering: every aspect ratio (not just the
-  two shown), plus SEO-optimised YouTube titles/descriptions/tags on
-  every video. Keep this in sync with whatever you actually promise
-  dealers in outreach messages.
-
-  Last synced from a live dealer page: 17 Sep 2026 (Bure Valley Classics).
+  Last synced from a live dealer page: 18 Sep 2026 (Bure Valley Classics)
+  — major copy/layout revision: bigger "Prepared for" label, no price
+  shown in hero, no watermark references anywhere, "IMAX-quality,
+  full-motion video" replaces "Pilot vs. client" framing, bigger white
+  table header row, glowing animated border on the CTA card.
   =====================================================================
 -->
 
@@ -155,7 +158,7 @@
   /* ---------- PREPARED-FOR STRIP ---------- */
 
   .prepared-strip {
-    padding: 18px 0;
+    padding: 26px 0;
     border-bottom: 1px solid var(--hairline);
     background: var(--bg-alt);
   }
@@ -169,8 +172,8 @@
 
   .prepared-tag {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.72rem;
-    letter-spacing: 0.14em;
+    font-size: 1rem;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--brass);
     white-space: nowrap;
@@ -179,7 +182,8 @@
   .prepared-name {
     font-family: 'Fraunces', serif;
     font-style: italic;
-    font-size: 1rem;
+    font-weight: 600;
+    font-size: 1.6rem;
     color: var(--paper);
   }
 
@@ -226,19 +230,62 @@
   }
 
   .hero-cta-card {
+    position: relative;
     background: var(--panel);
     border: 1px solid var(--hairline-strong);
     border-radius: 6px;
     padding: 30px;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  @property --beam-angle {
+    syntax: '<angle>';
+    inherits: false;
+    initial-value: 0deg;
+  }
+
+  .hero-cta-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 2px;
+    background: conic-gradient(
+      from var(--beam-angle),
+      transparent 0%,
+      transparent 82%,
+      var(--brass) 88%,
+      #fff6e6 92%,
+      var(--brass) 96%,
+      transparent 100%
+    );
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: beam-rotate 3.5s linear infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  @keyframes beam-rotate {
+    to {
+      --beam-angle: 360deg;
+    }
+  }
+
+  .hero-cta-card > * {
+    position: relative;
+    z-index: 1;
   }
 
   .hero-cta-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--brass);
-    margin-bottom: 10px;
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: clamp(2.1rem, 4.6vw, 3.4rem);
+    line-height: 1.1;
+    color: var(--paper);
+    margin-bottom: 14px;
   }
 
   .hero-cta-card h3 {
@@ -437,12 +484,13 @@
   }
 
   .stats-source {
-    margin-top: 10px;
+    margin-top: 18px;
     text-align: center;
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.66rem;
+    font-size: 0.95rem;
+    font-weight: 700;
     letter-spacing: 0.02em;
-    color: var(--paper-dim);
+    color: var(--paper);
   }
 
   /* ---------- SHOWCASE ---------- */
@@ -616,9 +664,16 @@
     margin-top: 22px;
     font-family: 'Fraunces', serif;
     font-style: italic;
-    font-size: 1.25rem;
+    font-size: 1.1rem;
     color: var(--paper-dim);
-    max-width: 40ch;
+    max-width: 100%;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 760px) {
+    .showcase-note {
+      white-space: normal;
+    }
   }
 
   .showcase-note strong {
@@ -651,6 +706,13 @@
     margin-bottom: 22px;
   }
 
+  .compare-intro {
+    font-size: 1.05rem;
+    color: var(--paper-dim);
+    max-width: 62ch;
+    margin-bottom: 32px;
+  }
+
   /* ---------- CLIENT-TIER EXAMPLES ---------- */
 
   section.client-examples {
@@ -673,6 +735,14 @@
     color: var(--paper-dim);
     max-width: 52ch;
     margin-bottom: 36px;
+  }
+
+  .client-examples-intro {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--paper);
+    max-width: 60ch;
+    margin-bottom: 14px;
   }
 
   .client-examples-note strong {
@@ -737,10 +807,11 @@
 
   .compare-head-row th,
   .compare-head-row td {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.72rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0;
+    text-transform: none;
     color: var(--paper);
     background: var(--bg);
     border-bottom: 1px solid var(--hairline-strong);
@@ -1171,20 +1242,18 @@
     <div>
       <div class="eyebrow">No filming · No reshoot · No new photography</div>
       <h1 class="headline">Turn Your {{DEALER_NAME}} Showroom Photography <em>Into Cinematic Vehicle Video</em></h1>
-      <p class="sub">This is your pilot video — free, watermarked, and made entirely from the photography you already have. No filming, no reshoot, no new equipment.</p>
-      <p class="sub">Packages from £50 per vehicle.</p>
+      <p class="sub">This is your pilot video — free, and made entirely from the photography you already have. No filming, no reshoot, no new equipment.</p>
     </div>
     <div class="hero-cta-card">
       <div class="hero-cta-label">Get started</div>
-      <h3>Bring this to your showroom</h3>
       <p>Message Chris directly — no forms, no waiting.</p>
-      <a class="hero-cta-primary" href="https://wa.me/447398225970?text=Hi%20Chris%2C%20I%27d%20like%20to%20discuss%20a%20showroom%20video%20for%20{{DEALER_NAME_URLENC}}" onclick="pingContact('WhatsApp (hero)')">WhatsApp Chris now →</a>
+      <a class="hero-cta-primary" href="https://wa.me/447398225970?text=Hi%20Chris%2C%20I%27d%20like%20to%20discuss%20a%20showroom%20video%20for%20{{DEALER_NAME_URLENC}}" onclick="pingContact('WhatsApp (hero)')">Chat with us live →</a>
       <div class="hero-cta-divider">or</div>
-      <p class="hero-cta-secondary-label">Prefer we message you first?</p>
+      <p class="hero-cta-secondary-label">Have a question?</p>
       <form id="heroSignupForm" onsubmit="return submitHeroForm(event)">
         <input type="text" id="signupName" placeholder="Your name" required>
         <input type="tel" id="signupPhone" placeholder="Phone number" required>
-        <button type="submit">Request a callback →</button>
+        <button type="submit">Submit your question →</button>
       </form>
       <div class="hero-cta-fine">Or call directly: 07398 225970</div>
     </div>
@@ -1207,7 +1276,6 @@
         <div class="stat-label">booked a test drive</div>
       </div>
     </div>
-    <p class="stats-note">Action rates over-index among <strong>luxury shoppers and buyers</strong>.</p>
     <p class="stats-source">Source: Cox Automotive GfK Content Influence Study, 2023</p>
   </div>
 </section>
@@ -1253,24 +1321,20 @@
     </div>
 
     <p class="showcase-note">This one's yours to keep, free, as promised. <strong>Here's what changes once you're a client.</strong></p>
-    <p class="download-links">Save these: <a href="{{VIDEO_LANDSCAPE_URL}}" download target="_blank" rel="noopener">Download 16:9 →</a> &nbsp;·&nbsp; <a href="{{VIDEO_VERTICAL_URL}}" download target="_blank" rel="noopener">Download 9:16 →</a><br>If a video opens instead of downloading, right-click it and choose "Save video as…"</p>
+    <p class="download-links">Save these: <a href="{{VIDEO_LANDSCAPE_URL}}" download target="_blank" rel="noopener">Download 16:9 →</a> &nbsp;·&nbsp; <a href="{{VIDEO_VERTICAL_URL}}" download target="_blank" rel="noopener">Download 9:16 →</a> &nbsp;·&nbsp; If a video opens instead of downloading, right-click it and choose "Save video as…"</p>
   </div>
 </section>
 
 <section class="compare">
   <div class="wrap">
-    <span class="section-eyebrow">Pilot vs. client</span>
-    <h2 class="section-title">Same photos. A more complete result once you're on board.</h2>
+    <span class="section-eyebrow">Join us as a partner</span>
+    <h2 class="section-title">IMAX-quality, full-motion video.</h2>
+    <p class="compare-intro">The video above was prepared at zero cost to you — but I incurred a fair amount of expense. When you become a partner, the small amount you pay turns what you see above into the sort of full-motion, IMAX-quality, super HD video our existing clients use to boost their sales and speed up vehicle sales.</p>
     <table class="compare-table">
       <tr class="compare-head-row">
         <th></th>
         <td>What you're watching now</td>
         <td>As a {{DEALER_NAME}} client</td>
-      </tr>
-      <tr>
-        <th>Watermark</th>
-        <td class="pilot-col">Yes — pilot copy</td>
-        <td class="client-col">Removed</td>
       </tr>
       <tr>
         <th>Length</th>
@@ -1303,7 +1367,7 @@
 
 <section class="client-examples">
   <div class="wrap">
-    <span class="section-eyebrow">Client-tier examples</span>
+    <p class="client-examples-intro">Join us as a partner and look at the results you will be getting when you go live — these are live, existing supercar clients.</p>
     <p class="client-examples-statement">No stitched photos. No Ken Burns pans. Full cinematic motion — shot-for-shot.</p>
     <p class="client-examples-note">Delivered for <strong>{{TRUST_SIGNAL}}</strong> — real client work, not a demo reel.</p>
 
@@ -1421,7 +1485,7 @@
 <section class="cta-mega">
   <div class="wrap">
     <h2>Ready to bring this to your whole showroom?</h2>
-    <p class="sub">Cinematic-grade video, watermark-free, for every vehicle you move — from £50 per vehicle, priced around your stock, not a fixed tier. Same process as the pilot you just watched.</p>
+    <p class="sub">Cinematic-grade video for every vehicle you move — from £50 per vehicle, priced around your stock, not a fixed tier. Same process as the pilot you just watched.</p>
     <div class="cta-mega-actions">
       <a class="btn-primary btn-huge" href="tel:+447398225970" onclick="pingContact('Call')">Call now →</a>
       <a class="btn-secondary btn-huge" href="https://wa.me/447398225970?text=Hi%20Chris%2C%20I%27d%20like%20to%20discuss%20a%20showroom%20video%20for%20{{DEALER_NAME_URLENC}}" onclick="pingContact('WhatsApp')">WhatsApp now →</a>
