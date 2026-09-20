@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -680,8 +679,68 @@
     letter-spacing: 0.02em;
   }
 
-  .url-field {
+  /* ---------- CLAIM GLOW BOX ---------- */
+  /* Same rotating-beam technique used on the dealer pages' hero sign-up card */
+
+  .claim-glow-box {
+    position: relative;
     margin-top: 30px;
+    background: var(--panel);
+    border: 1px solid var(--hairline-strong);
+    border-radius: 6px;
+    padding: 30px;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  @property --claim-beam-angle {
+    syntax: '<angle>';
+    inherits: false;
+    initial-value: 0deg;
+  }
+
+  .claim-glow-box::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 2px;
+    background: conic-gradient(
+      from var(--claim-beam-angle),
+      transparent 0%,
+      transparent 82%,
+      var(--brass) 88%,
+      #fff6e6 92%,
+      var(--brass) 96%,
+      transparent 100%
+    );
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: claim-beam-rotate 3.5s linear infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  @keyframes claim-beam-rotate {
+    to { --claim-beam-angle: 360deg; }
+  }
+
+  .claim-glow-box > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .claim-field {
+    margin-bottom: 18px;
+  }
+
+  .claim-field .url-input {
+    width: 100%;
+  }
+
+  .url-field {
+    margin-top: 0;
   }
 
   .url-field label {
@@ -702,7 +761,7 @@
 
   .url-input {
     flex: 1 1 320px;
-    background: var(--panel);
+    background: var(--bg);
     border: 1px solid var(--hairline-strong);
     color: var(--paper);
     font-family: 'Inter', sans-serif;
@@ -810,7 +869,7 @@
   <div class="wrap">
     <div class="eyebrow">No filming · No editing · No new photography</div>
     <h1 class="headline">You already have the photos.<br>We turn them <em>into video.</em></h1>
-    <p class="sub">Send us the listing. We send back a cinematic vertical video for Instagram, Facebook and TikTok — built entirely from the photography you've already taken.</p>
+    <p class="sub">Send us the link to your vehicle. We send back a cinematic vertical video for Instagram, Facebook and TikTok, plus a landscape cut for your website — built entirely from the photography you've already taken.</p>
     <div class="hero-actions">
       <span class="hero-note">Reply within 24 hours</span>
     </div>
@@ -833,7 +892,7 @@
           <div class="commit-actions">
             <button type="button" class="commit-btn confident" onclick="chooseCommit('confident')">
               <span class="label">Yes — if it delivers, count me in</span>
-              <span class="hint">I'm ready to use it for future listings</span>
+              <span class="hint">I'm ready to use it for future vehicles</span>
             </button>
             <button type="button" class="commit-btn" onclick="chooseCommit('cautious')">
               <span class="label">Maybe — I'll judge it on the results</span>
@@ -844,29 +903,41 @@
       </div>
     </div>
 
-    <!-- STEP 2: listing URL -->
+    <!-- STEP 2: name, mobile (optional), listing URL — wrapped in the glowing box -->
     <div class="claim-step claim-narrow" id="step-url">
       <div class="claim-progress">Step 2 of 2</div>
       <span class="section-eyebrow">Almost there</span>
-      <h2 class="section-title">Send us the listing. That's it.</h2>
+      <h2 class="section-title">Send us the vehicle. That's it.</h2>
       <p class="claim-ack" id="claim-ack"></p>
-      <div class="url-field">
-        <label for="listing-url">Listing URL</label>
-        <div class="url-row">
-          <input type="url" id="listing-url" class="url-input" placeholder="https://www.rightmove.co.uk/properties/...">
-          <button type="button" class="btn-submit" id="submit-btn" onclick="submitListing()">Send my listing</button>
+
+      <div class="claim-glow-box">
+        <div class="url-field">
+          <div class="claim-field">
+            <label for="claimant-name">Your name</label>
+            <input type="text" id="claimant-name" class="url-input" placeholder="Your name">
+          </div>
+          <div class="claim-field">
+            <label for="claimant-mobile">Mobile (optional) — so we can text you the moment it's ready</label>
+            <input type="tel" id="claimant-mobile" class="url-input" placeholder="07xxx xxxxxx">
+          </div>
+          <label for="listing-url">Vehicle URL</label>
+          <div class="url-row">
+            <input type="url" id="listing-url" class="url-input" placeholder="https://www.autotrader.co.uk/car-details/...">
+            <button type="button" class="btn-submit" id="submit-btn" onclick="submitListing()">Send my link</button>
+          </div>
+          <p class="url-note">No photos to upload, no forms to fill in. Just the link — we'll take it from there. Reply within 24 hours.</p>
+          <p class="url-error" id="url-error">Something went wrong sending that — please try again, or email us directly at chris@realmotionvideo.com.</p>
         </div>
-        <p class="url-note">No photos to upload, no forms to fill in. Just the link — we'll take it from there. Reply within 24 hours.</p>
-        <p class="url-error" id="url-error">Something went wrong sending that — please try again, or email us directly at chris@realmotionvideo.com.</p>
       </div>
+
       <button type="button" class="change-answer" onclick="goBackToCommit()">← Change my answer</button>
     </div>
 
     <!-- STEP 3: confirmation -->
     <div class="claim-step claim-sent claim-narrow" id="step-sent">
       <div class="claim-progress">Sent</div>
-      <h2>Got it — on its way to us.</h2>
-      <p>Your listing has been received. We'll get started and reply within 24 hours.</p>
+      <h2 id="claim-sent-heading">Got it — on its way to us.</h2>
+      <p>Your vehicle details have been received. We'll get started and reply within 24 hours.</p>
     </div>
 
   </div>
@@ -879,8 +950,8 @@
     <div class="steps">
       <div class="step">
         <div class="step-num">01</div>
-        <h3>Send the listing</h3>
-        <p>Forward the Rightmove or agency listing link, or just the photos. That's the only thing we need from you.</p>
+        <h3>Send the vehicle</h3>
+        <p>Forward your dealer stock page, a specific listing link, or just the photos. That's the only thing we need from you.</p>
       </div>
       <div class="step">
         <div class="step-num">02</div>
@@ -900,15 +971,15 @@
   <div class="wrap offer-grid">
     <div class="offer-copy">
       <h2>One plan. No tiers to work through.</h2>
-      <p>Most agencies send four to six new listings a month worth turning into video. This is priced for that, not for the ones you'll never use.</p>
+      <p>Most dealers send four to six new vehicles a month worth turning into video. This is priced for that, not for the ones you'll never use.</p>
     </div>
     <div class="offer-card">
       <div class="offer-name">RealMotionVideo</div>
       <div class="offer-price">£199<span>/ month</span></div>
       <ul class="offer-list">
-        <li>Up to <strong>6 listings a month</strong> turned into vertical video</li>
-        <li>Branded to your agency, ready for Instagram, Facebook and TikTok</li>
-        <li>Delivered within <strong>48 hours</strong> of you sending the listing</li>
+        <li>Up to <strong>6 vehicles a month</strong> turned into vertical video</li>
+        <li>Branded to your dealership, ready for Instagram, Facebook and TikTok</li>
+        <li>Delivered within <strong>48 hours</strong> of you sending the vehicle</li>
         <li>No filming, no editing, no new photography required</li>
       </ul>
       <a class="btn-block" href="mailto:chris@realmotionvideo.com?subject=RealMotionVideo%20%E2%80%94%20I%27d%20like%20to%20start">Get started</a>
@@ -955,18 +1026,30 @@
   }
 
   async function submitListing() {
+    const nameInput = document.getElementById('claimant-name');
+    const mobileInput = document.getElementById('claimant-mobile');
     const input = document.getElementById('listing-url');
     const button = document.getElementById('submit-btn');
     const errorEl = document.getElementById('url-error');
+    const name = nameInput.value.trim();
+    const mobile = mobileInput.value.trim();
     const url = input.value.trim();
 
     errorEl.classList.remove('active');
+
+    if (!name) {
+      nameInput.focus();
+      nameInput.style.borderColor = '#b23a2e';
+      return;
+    }
+    nameInput.style.borderColor = '';
 
     if (!url) {
       input.focus();
       input.style.borderColor = '#b23a2e';
       return;
     }
+    input.style.borderColor = '';
 
     button.disabled = true;
     button.textContent = 'Sending…';
@@ -976,6 +1059,8 @@
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          name: name,
+          mobile: mobile || null,
           listingUrl: url,
           commitLevel: commitLevel || 'unspecified'
         })
@@ -985,7 +1070,9 @@
         throw new Error('Non-OK response: ' + response.status);
       }
 
-      // Success — show the confirmation step.
+      // Success — show the confirmation step, personalised with their name.
+      document.getElementById('claim-sent-heading').textContent =
+        'Got it, ' + name + ' — on its way to us.';
       document.getElementById('step-url').classList.remove('active');
       document.getElementById('step-sent').classList.add('active');
     } catch (err) {
