@@ -217,6 +217,56 @@
     transform: translateY(-1px);
   }
 
+  /* ---------- GLOW WRAP ---------- */
+  /* Rotating "shooting star" beam around a button, same technique used
+     on the dealer pilot pages' sign-up cards */
+
+  .glow-wrap {
+    position: relative;
+    display: inline-block;
+    border-radius: 3px;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  @property --glow-beam-angle {
+    syntax: '<angle>';
+    inherits: false;
+    initial-value: 0deg;
+  }
+
+  .glow-wrap::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 2px;
+    background: conic-gradient(
+      from var(--glow-beam-angle),
+      transparent 0%,
+      transparent 82%,
+      var(--brass) 88%,
+      #fff6e6 92%,
+      var(--brass) 96%,
+      transparent 100%
+    );
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: glow-beam-rotate 3.5s linear infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  @keyframes glow-beam-rotate {
+    to { --glow-beam-angle: 360deg; }
+  }
+
+  .glow-wrap > * {
+    position: relative;
+    z-index: 1;
+  }
+
   .hero-note {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 0.78rem;
@@ -356,6 +406,70 @@
   /* Landscape variant of the frame media, used for the horizontal cut */
   .frame-media.frame-media--landscape {
     aspect-ratio: 16 / 9;
+  }
+
+  /* ---------- AUTO CAROUSEL ---------- */
+
+  .auto-carousel {
+    position: relative;
+  }
+
+  .carousel-slide {
+    display: none;
+  }
+
+  .carousel-slide.active {
+    display: block;
+  }
+
+  .carousel-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 26px;
+  }
+
+  .carousel-arrow {
+    background: var(--panel);
+    border: 1px solid var(--hairline-strong);
+    color: var(--paper);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+
+  .carousel-arrow:hover {
+    border-color: var(--brass);
+    background: rgba(194, 154, 91, 0.08);
+  }
+
+  .carousel-dots {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .carousel-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--hairline-strong);
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.2s ease, transform 0.15s ease;
+  }
+
+  .carousel-dot.active {
+    background: var(--brass);
+    transform: scale(1.3);
   }
 
   .frame {
@@ -701,7 +815,9 @@
     <h1 class="headline">You already have the photos.<br>We turn them <em>into video.</em></h1>
     <p class="sub">Send us the link to your vehicle. We send back a cinematic vertical video for Instagram, Facebook and TikTok, built entirely from the photography you've already taken.</p>
     <div class="hero-actions">
-      <a class="btn-primary" href="claim.html">Send us the web link to where your images are</a>
+      <div class="glow-wrap">
+        <a class="btn-primary" href="claim.html">Send us the web link to where your images are</a>
+      </div>
       <span class="hero-note">We reply within 24 hours</span>
     </div>
   </div>
@@ -718,43 +834,123 @@
     </div>
 
     <div class="filmstrip">
-      <div class="filmstrip-track filmstrip-track--paired">
+      <div class="auto-carousel">
 
-        <!-- AUTOMOBILE FRAME 1 — Ferrari 488, vertical cut -->
-        <div class="frame">
-          <div class="frame-media ready" onclick="toggleClip(this)">
-            <video src="https://videos.realmotionvideo.com/ferrari%20vertical.mp4" loop playsinline preload="metadata"></video>
-            <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
-            <div class="frame-spec">3.9T V8 Spider F1 DCT Euro 6 (s/s)</div>
-            <div class="frame-caption">
-              <span class="place">Ferrari 488</span>
-              <span>0:00</span>
+        <!-- SLIDE 1 — Ferrari 488 -->
+        <div class="carousel-slide active" id="carousel-slide-0">
+          <div class="filmstrip-track filmstrip-track--paired">
+            <div class="frame">
+              <div class="frame-media ready" onclick="toggleClip(this)">
+                <video src="https://videos.realmotionvideo.com/ferrari%20vertical.mp4" loop playsinline preload="metadata"></video>
+                <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
+                <div class="frame-spec">3.9T V8 Spider F1 DCT Euro 6 (s/s)</div>
+                <div class="frame-caption">
+                  <span class="place">Ferrari 488</span>
+                  <span>0:00</span>
+                </div>
+              </div>
+              <div class="frame-tag">
+                <span>UK · Luxury Auto</span>
+                <span class="rec">CUT 01 · VERTICAL</span>
+              </div>
             </div>
-          </div>
-          <div class="frame-tag">
-            <span>UK · Luxury Auto</span>
-            <span class="rec">CUT 01 · VERTICAL</span>
+            <div class="frame">
+              <div class="frame-media frame-media--landscape ready" onclick="toggleClip(this)">
+                <video src="https://videos.realmotionvideo.com/ferrari.mp4" loop playsinline preload="metadata"></video>
+                <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
+                <div class="frame-spec">3.9T V8 Spider F1 DCT Euro 6 (s/s)</div>
+                <div class="frame-caption">
+                  <span class="place">Ferrari 488</span>
+                  <span>0:00</span>
+                </div>
+              </div>
+              <div class="frame-tag">
+                <span>UK · Luxury Auto</span>
+                <span class="rec">CUT 01 · LANDSCAPE</span>
+              </div>
+            </div>
           </div>
         </div>
 
-        <!-- AUTOMOBILE FRAME 2 — Ferrari 488, landscape cut -->
-        <div class="frame">
-          <div class="frame-media frame-media--landscape ready" onclick="toggleClip(this)">
-            <video src="https://videos.realmotionvideo.com/ferrari.mp4" loop playsinline preload="metadata"></video>
-            <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
-            <div class="frame-spec">3.9T V8 Spider F1 DCT Euro 6 (s/s)</div>
-            <div class="frame-caption">
-              <span class="place">Ferrari 488</span>
-              <span>0:00</span>
+        <!-- SLIDE 2 — Rolls-Royce Dawn -->
+        <div class="carousel-slide" id="carousel-slide-1">
+          <div class="filmstrip-track filmstrip-track--paired">
+            <div class="frame">
+              <div class="frame-media ready" onclick="toggleClip(this)">
+                <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/PHANTOM%20-%20SOCIALS%20-%20ROLLS%20ROYCE%20DAWN.mp4" loop playsinline preload="metadata"></video>
+                <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
+                <div class="frame-caption">
+                  <span class="place">Rolls-Royce Dawn</span>
+                  <span>0:00</span>
+                </div>
+              </div>
+              <div class="frame-tag">
+                <span>UK · Luxury Auto</span>
+                <span class="rec">CUT 01 · VERTICAL</span>
+              </div>
+            </div>
+            <div class="frame">
+              <div class="frame-media frame-media--landscape ready" onclick="toggleClip(this)">
+                <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/PHANTOM%20-%20YOUTUBE%20-%20ROLLS%20ROYCE%20DAWN.mp4" loop playsinline preload="metadata"></video>
+                <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
+                <div class="frame-caption">
+                  <span class="place">Rolls-Royce Dawn</span>
+                  <span>0:00</span>
+                </div>
+              </div>
+              <div class="frame-tag">
+                <span>UK · Luxury Auto</span>
+                <span class="rec">CUT 01 · LANDSCAPE</span>
+              </div>
             </div>
           </div>
-          <div class="frame-tag">
-            <span>UK · Luxury Auto</span>
-            <span class="rec">CUT 01 · LANDSCAPE</span>
+        </div>
+
+        <!-- SLIDE 3 — Aston Martin DB12 -->
+        <div class="carousel-slide" id="carousel-slide-2">
+          <div class="filmstrip-track filmstrip-track--paired">
+            <div class="frame">
+              <div class="frame-media ready" onclick="toggleClip(this)">
+                <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/Phantom%20Aston%20Martin%20DB12%20TikTok.mp4" loop playsinline preload="metadata"></video>
+                <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
+                <div class="frame-caption">
+                  <span class="place">Aston Martin DB12</span>
+                  <span>0:00</span>
+                </div>
+              </div>
+              <div class="frame-tag">
+                <span>UK · Luxury Auto</span>
+                <span class="rec">CUT 01 · VERTICAL</span>
+              </div>
+            </div>
+            <div class="frame">
+              <div class="frame-media frame-media--landscape ready" onclick="toggleClip(this)">
+                <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/Phantom%20Aston%20Martin%20DB12%20YouTube.mp4" loop playsinline preload="metadata"></video>
+                <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
+                <div class="frame-caption">
+                  <span class="place">Aston Martin DB12</span>
+                  <span>0:00</span>
+                </div>
+              </div>
+              <div class="frame-tag">
+                <span>UK · Luxury Auto</span>
+                <span class="rec">CUT 01 · LANDSCAPE</span>
+              </div>
+            </div>
           </div>
         </div>
 
       </div>
+    </div>
+
+    <div class="carousel-nav">
+      <button type="button" class="carousel-arrow" onclick="carouselPrev()" aria-label="Previous vehicle">‹</button>
+      <div class="carousel-dots">
+        <button type="button" class="carousel-dot active" onclick="carouselGoTo(0)" aria-label="Ferrari 488"></button>
+        <button type="button" class="carousel-dot" onclick="carouselGoTo(1)" aria-label="Rolls-Royce Dawn"></button>
+        <button type="button" class="carousel-dot" onclick="carouselGoTo(2)" aria-label="Aston Martin DB12"></button>
+      </div>
+      <button type="button" class="carousel-arrow" onclick="carouselNext()" aria-label="Next vehicle">›</button>
     </div>
   </div>
 </section>
@@ -783,33 +979,14 @@
   </div>
 </section>
 
-<section class="offer">
-  <div class="wrap offer-grid">
-    <div class="offer-copy">
-      <h2>One plan. No tiers to work through.</h2>
-      <p>Most dealers send four to six new vehicles a month worth turning into video. This is priced for that, not for the ones you'll never use.</p>
-    </div>
-    <div class="offer-card">
-      <div class="offer-name">RealMotionVideo</div>
-      <div class="offer-price">£199<span>/ month</span></div>
-      <ul class="offer-list">
-        <li>Up to <strong>6 vehicles a month</strong> turned into vertical video</li>
-        <li>Branded to your dealership, ready for Instagram, Facebook and TikTok</li>
-        <li>Delivered within <strong>48 hours</strong> of you sending the vehicle</li>
-        <li>No filming, no editing, no new photography required</li>
-      </ul>
-      <a class="btn-block" href="start.html">Get started</a>
-      <div class="offer-fine">No contract. Cancel any month.</div>
-    </div>
-  </div>
-</section>
-
 <section class="closing">
   <div class="wrap">
     <h2>Send us one vehicle. See what it becomes.</h2>
     <p class="sub">If you'd rather talk it through first, just reply and tell us about your vehicles — we'll make the first video before you commit to anything.</p>
     <div class="closing-actions">
-      <a class="btn-primary" href="claim.html">Send us the link to your images</a>
+      <div class="glow-wrap">
+        <a class="btn-primary" href="claim.html">Send us the link to your images</a>
+      </div>
     </div>
   </div>
 </section>
@@ -839,6 +1016,41 @@
       video.pause();
       el.classList.remove('playing');
     }
+  }
+
+  var carouselIndex = 0;
+  var carouselSlideCount = 3;
+
+  function carouselGoTo(n) {
+    var slides = document.querySelectorAll('.carousel-slide');
+    var dots = document.querySelectorAll('.carousel-dot');
+
+    // Pause and reset any playing video in the slide being hidden
+    slides.forEach(function (slide) {
+      slide.querySelectorAll('video').forEach(function (v) {
+        v.pause();
+        v.currentTime = 0;
+      });
+      slide.querySelectorAll('.frame-media').forEach(function (m) {
+        m.classList.remove('playing');
+      });
+      slide.classList.remove('active');
+    });
+
+    slides[n].classList.add('active');
+    dots.forEach(function (d, i) {
+      d.classList.toggle('active', i === n);
+    });
+
+    carouselIndex = n;
+  }
+
+  function carouselNext() {
+    carouselGoTo((carouselIndex + 1) % carouselSlideCount);
+  }
+
+  function carouselPrev() {
+    carouselGoTo((carouselIndex - 1 + carouselSlideCount) % carouselSlideCount);
   }
 </script>
 </body>
