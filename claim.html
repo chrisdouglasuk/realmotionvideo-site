@@ -960,65 +960,6 @@
   </div>
 </section>
 
-<section class="process">
-  <div class="wrap">
-    <span class="section-eyebrow">How it works</span>
-    <h2 class="section-title">Three steps. Nothing to install.</h2>
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">01</div>
-        <h3>Send the vehicle</h3>
-        <p>Forward your dealer stock page, a specific listing link, or just the photos. That's the only thing we need from you.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">02</div>
-        <h3>We produce the video</h3>
-        <p>Your existing photography becomes a branded vertical video — no site visit, no reshoot, no new equipment.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">03</div>
-        <h3>You post it</h3>
-        <p>Delivered ready for Instagram, Facebook and TikTok. Post it yourself, or hand it to whoever runs your socials.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="offer">
-  <div class="wrap offer-grid">
-    <div class="offer-copy">
-      <h2>One plan. No tiers to work through.</h2>
-      <p>Most dealers send four to six new vehicles a month worth turning into video. This is priced for that, not for the ones you'll never use.</p>
-    </div>
-    <div class="offer-card">
-      <div class="offer-name">RealMotionVideo</div>
-      <div class="offer-price">£199<span>/ month</span></div>
-      <ul class="offer-list">
-        <li>Up to <strong>6 vehicles a month</strong> turned into vertical video</li>
-        <li>Branded to your dealership, ready for Instagram, Facebook and TikTok</li>
-        <li>Delivered within <strong>48 hours</strong> of you sending the vehicle</li>
-        <li>No filming, no editing, no new photography required</li>
-      </ul>
-      <a class="btn-block" href="mailto:chris@realmotionvideo.com?subject=RealMotionVideo%20%E2%80%94%20I%27d%20like%20to%20start">Get started</a>
-      <div class="offer-fine">No contract. Cancel any month.</div>
-    </div>
-  </div>
-</section>
-
-<section class="closing">
-  <div class="wrap">
-    <h2>Still deciding? No pressure.</h2>
-    <p class="sub">Scroll back up whenever you're ready — the form's right there, and the offer isn't going anywhere.</p>
-  </div>
-</section>
-
-<footer>
-  <div class="wrap footer-inner">
-    <span>RealMotionVideo</span>
-    <span>chris@realmotionvideo.com</span>
-  </div>
-</footer>
-
 <script>
   let commitLevel = null;
 
@@ -1087,9 +1028,18 @@
         throw new Error('Non-OK response: ' + response.status);
       }
 
-      // Success — show the confirmation step, personalised with their name.
+      // Success — show the confirmation step, personalised with just their
+      // first name, properly capitalised regardless of how they typed it.
+      // (The full name still goes to Airtable/email as submitted — this only
+      // affects what the visitor sees on screen.)
+      var firstNameRaw = name.trim().split(/\s+/)[0] || '';
+      var firstName = firstNameRaw
+        ? firstNameRaw.charAt(0).toUpperCase() + firstNameRaw.slice(1).toLowerCase()
+        : '';
       document.getElementById('claim-sent-heading').textContent =
-        'Got it, ' + name + ' — on its way to us.';
+        firstName
+          ? 'Got it, ' + firstName + ' — on its way to us.'
+          : 'Got it — on its way to us.';
       document.getElementById('step-url').classList.remove('active');
       document.getElementById('step-sent').classList.add('active');
     } catch (err) {
