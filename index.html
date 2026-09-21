@@ -816,7 +816,7 @@
     <p class="sub">Send us the link to your vehicle. We send back a cinematic vertical video for Instagram, Facebook and TikTok, built entirely from the photography you've already taken.</p>
     <div class="hero-actions">
       <div class="glow-wrap">
-        <a class="btn-primary" href="claim.html">Send us the web link to where your images are</a>
+        <a class="btn-primary" href="claim.html" onclick="ctaClickPing('Hero CTA')">Send us the web link to where your images are</a>
       </div>
       <span class="hero-note">We reply within 24 hours</span>
     </div>
@@ -985,7 +985,7 @@
     <p class="sub">If you'd rather talk it through first, just reply and tell us about your vehicles — we'll make the first video before you commit to anything.</p>
     <div class="closing-actions">
       <div class="glow-wrap">
-        <a class="btn-primary" href="claim.html">Send us the link to your images</a>
+        <a class="btn-primary" href="claim.html" onclick="ctaClickPing('Closing CTA')">Send us the link to your images</a>
       </div>
     </div>
   </div>
@@ -1039,6 +1039,21 @@
     var source = detectVisitSource();
     homepageNtfyPing('Homepage visited \u2014 ' + source);
   })();
+
+  function ctaClickPing(buttonLabel) {
+    var message = buttonLabel + ' clicked \u2014 ' + detectVisitSource();
+    var topicUrl = 'https://ntfy.sh/' + HOMEPAGE_NTFY_TOPIC;
+    // sendBeacon is built specifically for this: a ping that must survive
+    // the browser navigating away immediately after, which a plain fetch
+    // can sometimes get cut off before completing.
+    if (navigator.sendBeacon) {
+      navigator.sendBeacon(topicUrl, message);
+    } else {
+      fetch(topicUrl, { method: 'POST', body: message, keepalive: true }).catch(function () {});
+    }
+    // Don't block or delay the actual navigation to claim.html
+    return true;
+  }
 
   function toggleClip(el) {
     const video = el.querySelector('video');
