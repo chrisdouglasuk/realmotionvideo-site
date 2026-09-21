@@ -1233,7 +1233,20 @@
     }).catch(function(){});
   }
 
-  ntfyPing(DEALER_LABEL + ' page viewed');
+  function detectVisitSource() {
+    var params = new URLSearchParams(window.location.search);
+    var src = params.get('src');
+    if (src) return ' (via ' + src + ')';
+
+    var utmSource = params.get('utm_source');
+    if (utmSource) return ' (via UTM: ' + utmSource + ')';
+
+    if (document.referrer) return ' (referrer: ' + document.referrer + ')';
+
+    return '';
+  }
+
+  ntfyPing(DEALER_LABEL + ' page viewed' + detectVisitSource());
 
   function pingContact(method) {
     ntfyPing(DEALER_LABEL + ' clicked ' + method);
