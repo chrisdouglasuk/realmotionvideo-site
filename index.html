@@ -999,6 +999,47 @@
 </footer>
 
 <script>
+  // ---------- Homepage visit tracking ----------
+  // Separate ntfy topic from the dealer pilot pages, since a homepage hit
+  // is a noisier signal (could be a bot, a test, or a genuine lead) and
+  // shouldn't dilute the more targeted per-dealer page-view alerts.
+  var HOMEPAGE_NTFY_TOPIC = 'rmv-homepage-visits-8f2k1x';
+
+  function homepageNtfyPing(message) {
+    fetch('https://ntfy.sh/' + HOMEPAGE_NTFY_TOPIC, {
+      method: 'POST',
+      body: message
+    }).catch(function () {});
+  }
+
+  function detectVisitSource() {
+    var params = new URLSearchParams(window.location.search);
+    // Prefer an explicit ?src=... tag on the link (whatever you label it
+    // when sending it out, e.g. ?src=email-amari, ?src=whatsapp-frankdale)
+    var src = params.get('src');
+    if (src) return 'Tagged link: ' + src;
+
+    // Fall back to standard UTM parameters if those were used instead
+    var utmSource = params.get('utm_source');
+    var utmCampaign = params.get('utm_campaign');
+    if (utmSource || utmCampaign) {
+      return 'UTM: ' + (utmSource || 'unknown') + (utmCampaign ? ' / ' + utmCampaign : '');
+    }
+
+    // Fall back to the browser's own referrer, when available
+    // (many email clients and apps like WhatsApp strip this)
+    if (document.referrer) {
+      return 'Referrer: ' + document.referrer;
+    }
+
+    return 'Direct / unknown';
+  }
+
+  (function () {
+    var source = detectVisitSource();
+    homepageNtfyPing('Homepage visited \u2014 ' + source);
+  })();
+
   function toggleClip(el) {
     const video = el.querySelector('video');
     if (!video) return;
