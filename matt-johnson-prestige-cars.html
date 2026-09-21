@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<title>RealMotionVideo — Prepared for Stone Cold Classics</title>
+<title>RealMotionVideo — Prepared for Matt Johnson Prestige Cars</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -1185,7 +1185,7 @@
 </head>
 <body>
 <script>
-  var DEALER_LABEL = 'Stone Cold Classics';
+  var DEALER_LABEL = 'Matt Johnson Prestige Cars';
 
   function ntfyPing(message) {
     fetch('https://ntfy.sh/rmv-dealer-pageviews-8f2k1x', {
@@ -1194,7 +1194,20 @@
     }).catch(function(){});
   }
 
-  ntfyPing(DEALER_LABEL + ' page viewed');
+  function detectVisitSource() {
+    var params = new URLSearchParams(window.location.search);
+    var src = params.get('src');
+    if (src) return ' (via ' + src + ')';
+
+    var utmSource = params.get('utm_source');
+    if (utmSource) return ' (via UTM: ' + utmSource + ')';
+
+    if (document.referrer) return ' (referrer: ' + document.referrer + ')';
+
+    return '';
+  }
+
+  ntfyPing(DEALER_LABEL + ' page viewed' + detectVisitSource());
 
   function pingContact(method) {
     ntfyPing(DEALER_LABEL + ' clicked ' + method);
@@ -1242,7 +1255,7 @@
 <div class="prepared-strip">
   <div class="wrap">
     <span class="prepared-tag">Prepared for</span>
-    <span class="prepared-name">Stone Cold Classics</span>
+    <span class="prepared-name">Matt Johnson Prestige Cars</span>
   </div>
 </div>
 
@@ -1252,19 +1265,19 @@
 
 <header class="hero" id="top">
   <video class="hero-bg-video" autoplay muted loop playsinline>
-    <source src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/stone%20cold%20classics%20youtube.mp4" type="video/mp4">
+    <source src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/MATT%20JOHNSON%20PORSCHE%20MACAN%20WEBSITE.mp4" type="video/mp4">
   </video>
   <div class="hero-bg-overlay"></div>
   <div class="wrap hero-grid">
     <div>
       <div class="eyebrow">No filming · No reshoot · No new photography</div>
-      <h1 class="headline">Turn Your Stone Cold Classics Showroom Photography <em>Into Cinematic Vehicle Video</em></h1>
+      <h1 class="headline">Turn Your Matt Johnson Prestige Cars Showroom Photography <em>Into Cinematic Vehicle Video</em></h1>
       <p class="sub">This is your pilot video — free, and made entirely from the photography you already have. No filming, no reshoot, no new equipment.</p>
     </div>
     <div class="hero-cta-card">
       <div class="hero-cta-label">Get started</div>
       <p>Message Chris directly — no forms, no waiting.</p>
-      <a class="hero-cta-primary" href="https://wa.me/447398225970?text=Hi%20Chris%2C%20I%27d%20like%20to%20discuss%20a%20showroom%20video%20for%20Stone%20Cold%20Classics" onclick="pingContact('WhatsApp (hero)')">Chat with us live →</a>
+      <a class="hero-cta-primary" href="https://wa.me/447398225970?text=Hi%20Chris%2C%20I%27d%20like%20to%20discuss%20a%20showroom%20video%20for%20Matt%20Johnson%20Prestige%20Cars" onclick="pingContact('WhatsApp (hero)')">Chat with us live →</a>
       <div class="hero-cta-divider">or</div>
       <p class="hero-cta-secondary-label">Have a question?</p>
       <form id="heroSignupForm" onsubmit="return submitHeroForm(event)">
@@ -1305,11 +1318,11 @@
 
         <!-- PRIMARY — landscape cut -->
         <div class="frame pair-primary">
-          <div class="frame-media frame-media--landscape ready" onclick="openLightbox('https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/stone%20cold%20classics%20youtube.mp4')">
-            <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/stone%20cold%20classics%20youtube.mp4" loop playsinline preload="metadata"></video>
+          <div class="frame-media frame-media--landscape ready" onclick="openLightbox('https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/MATT%20JOHNSON%20PORSCHE%20MACAN%20WEBSITE.mp4')">
+            <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/MATT%20JOHNSON%20PORSCHE%20MACAN%20WEBSITE.mp4" loop playsinline preload="metadata"></video>
             <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
             <div class="frame-caption">
-              <span class="place">1988 Hustler 4</span>
+              <span class="place">Porsche Macan</span>
               <span>0:00</span>
             </div>
           </div>
@@ -1321,11 +1334,11 @@
 
         <!-- SECONDARY — vertical cut -->
         <div class="frame pair-secondary">
-          <div class="frame-media ready" onclick="openLightbox('https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/stone%20cold%20classics%20socials.mp4')">
-            <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/stone%20cold%20classics%20socials.mp4" loop playsinline preload="metadata"></video>
+          <div class="frame-media ready" onclick="openLightbox('https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/MATT%20JOHNSON%20PORSCHE%20MACAN%20SOCIAL%20MEDIA.mp4')">
+            <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/MATT%20JOHNSON%20PORSCHE%20MACAN%20SOCIAL%20MEDIA.mp4" loop playsinline preload="metadata"></video>
             <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
             <div class="frame-caption">
-              <span class="place">1988 Hustler 4</span>
+              <span class="place">Porsche Macan</span>
               <span>0:00</span>
             </div>
           </div>
@@ -1339,7 +1352,7 @@
     </div>
 
     <p class="showcase-note">This one's yours to keep, free, as promised. <strong>Here's what changes once you're a client.</strong></p>
-    <p class="download-links">Save these: <a href="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/stone%20cold%20classics%20youtube.mp4" download target="_blank" rel="noopener">Download 16:9 →</a> &nbsp;·&nbsp; <a href="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/stone%20cold%20classics%20socials.mp4" download target="_blank" rel="noopener">Download 9:16 →</a> &nbsp;·&nbsp; If a video opens instead of downloading, right-click it and choose "Save video as…"</p>
+    <p class="download-links">Save these: <a href="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/MATT%20JOHNSON%20PORSCHE%20MACAN%20WEBSITE.mp4" download target="_blank" rel="noopener">Download 16:9 →</a> &nbsp;·&nbsp; <a href="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/MATT%20JOHNSON%20PORSCHE%20MACAN%20SOCIAL%20MEDIA.mp4" download target="_blank" rel="noopener">Download 9:16 →</a> &nbsp;·&nbsp; If a video opens instead of downloading, right-click it and choose "Save video as…"</p>
   </div>
 </section>
 
@@ -1352,7 +1365,7 @@
       <tr class="compare-head-row">
         <th></th>
         <td>What you're watching now</td>
-        <td>As a Stone Cold Classics client</td>
+        <td>As a Matt Johnson Prestige Cars client</td>
       </tr>
       <tr>
         <th>Length</th>
@@ -1506,7 +1519,7 @@
     <p class="sub">Cinematic-grade video for every vehicle you move — from £50 per vehicle, priced around your stock, not a fixed tier. Same process as the pilot you just watched.</p>
     <div class="cta-mega-actions">
       <a class="btn-primary btn-huge" href="tel:+447398225970" onclick="pingContact('Call')">Call now →</a>
-      <a class="btn-secondary btn-huge" href="https://wa.me/447398225970?text=Hi%20Chris%2C%20I%27d%20like%20to%20discuss%20a%20showroom%20video%20for%20Stone%20Cold%20Classics" onclick="pingContact('WhatsApp')">WhatsApp now →</a>
+      <a class="btn-secondary btn-huge" href="https://wa.me/447398225970?text=Hi%20Chris%2C%20I%27d%20like%20to%20discuss%20a%20showroom%20video%20for%20Matt%20Johnson%20Prestige%20Cars" onclick="pingContact('WhatsApp')">WhatsApp now →</a>
     </div>
     <p class="cta-mega-fine">Chris Douglas — 07398 225970</p>
     <div class="cta-mega-meta">
