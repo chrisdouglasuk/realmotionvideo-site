@@ -499,6 +499,24 @@
     border-bottom: 1px solid var(--hairline);
   }
 
+  .showcase-vehicle {
+    margin-bottom: 30px;
+  }
+
+  .showcase-vehicle:last-child {
+    margin-bottom: 0;
+  }
+
+  .showcase-vehicle-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin-bottom: 10px;
+    display: block;
+  }
+
   .filmstrip {
     position: relative;
     padding: 14px 0;
@@ -1265,7 +1283,7 @@
 
 <header class="hero" id="top">
   <video class="hero-bg-video" autoplay muted loop playsinline>
-    <source src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/FRANK%20DALE%20ROLLS%20ROYCE%20WEBSITE.mp4" type="video/mp4">
+    <source src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/FRANK%20DALE%20ROLLS%20ROYCE%20WRAITH.mp4" type="video/mp4">
   </video>
   <div class="hero-bg-overlay"></div>
   <div class="wrap hero-grid">
@@ -1313,46 +1331,85 @@
 
 <section class="showcase">
   <div class="wrap">
-    <div class="filmstrip">
-      <div class="showcase-track">
 
-        <!-- PRIMARY — landscape cut -->
-        <div class="frame pair-primary">
-          <div class="frame-media frame-media--landscape ready" onclick="openLightbox('https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/FRANK%20DALE%20ROLLS%20ROYCE%20WEBSITE.mp4')">
-            <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/FRANK%20DALE%20ROLLS%20ROYCE%20WEBSITE.mp4" loop playsinline preload="metadata"></video>
-            <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
-            <div class="frame-caption">
-              <span class="place">1933 Rolls-Royce 20/25 by Gurney Nutting</span>
-              <span>0:00</span>
+    <!-- VEHICLE 1 — NEW — Rolls-Royce Wraith (Black Badge) -->
+    <div class="showcase-vehicle">
+      <span class="showcase-vehicle-label">Just delivered</span>
+      <div class="filmstrip">
+        <div class="showcase-track">
+          <div class="frame pair-primary">
+            <div class="frame-media frame-media--landscape ready" onclick="openLightbox('https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/FRANK%20DALE%20ROLLS%20ROYCE%20WRAITH.mp4')">
+              <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/FRANK%20DALE%20ROLLS%20ROYCE%20WRAITH.mp4" loop playsinline preload="metadata"></video>
+              <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
+              <div class="frame-caption">
+                <span class="place">2017 Rolls-Royce Wraith (Black Badge)</span>
+                <span>0:00</span>
+              </div>
+            </div>
+            <div class="frame-tag">
+              <span>Showroom &amp; Website — 16:9</span>
+              <span class="rec">PILOT</span>
             </div>
           </div>
-          <div class="frame-tag">
-            <span>Showroom &amp; Website — 16:9</span>
-            <span class="rec">PILOT</span>
-          </div>
-        </div>
-
-        <!-- SECONDARY — vertical cut -->
-        <div class="frame pair-secondary">
-          <div class="frame-media ready" onclick="openLightbox('https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/FRANK%20DALE%20ROLLS%20ROYCE%20SOCIAL%20MEDIA.mp4')">
-            <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/FRANK%20DALE%20ROLLS%20ROYCE%20SOCIAL%20MEDIA.mp4" loop playsinline preload="metadata"></video>
-            <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
-            <div class="frame-caption">
-              <span class="place">1933 Rolls-Royce 20/25 by Gurney Nutting</span>
-              <span>0:00</span>
+          <div class="frame pair-secondary">
+            <div class="frame-media ready" onclick="openLightbox('https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/FRANK%20DALE%20ROLLS%20ROYCE%20WRAITH%20SOCIAL%20MEDIA.mp4')">
+              <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/FRANK%20DALE%20ROLLS%20ROYCE%20WRAITH%20SOCIAL%20MEDIA.mp4" loop playsinline preload="metadata"></video>
+              <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
+              <div class="frame-caption">
+                <span class="place">2017 Rolls-Royce Wraith (Black Badge)</span>
+                <span>0:00</span>
+              </div>
+            </div>
+            <div class="frame-tag">
+              <span>Social &amp; Reels — 9:16</span>
+              <span class="rec">PILOT</span>
             </div>
           </div>
-          <div class="frame-tag">
-            <span>Social &amp; Reels — 9:16</span>
-            <span class="rec">PILOT</span>
-          </div>
         </div>
-
       </div>
+      <p class="download-links">Save these: <a href="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/FRANK%20DALE%20ROLLS%20ROYCE%20WRAITH.mp4" download target="_blank" rel="noopener">Download 16:9 →</a> &nbsp;·&nbsp; <a href="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/FRANK%20DALE%20ROLLS%20ROYCE%20WRAITH%20SOCIAL%20MEDIA.mp4" download target="_blank" rel="noopener">Download 9:16 →</a></p>
     </div>
 
-    <p class="showcase-note">This one's yours to keep, free, as promised. <strong>Here's what changes once you're a client.</strong></p>
-    <p class="download-links">Save these: <a href="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/FRANK%20DALE%20ROLLS%20ROYCE%20WEBSITE.mp4" download target="_blank" rel="noopener">Download 16:9 →</a> &nbsp;·&nbsp; <a href="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/FRANK%20DALE%20ROLLS%20ROYCE%20SOCIAL%20MEDIA.mp4" download target="_blank" rel="noopener">Download 9:16 →</a> &nbsp;·&nbsp; If a video opens instead of downloading, right-click it and choose "Save video as…"</p>
+    <!-- VEHICLE 2 — the original pilot — 1933 Rolls-Royce 20/25 -->
+    <div class="showcase-vehicle">
+      <span class="showcase-vehicle-label">Also delivered</span>
+      <div class="filmstrip">
+        <div class="showcase-track">
+          <div class="frame pair-primary">
+            <div class="frame-media frame-media--landscape ready" onclick="openLightbox('https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/FRANK%20DALE%20ROLLS%20ROYCE%20WEBSITE.mp4')">
+              <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/FRANK%20DALE%20ROLLS%20ROYCE%20WEBSITE.mp4" loop playsinline preload="metadata"></video>
+              <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
+              <div class="frame-caption">
+                <span class="place">1933 Rolls-Royce 20/25 by Gurney Nutting</span>
+                <span>0:00</span>
+              </div>
+            </div>
+            <div class="frame-tag">
+              <span>Showroom &amp; Website — 16:9</span>
+              <span class="rec">PILOT</span>
+            </div>
+          </div>
+          <div class="frame pair-secondary">
+            <div class="frame-media ready" onclick="openLightbox('https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/FRANK%20DALE%20ROLLS%20ROYCE%20SOCIAL%20MEDIA.mp4')">
+              <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/FRANK%20DALE%20ROLLS%20ROYCE%20SOCIAL%20MEDIA.mp4" loop playsinline preload="metadata"></video>
+              <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
+              <div class="frame-caption">
+                <span class="place">1933 Rolls-Royce 20/25 by Gurney Nutting</span>
+                <span>0:00</span>
+              </div>
+            </div>
+            <div class="frame-tag">
+              <span>Social &amp; Reels — 9:16</span>
+              <span class="rec">PILOT</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="download-links">Save these: <a href="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/FRANK%20DALE%20ROLLS%20ROYCE%20WEBSITE.mp4" download target="_blank" rel="noopener">Download 16:9 →</a> &nbsp;·&nbsp; <a href="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/FRANK%20DALE%20ROLLS%20ROYCE%20SOCIAL%20MEDIA.mp4" download target="_blank" rel="noopener">Download 9:16 →</a></p>
+    </div>
+
+    <p class="showcase-note">These are yours to keep, free, as promised. <strong>Here's what changes once you're a client.</strong></p>
+    <p class="download-links">If a video opens instead of downloading, right-click it and choose "Save video as…"</p>
   </div>
 </section>
 
@@ -1360,7 +1417,7 @@
   <div class="wrap">
     <span class="section-eyebrow">Join us as a partner</span>
     <h2 class="section-title">IMAX-quality, full-motion video.</h2>
-    <p class="compare-intro">The video above was prepared at zero cost to you — but I incurred a fair amount of expense. When you become a partner, the small amount you pay turns what you see above into the sort of full-motion, IMAX-quality, super HD video our existing clients use to boost their sales and speed up vehicle sales.</p>
+    <p class="compare-intro">The videos above were prepared at zero cost to you — but I incurred a fair amount of expense. When you become a partner, the small amount you pay turns what you see above into the sort of full-motion, IMAX-quality, super HD video our existing clients use to boost their sales and speed up vehicle sales.</p>
     <table class="compare-table">
       <tr class="compare-head-row">
         <th></th>
@@ -1516,7 +1573,7 @@
 <section class="cta-mega">
   <div class="wrap">
     <h2>Ready to bring this to your whole showroom?</h2>
-    <p class="sub">Cinematic-grade video for every vehicle you move — from £50 per vehicle, priced around your stock, not a fixed tier. Same process as the pilot you just watched.</p>
+    <p class="sub">Cinematic-grade video for every vehicle you move — from £50 per vehicle, priced around your stock, not a fixed tier. Same process as the pilots you just watched.</p>
     <div class="cta-mega-actions">
       <a class="btn-primary btn-huge" href="tel:+447398225970" onclick="pingContact('Call')">Call now →</a>
       <a class="btn-secondary btn-huge" href="https://wa.me/447398225970?text=Hi%20Chris%2C%20I%27d%20like%20to%20discuss%20a%20showroom%20video%20for%20Frank%20Dale" onclick="pingContact('WhatsApp')">WhatsApp now →</a>
