@@ -344,7 +344,7 @@
     gap: 18px;
   }
 
-  /* Two-up grid — the new "rows of two cars" proof layout */
+  /* Two-up grid — the "rows of two cars" proof layout */
   .filmstrip-track.filmstrip-track--grid2 {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -370,11 +370,10 @@
     aspect-ratio: 16 / 9;
   }
 
-  /* Hero variant — spans the footprint the old paired vertical+landscape
-     cards used to occupy together, so the featured video reads larger
-     without the page needing extra vertical space */
+  /* Hero variant — true 16:9, same width the old paired vertical+landscape
+     cards used to share, but taller than the small grid cards below it */
   .frame-media.frame-media--hero {
-    aspect-ratio: 21 / 9;
+    aspect-ratio: 16 / 9;
   }
 
   .frame {
@@ -403,11 +402,6 @@
     cursor: pointer;
   }
 
-  .frame-media.playing .play-badge {
-    opacity: 0;
-    transition: opacity 0.2s ease;
-  }
-
   .frame-media video {
     width: 100%;
     height: 100%;
@@ -427,14 +421,18 @@
     z-index: 2;
     position: relative;
     pointer-events: none;
+    transition: transform 0.2s ease;
+  }
+
+  .frame-media:hover .play-badge {
+    transform: scale(1.08);
   }
 
   .play-badge svg { width: 15px; height: 15px; fill: var(--ink); margin-left: 2px; }
 
   /* Bottom-anchored text stack for each card. Spec line (if present) and
-     caption line now share one flex column with a fixed gap instead of
-     being independently absolutely-positioned — that's what was causing
-     the two lines to overlap on the Ferrari card before. */
+     caption line share one flex column with a fixed gap instead of being
+     independently absolutely-positioned, so they can't collide. */
   .frame-footer {
     position: absolute;
     left: 12px;
@@ -495,6 +493,69 @@
     height: 6px;
     border-radius: 50%;
     background: var(--rec);
+  }
+
+  /* ---------- VIDEO MODAL (lightbox) ---------- */
+  /* Clicking any proof card opens the same clip larger and centred,
+     rather than playing inline at card size or going full-page. */
+
+  .video-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    background: rgba(10, 10, 11, 0.92);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 56px 24px;
+  }
+
+  .video-modal.active {
+    display: flex;
+  }
+
+  .video-modal-inner {
+    width: min(1100px, 92vw);
+    max-height: 86vh;
+    position: relative;
+  }
+
+  .video-modal-inner video {
+    width: 100%;
+    max-height: 86vh;
+    display: block;
+    background: #000;
+    border-radius: 4px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+  }
+
+  .video-modal-close {
+    position: absolute;
+    top: -52px;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(237, 230, 216, 0.1);
+    border: 1px solid var(--hairline-strong);
+    color: var(--paper);
+    font-size: 1.2rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease, border-color 0.2s ease;
+  }
+
+  .video-modal-close:hover {
+    background: rgba(237, 230, 216, 0.18);
+    border-color: var(--brass);
+  }
+
+  @media (max-width: 640px) {
+    .video-modal { padding: 40px 16px; }
+    .video-modal-close { top: -44px; right: 0; }
   }
 
   /* ---------- REVEAL LINE ---------- */
@@ -613,7 +674,7 @@
 <nav>
   <div class="wrap nav-inner">
     <a class="wordmark" href="#top"><span class="dot"></span>RealMotionVideo</a>
-    <a class="nav-cta" href="claim.html">Send us the link →</a>
+    <a class="nav-cta" href="claim.html">Request a pilot →</a>
   </div>
 </nav>
 
@@ -628,7 +689,7 @@
     <p class="sub">Send us the link to your vehicle. We send back a cinematic vertical video for Instagram, Facebook and TikTok, built entirely from the photography you've already taken.</p>
     <div class="hero-actions">
       <div class="glow-wrap">
-        <a class="btn-primary" href="claim.html" onclick="ctaClickPing('Hero CTA')">Send us the web link to where your images are</a>
+        <a class="btn-primary" href="claim.html" onclick="ctaClickPing('Hero CTA')">REQUEST MY PILOT →</a>
       </div>
       <span class="hero-note">We reply within 24 hours</span>
     </div>
@@ -649,9 +710,9 @@
     <div class="filmstrip">
       <div class="proof-stack">
 
-        <!-- Featured hero video — takes the footprint the vertical + landscape pair used to share -->
+        <!-- Featured hero video — true 16:9, same width the vertical + landscape pair used to share -->
         <div class="frame">
-          <div class="frame-media frame-media--hero ready" onclick="toggleClip(this)">
+          <div class="frame-media frame-media--hero ready" data-label="Phantom Motor Company · Aston Martin DB12" onclick="openVideoModal(this)">
             <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/Phantom%20Aston%20Martin%20DB12%20YouTube.mp4" loop playsinline preload="metadata"></video>
             <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
             <div class="frame-footer">
@@ -670,7 +731,7 @@
         <!-- Row 1 -->
         <div class="filmstrip-track filmstrip-track--grid2">
           <div class="frame">
-            <div class="frame-media frame-media--landscape ready" onclick="toggleClip(this)">
+            <div class="frame-media frame-media--landscape ready" data-label="Amari Supercars · Ferrari" onclick="openVideoModal(this)">
               <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/AMARI%20FERRARI%20YOUTUBE.mp4" loop playsinline preload="metadata"></video>
               <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
               <div class="frame-footer">
@@ -686,7 +747,7 @@
             </div>
           </div>
           <div class="frame">
-            <div class="frame-media frame-media--landscape ready" onclick="toggleClip(this)">
+            <div class="frame-media frame-media--landscape ready" data-label="Frank Dale · Rolls-Royce Wraith" onclick="openVideoModal(this)">
               <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/FRANK%20DALE%20ROLLS%20ROYCE%20WRAITH.mp4" loop playsinline preload="metadata"></video>
               <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
               <div class="frame-footer">
@@ -706,7 +767,7 @@
         <!-- Row 2 -->
         <div class="filmstrip-track filmstrip-track--grid2">
           <div class="frame">
-            <div class="frame-media frame-media--landscape ready" onclick="toggleClip(this)">
+            <div class="frame-media frame-media--landscape ready" data-label="Phantom Motor Company · Ferrari 488" onclick="openVideoModal(this)">
               <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/Phantom%20Ferrari%20488%20Youtube.mp4" loop playsinline preload="metadata"></video>
               <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
               <div class="frame-footer">
@@ -722,7 +783,7 @@
             </div>
           </div>
           <div class="frame">
-            <div class="frame-media frame-media--landscape ready" onclick="toggleClip(this)">
+            <div class="frame-media frame-media--landscape ready" data-label="Matt Johnson Prestige Cars · Porsche Macan" onclick="openVideoModal(this)">
               <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/MATT%20JOHNSON%20PORSCHE%20MACAN%20WEBSITE.mp4" loop playsinline preload="metadata"></video>
               <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
               <div class="frame-footer">
@@ -742,7 +803,7 @@
         <!-- Row 3 -->
         <div class="filmstrip-track filmstrip-track--grid2">
           <div class="frame">
-            <div class="frame-media frame-media--landscape ready" onclick="toggleClip(this)">
+            <div class="frame-media frame-media--landscape ready" data-label="Phantom Motor Company · Rolls-Royce Dawn" onclick="openVideoModal(this)">
               <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/PHANTOM%20-%20YOUTUBE%20-%20ROLLS%20ROYCE%20DAWN.mp4" loop playsinline preload="metadata"></video>
               <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
               <div class="frame-footer">
@@ -758,7 +819,7 @@
             </div>
           </div>
           <div class="frame">
-            <div class="frame-media frame-media--landscape ready" onclick="toggleClip(this)">
+            <div class="frame-media frame-media--landscape ready" data-label="Saxtons · Porsche 911" onclick="openVideoModal(this)">
               <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/SAXTONS%20PORSCHE%20911%20WEBSITE.mp4" loop playsinline preload="metadata"></video>
               <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
               <div class="frame-footer">
@@ -810,11 +871,11 @@
 <!-- ================= CLOSING CTA — tracked/generic swap ================= -->
 <section class="closing">
   <div class="wrap">
-    <h2 id="cta-headline">Send us one stock link. We'll show you what your own photography can become.</h2>
-    <p class="sub" id="cta-sub">No contract. No filming. No change to your existing photography workflow.</p>
+    <h2 id="cta-headline">See what your own vehicle can become.</h2>
+    <p class="sub" id="cta-sub">We'll create a complimentary pilot from your existing photography. No filming. No reshoot. No commitment.</p>
     <div class="closing-actions">
       <div class="glow-wrap">
-        <a class="btn-primary" id="cta-button" href="claim.html" onclick="ctaClickPing('Closing CTA')">Send us a vehicle →</a>
+        <a class="btn-primary" id="cta-button" href="claim.html" onclick="ctaClickPing('Closing CTA')">REQUEST MY PILOT →</a>
       </div>
     </div>
   </div>
@@ -826,6 +887,14 @@
     <span>chris@realmotionvideo.com</span>
   </div>
 </footer>
+
+<!-- ================= VIDEO LIGHTBOX ================= -->
+<div class="video-modal" id="videoModal" onclick="if (event.target === this) closeVideoModal()">
+  <div class="video-modal-inner">
+    <button class="video-modal-close" onclick="closeVideoModal()" aria-label="Close video">✕</button>
+    <video id="videoModalPlayer" controls playsinline></video>
+  </div>
+</div>
 
 <script>
   // ---------- Homepage visit tracking ----------
@@ -876,24 +945,40 @@
     return true;
   }
 
-  function toggleClip(el) {
-    const video = el.querySelector('video');
-    if (!video) return;
-    const allMedia = document.querySelectorAll('.frame-media');
-    if (video.paused) {
-      allMedia.forEach(m => {
-        const v = m.querySelector('video');
-        if (v && v !== video) { v.pause(); v.currentTime = 0; }
-        m.classList.remove('playing');
-      });
-      video.muted = false;
-      video.play();
-      el.classList.add('playing');
-    } else {
-      video.pause();
-      el.classList.remove('playing');
-    }
+  // ---------- Video lightbox ----------
+  // Clicking any proof card opens the same clip larger and centred in an
+  // overlay, rather than playing inline at card size or going full-page.
+  function openVideoModal(cardEl) {
+    var sourceVideo = cardEl.querySelector('video');
+    if (!sourceVideo) return;
+
+    var src = sourceVideo.currentSrc || sourceVideo.getAttribute('src');
+    var modal = document.getElementById('videoModal');
+    var player = document.getElementById('videoModalPlayer');
+
+    player.src = src;
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+
+    player.currentTime = 0;
+    player.play().catch(function () {});
+
+    homepageNtfyPing('Video opened — ' + (cardEl.dataset.label || 'unlabeled'));
   }
+
+  function closeVideoModal() {
+    var modal = document.getElementById('videoModal');
+    var player = document.getElementById('videoModalPlayer');
+    player.pause();
+    player.removeAttribute('src');
+    player.load();
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeVideoModal();
+  });
 
   // ---------- Tracked vs generic closing CTA ----------
   // A tracked outreach link should append ?car=<model>, e.g.
@@ -910,7 +995,7 @@
 
     headline.textContent = 'We already have the ' + carName + ' you came here about.';
     sub.textContent = "No contract, no filming — just say the word and we'll build the pilot.";
-    button.textContent = 'Make my pilot →';
+    button.textContent = 'REQUEST MY PILOT →';
     button.setAttribute('href', 'claim.html?car=' + encodeURIComponent(carName));
   })();
 </script>
