@@ -218,8 +218,6 @@
   }
 
   /* ---------- GLOW WRAP ---------- */
-  /* Rotating "shooting star" beam around a button, same technique used
-     on the dealer pilot pages' sign-up cards */
 
   .glow-wrap {
     position: relative;
@@ -346,130 +344,37 @@
     gap: 18px;
   }
 
-  /* Single/featured-item variant of the filmstrip, used when a reel
-     only has one or two cuts so far (e.g. a new vertical just starting) */
-  .filmstrip-track.filmstrip-track--featured {
-    grid-template-columns: minmax(0, 320px);
-    justify-content: start;
+  /* Two-up grid — the new "rows of two cars" proof layout */
+  .filmstrip-track.filmstrip-track--grid2 {
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  /* Paired variant — one vertical cut and one landscape cut shown
-     side by side, sharing the same height so the landscape cut reads
-     as large as the vertical one instead of looking squeezed in */
-  .filmstrip-track.filmstrip-track--paired {
+  /* Stacks the hero frame and the grid2 rows underneath it with even spacing */
+  .proof-stack {
     display: flex;
-    align-items: flex-start;
+    flex-direction: column;
     gap: 18px;
-    flex-wrap: nowrap;
-  }
-
-  .filmstrip-track.filmstrip-track--paired .frame {
-    flex: 0 1 auto;
-    min-width: 0;
-  }
-
-  /* These two percentages are mathematically derived so that a 9:16
-     card and a 16:9 card end up the same rendered height at any
-     container width, without relying on viewport-unit guesswork. */
-  .filmstrip-track.filmstrip-track--paired .frame:nth-child(1) {
-    flex-basis: 24%;
-  }
-
-  .filmstrip-track.filmstrip-track--paired .frame:nth-child(2) {
-    flex-basis: 76%;
-  }
-
-  .filmstrip-track.filmstrip-track--paired .frame-media {
-    width: 100%;
-    height: auto;
   }
 
   @media (max-width: 860px) {
     .filmstrip-track { grid-template-columns: repeat(2, 1fr); }
-    .filmstrip-track.filmstrip-track--featured { grid-template-columns: minmax(0, 320px); }
-    .filmstrip-track.filmstrip-track--paired { flex-direction: column; }
-    .filmstrip-track.filmstrip-track--paired .frame {
-      width: 100%;
-      flex-basis: auto;
-    }
-    .filmstrip-track.filmstrip-track--paired .frame-media {
-      height: auto;
-      width: 100%;
-    }
   }
 
   @media (max-width: 480px) {
     .filmstrip-track { grid-template-columns: 1fr; }
-    .filmstrip-track.filmstrip-track--featured { grid-template-columns: 1fr; }
+    .filmstrip-track.filmstrip-track--grid2 { grid-template-columns: 1fr; }
   }
 
-  /* Landscape variant of the frame media, used for the horizontal cut */
+  /* Landscape variant of the frame media, used for the horizontal cuts */
   .frame-media.frame-media--landscape {
     aspect-ratio: 16 / 9;
   }
 
-  /* ---------- AUTO CAROUSEL ---------- */
-
-  .auto-carousel {
-    position: relative;
-  }
-
-  .carousel-slide {
-    display: none;
-  }
-
-  .carousel-slide.active {
-    display: block;
-  }
-
-  .carousel-nav {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 26px;
-  }
-
-  .carousel-arrow {
-    background: var(--panel);
-    border: 1px solid var(--hairline-strong);
-    color: var(--paper);
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 1.1rem;
-    transition: border-color 0.2s ease, background 0.2s ease;
-  }
-
-  .carousel-arrow:hover {
-    border-color: var(--brass);
-    background: rgba(194, 154, 91, 0.08);
-  }
-
-  .carousel-dots {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .carousel-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--hairline-strong);
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    transition: background 0.2s ease, transform 0.15s ease;
-  }
-
-  .carousel-dot.active {
-    background: var(--brass);
-    transform: scale(1.3);
+  /* Hero variant — spans the footprint the old paired vertical+landscape
+     cards used to occupy together, so the featured video reads larger
+     without the page needing extra vertical space */
+  .frame-media.frame-media--hero {
+    aspect-ratio: 21 / 9;
   }
 
   .frame {
@@ -526,18 +431,29 @@
 
   .play-badge svg { width: 15px; height: 15px; fill: var(--ink); margin-left: 2px; }
 
-  .frame-caption {
+  /* Bottom-anchored text stack for each card. Spec line (if present) and
+     caption line now share one flex column with a fixed gap instead of
+     being independently absolutely-positioned — that's what was causing
+     the two lines to overlap on the Ferrari card before. */
+  .frame-footer {
     position: absolute;
     left: 12px;
     right: 12px;
     bottom: 12px;
     z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .frame-caption {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 0.72rem;
     color: var(--paper);
     display: flex;
     justify-content: space-between;
     align-items: baseline;
+    gap: 10px;
   }
 
   .frame-caption .place {
@@ -547,14 +463,7 @@
     color: var(--paper);
   }
 
-  /* Secondary spec line, used on cards that need a short technical
-     detail under the main caption (e.g. an automobile's spec) */
   .frame-spec {
-    position: absolute;
-    left: 12px;
-    right: 12px;
-    bottom: 32px;
-    z-index: 2;
     font-family: 'IBM Plex Mono', monospace;
     font-size: 0.66rem;
     letter-spacing: 0.01em;
@@ -586,6 +495,29 @@
     height: 6px;
     border-radius: 50%;
     background: var(--rec);
+  }
+
+  /* ---------- REVEAL LINE ---------- */
+
+  .reveal-line {
+    max-width: 640px;
+    margin: 40px auto 0;
+    text-align: center;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 1.25rem;
+    color: var(--paper);
+  }
+
+  .reveal-sub {
+    text-align: center;
+    margin-top: 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--paper-dim);
   }
 
   /* ---------- HOW IT WORKS ---------- */
@@ -635,126 +567,6 @@
     margin: 0;
   }
 
-  /* ---------- OFFER ---------- */
-
-  section.offer {
-    padding: 96px 0;
-    border-bottom: 1px solid var(--hairline);
-  }
-
-  .offer-grid {
-    display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: 56px;
-    align-items: start;
-  }
-
-  @media (max-width: 820px) {
-    .offer-grid { grid-template-columns: 1fr; gap: 44px; }
-  }
-
-  .offer-copy h2 { font-size: clamp(1.8rem, 3.4vw, 2.5rem); max-width: 16ch; }
-
-  .offer-copy p {
-    margin-top: 20px;
-    color: var(--paper-dim);
-    max-width: 42ch;
-    font-size: 1.02rem;
-  }
-
-  .offer-card {
-    background: var(--panel);
-    border: 1px solid var(--hairline-strong);
-    border-radius: 6px;
-    padding: 40px;
-    position: relative;
-  }
-
-  .offer-card::before {
-    content: 'RATE CARD';
-    position: absolute;
-    top: -11px;
-    left: 32px;
-    background: var(--bg);
-    padding: 0 10px;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.68rem;
-    letter-spacing: 0.14em;
-    color: var(--brass);
-  }
-
-  .offer-name {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.8rem;
-    letter-spacing: 0.04em;
-    color: var(--paper-dim);
-    text-transform: uppercase;
-    margin-bottom: 8px;
-  }
-
-  .offer-price {
-    font-family: 'Fraunces', serif;
-    font-size: 3rem;
-    font-weight: 600;
-    color: var(--paper);
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
-  }
-
-  .offer-price span {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.95rem;
-    color: var(--paper-dim);
-    font-weight: 400;
-  }
-
-  .offer-list {
-    list-style: none;
-    margin: 30px 0 34px;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-  }
-
-  .offer-list li {
-    display: flex;
-    gap: 12px;
-    font-size: 0.95rem;
-    color: var(--paper-dim);
-  }
-
-  .offer-list li::before {
-    content: '—';
-    color: var(--brass);
-    flex-shrink: 0;
-  }
-
-  .offer-list strong { color: var(--paper); font-weight: 500; }
-
-  .btn-block {
-    display: block;
-    text-align: center;
-    background: var(--brass);
-    color: var(--ink);
-    font-weight: 600;
-    text-decoration: none;
-    padding: 15px;
-    border-radius: 3px;
-    transition: background 0.2s ease;
-  }
-
-  .btn-block:hover { background: var(--brass-bright); }
-
-  .offer-fine {
-    margin-top: 16px;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.72rem;
-    color: var(--paper-dim);
-    text-align: center;
-  }
-
   /* ---------- CLOSING CTA ---------- */
 
   section.closing {
@@ -764,7 +576,7 @@
 
   section.closing h2 {
     font-size: clamp(1.9rem, 4vw, 2.9rem);
-    max-width: 18ch;
+    max-width: 22ch;
     margin: 0 auto;
   }
 
@@ -823,119 +635,142 @@
   </div>
 </header>
 
-<section class="reel reel-alt">
+<!-- ================= PROOF SECTION ================= -->
+<section class="reel reel-alt" id="proof">
   <div class="wrap">
     <div class="section-head">
       <div>
         <span class="section-eyebrow">Now filming luxury automobiles</span>
-        <h2 class="section-title">Luxury Autos — Allow Your Vehicles To Sell Themselves Through Video</h2>
+        <h2 class="section-title">See what we do with ordinary dealer photography.</h2>
       </div>
-      <p class="section-desc">Same process, same turnaround — for dealers and private sellers moving high-end stock.</p>
+      <p class="section-desc">No filming. No CGI car. No reshoot — every video below was created entirely from photographs already used to advertise the vehicle.</p>
     </div>
 
     <div class="filmstrip">
-      <div class="auto-carousel">
+      <div class="proof-stack">
 
-        <!-- SLIDE 1 — Ferrari 488 -->
-        <div class="carousel-slide active" id="carousel-slide-0">
-          <div class="filmstrip-track filmstrip-track--paired">
-            <div class="frame">
-              <div class="frame-media ready" onclick="toggleClip(this)">
-                <video src="https://videos.realmotionvideo.com/ferrari%20vertical.mp4" loop playsinline preload="metadata"></video>
-                <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
-                <div class="frame-spec">3.9T V8 Spider F1 DCT Euro 6 (s/s)</div>
-                <div class="frame-caption">
-                  <span class="place">Ferrari 488</span>
-                  <span>0:00</span>
-                </div>
-              </div>
-              <div class="frame-tag">
-                <span>UK · Luxury Auto</span>
-                <span class="rec">CUT 01 · VERTICAL</span>
+        <!-- Featured hero video — takes the footprint the vertical + landscape pair used to share -->
+        <div class="frame">
+          <div class="frame-media frame-media--hero ready" onclick="toggleClip(this)">
+            <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/Phantom%20Aston%20Martin%20DB12%20YouTube.mp4" loop playsinline preload="metadata"></video>
+            <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
+            <div class="frame-footer">
+              <div class="frame-caption">
+                <span class="place">Phantom Motor Company · Aston Martin DB12</span>
+                <span>0:00</span>
               </div>
             </div>
-            <div class="frame">
-              <div class="frame-media frame-media--landscape ready" onclick="toggleClip(this)">
-                <video src="https://videos.realmotionvideo.com/ferrari.mp4" loop playsinline preload="metadata"></video>
-                <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
-                <div class="frame-spec">3.9T V8 Spider F1 DCT Euro 6 (s/s)</div>
+          </div>
+          <div class="frame-tag">
+            <span>UK · Luxury Auto</span>
+            <span class="rec">CUT 01 · LANDSCAPE</span>
+          </div>
+        </div>
+
+        <!-- Row 1 -->
+        <div class="filmstrip-track filmstrip-track--grid2">
+          <div class="frame">
+            <div class="frame-media frame-media--landscape ready" onclick="toggleClip(this)">
+              <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/AMARI%20FERRARI%20YOUTUBE.mp4" loop playsinline preload="metadata"></video>
+              <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
+              <div class="frame-footer">
                 <div class="frame-caption">
-                  <span class="place">Ferrari 488</span>
+                  <span class="place">Amari Supercars · Ferrari</span>
                   <span>0:00</span>
                 </div>
               </div>
-              <div class="frame-tag">
-                <span>UK · Luxury Auto</span>
-                <span class="rec">CUT 01 · LANDSCAPE</span>
+            </div>
+            <div class="frame-tag">
+              <span>UK · Luxury Auto</span>
+              <span class="rec">CUT 01 · LANDSCAPE</span>
+            </div>
+          </div>
+          <div class="frame">
+            <div class="frame-media frame-media--landscape ready" onclick="toggleClip(this)">
+              <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/FRANK%20DALE%20ROLLS%20ROYCE%20WRAITH.mp4" loop playsinline preload="metadata"></video>
+              <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
+              <div class="frame-footer">
+                <div class="frame-caption">
+                  <span class="place">Frank Dale · Rolls-Royce Wraith</span>
+                  <span>0:00</span>
+                </div>
               </div>
+            </div>
+            <div class="frame-tag">
+              <span>UK · Luxury Auto</span>
+              <span class="rec">CUT 01 · LANDSCAPE</span>
             </div>
           </div>
         </div>
 
-        <!-- SLIDE 2 — Rolls-Royce Dawn -->
-        <div class="carousel-slide" id="carousel-slide-1">
-          <div class="filmstrip-track filmstrip-track--paired">
-            <div class="frame">
-              <div class="frame-media ready" onclick="toggleClip(this)">
-                <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/PHANTOM%20-%20SOCIALS%20-%20ROLLS%20ROYCE%20DAWN.mp4" loop playsinline preload="metadata"></video>
-                <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
+        <!-- Row 2 -->
+        <div class="filmstrip-track filmstrip-track--grid2">
+          <div class="frame">
+            <div class="frame-media frame-media--landscape ready" onclick="toggleClip(this)">
+              <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/Phantom%20Ferrari%20488%20Youtube.mp4" loop playsinline preload="metadata"></video>
+              <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
+              <div class="frame-footer">
                 <div class="frame-caption">
-                  <span class="place">Rolls-Royce Dawn</span>
+                  <span class="place">Phantom Motor Company · Ferrari 488</span>
                   <span>0:00</span>
                 </div>
-              </div>
-              <div class="frame-tag">
-                <span>UK · Luxury Auto</span>
-                <span class="rec">CUT 01 · VERTICAL</span>
               </div>
             </div>
-            <div class="frame">
-              <div class="frame-media frame-media--landscape ready" onclick="toggleClip(this)">
-                <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/PHANTOM%20-%20YOUTUBE%20-%20ROLLS%20ROYCE%20DAWN.mp4" loop playsinline preload="metadata"></video>
-                <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
+            <div class="frame-tag">
+              <span>UK · Luxury Auto</span>
+              <span class="rec">CUT 01 · LANDSCAPE</span>
+            </div>
+          </div>
+          <div class="frame">
+            <div class="frame-media frame-media--landscape ready" onclick="toggleClip(this)">
+              <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/MATT%20JOHNSON%20PORSCHE%20MACAN%20WEBSITE.mp4" loop playsinline preload="metadata"></video>
+              <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
+              <div class="frame-footer">
                 <div class="frame-caption">
-                  <span class="place">Rolls-Royce Dawn</span>
+                  <span class="place">Matt Johnson Prestige Cars · Porsche Macan</span>
                   <span>0:00</span>
                 </div>
               </div>
-              <div class="frame-tag">
-                <span>UK · Luxury Auto</span>
-                <span class="rec">CUT 01 · LANDSCAPE</span>
-              </div>
+            </div>
+            <div class="frame-tag">
+              <span>UK · Luxury Auto</span>
+              <span class="rec">CUT 01 · LANDSCAPE</span>
             </div>
           </div>
         </div>
 
-        <!-- SLIDE 3 — Aston Martin DB12 -->
-        <div class="carousel-slide" id="carousel-slide-2">
-          <div class="filmstrip-track filmstrip-track--paired">
-            <div class="frame">
-              <div class="frame-media ready" onclick="toggleClip(this)">
-                <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/Phantom%20Aston%20Martin%20DB12%20TikTok.mp4" loop playsinline preload="metadata"></video>
-                <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
+        <!-- Row 3 -->
+        <div class="filmstrip-track filmstrip-track--grid2">
+          <div class="frame">
+            <div class="frame-media frame-media--landscape ready" onclick="toggleClip(this)">
+              <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/PHANTOM%20-%20YOUTUBE%20-%20ROLLS%20ROYCE%20DAWN.mp4" loop playsinline preload="metadata"></video>
+              <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
+              <div class="frame-footer">
                 <div class="frame-caption">
-                  <span class="place">Aston Martin DB12</span>
+                  <span class="place">Phantom Motor Company · Rolls-Royce Dawn</span>
                   <span>0:00</span>
                 </div>
-              </div>
-              <div class="frame-tag">
-                <span>UK · Luxury Auto</span>
-                <span class="rec">CUT 01 · VERTICAL</span>
               </div>
             </div>
-            <div class="frame">
-              <div class="frame-media frame-media--landscape ready" onclick="toggleClip(this)">
-                <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/Phantom%20Aston%20Martin%20DB12%20YouTube.mp4" loop playsinline preload="metadata"></video>
-                <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
+            <div class="frame-tag">
+              <span>UK · Luxury Auto</span>
+              <span class="rec">CUT 01 · LANDSCAPE</span>
+            </div>
+          </div>
+          <div class="frame">
+            <div class="frame-media frame-media--landscape ready" onclick="toggleClip(this)">
+              <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/SAXTONS%20PORSCHE%20911%20WEBSITE.mp4" loop playsinline preload="metadata"></video>
+              <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
+              <div class="frame-footer">
                 <div class="frame-caption">
-                  <span class="place">Aston Martin DB12</span>
+                  <span class="place">Saxtons · Porsche 911</span>
                   <span>0:00</span>
                 </div>
               </div>
-              <div class="frame-tag">
-                <span>UK · Luxury Auto</span>
-                <span class="rec">CUT 01 · LANDSCAPE</span>
-              </div>
+            </div>
+            <div class="frame-tag">
+              <span>UK · Luxury Auto</span>
+              <span class="rec">CUT 01 · LANDSCAPE</span>
             </div>
           </div>
         </div>
@@ -943,15 +778,8 @@
       </div>
     </div>
 
-    <div class="carousel-nav">
-      <button type="button" class="carousel-arrow" onclick="carouselPrev()" aria-label="Previous vehicle">‹</button>
-      <div class="carousel-dots">
-        <button type="button" class="carousel-dot active" onclick="carouselGoTo(0)" aria-label="Ferrari 488"></button>
-        <button type="button" class="carousel-dot" onclick="carouselGoTo(1)" aria-label="Rolls-Royce Dawn"></button>
-        <button type="button" class="carousel-dot" onclick="carouselGoTo(2)" aria-label="Aston Martin DB12"></button>
-      </div>
-      <button type="button" class="carousel-arrow" onclick="carouselNext()" aria-label="Next vehicle">›</button>
-    </div>
+    <p class="reveal-line">"Wait — they made that from the photographs we already had?"</p>
+    <p class="reveal-sub">That's the reaction we're built around</p>
   </div>
 </section>
 
@@ -979,13 +807,14 @@
   </div>
 </section>
 
+<!-- ================= CLOSING CTA — tracked/generic swap ================= -->
 <section class="closing">
   <div class="wrap">
-    <h2>Send us one vehicle. See what it becomes.</h2>
-    <p class="sub">If you'd rather talk it through first, just reply and tell us about your vehicles — we'll make the first video before you commit to anything.</p>
+    <h2 id="cta-headline">Send us one stock link. We'll show you what your own photography can become.</h2>
+    <p class="sub" id="cta-sub">No contract. No filming. No change to your existing photography workflow.</p>
     <div class="closing-actions">
       <div class="glow-wrap">
-        <a class="btn-primary" href="claim.html" onclick="ctaClickPing('Closing CTA')">Send us the link to your images</a>
+        <a class="btn-primary" id="cta-button" href="claim.html" onclick="ctaClickPing('Closing CTA')">Send us a vehicle →</a>
       </div>
     </div>
   </div>
@@ -1000,9 +829,6 @@
 
 <script>
   // ---------- Homepage visit tracking ----------
-  // Separate ntfy topic from the dealer pilot pages, since a homepage hit
-  // is a noisier signal (could be a bot, a test, or a genuine lead) and
-  // shouldn't dilute the more targeted per-dealer page-view alerts.
   var HOMEPAGE_NTFY_TOPIC = 'rmv-homepage-visits-8f2k1x';
 
   function homepageNtfyPing(message) {
@@ -1014,20 +840,15 @@
 
   function detectVisitSource() {
     var params = new URLSearchParams(window.location.search);
-    // Prefer an explicit ?src=... tag on the link (whatever you label it
-    // when sending it out, e.g. ?src=email-amari, ?src=whatsapp-frankdale)
     var src = params.get('src');
     if (src) return 'Tagged link: ' + src;
 
-    // Fall back to standard UTM parameters if those were used instead
     var utmSource = params.get('utm_source');
     var utmCampaign = params.get('utm_campaign');
     if (utmSource || utmCampaign) {
       return 'UTM: ' + (utmSource || 'unknown') + (utmCampaign ? ' / ' + utmCampaign : '');
     }
 
-    // Fall back to the browser's own referrer, when available
-    // (many email clients and apps like WhatsApp strip this)
     if (document.referrer) {
       return 'Referrer: ' + document.referrer;
     }
@@ -1037,21 +858,21 @@
 
   (function () {
     var source = detectVisitSource();
-    homepageNtfyPing('Homepage visited \u2014 ' + source);
+    var params = new URLSearchParams(window.location.search);
+    var car = params.get('car');
+    var message = 'Homepage visited — ' + source;
+    if (car) message += ' — car: ' + decodeURIComponent(car);
+    homepageNtfyPing(message);
   })();
 
   function ctaClickPing(buttonLabel) {
-    var message = buttonLabel + ' clicked \u2014 ' + detectVisitSource();
+    var message = buttonLabel + ' clicked — ' + detectVisitSource();
     var topicUrl = 'https://ntfy.sh/' + HOMEPAGE_NTFY_TOPIC;
-    // sendBeacon is built specifically for this: a ping that must survive
-    // the browser navigating away immediately after, which a plain fetch
-    // can sometimes get cut off before completing.
     if (navigator.sendBeacon) {
       navigator.sendBeacon(topicUrl, message);
     } else {
       fetch(topicUrl, { method: 'POST', body: message, keepalive: true }).catch(function () {});
     }
-    // Don't block or delay the actual navigation to claim.html
     return true;
   }
 
@@ -1074,40 +895,24 @@
     }
   }
 
-  var carouselIndex = 0;
-  var carouselSlideCount = 3;
+  // ---------- Tracked vs generic closing CTA ----------
+  // A tracked outreach link should append ?car=<model>, e.g.
+  // realmotionvideo.com/?car=Aston%20Martin%20DB12&src=email-phantom
+  (function () {
+    var params = new URLSearchParams(window.location.search);
+    var car = params.get('car');
+    if (!car) return; // generic visitor — leave the default copy/button as-is
 
-  function carouselGoTo(n) {
-    var slides = document.querySelectorAll('.carousel-slide');
-    var dots = document.querySelectorAll('.carousel-dot');
+    var carName = decodeURIComponent(car);
+    var headline = document.getElementById('cta-headline');
+    var sub = document.getElementById('cta-sub');
+    var button = document.getElementById('cta-button');
 
-    // Pause and reset any playing video in the slide being hidden
-    slides.forEach(function (slide) {
-      slide.querySelectorAll('video').forEach(function (v) {
-        v.pause();
-        v.currentTime = 0;
-      });
-      slide.querySelectorAll('.frame-media').forEach(function (m) {
-        m.classList.remove('playing');
-      });
-      slide.classList.remove('active');
-    });
-
-    slides[n].classList.add('active');
-    dots.forEach(function (d, i) {
-      d.classList.toggle('active', i === n);
-    });
-
-    carouselIndex = n;
-  }
-
-  function carouselNext() {
-    carouselGoTo((carouselIndex + 1) % carouselSlideCount);
-  }
-
-  function carouselPrev() {
-    carouselGoTo((carouselIndex - 1 + carouselSlideCount) % carouselSlideCount);
-  }
+    headline.textContent = 'We already have the ' + carName + ' you came here about.';
+    sub.textContent = "No contract, no filming — just say the word and we'll build the pilot.";
+    button.textContent = 'Make my pilot →';
+    button.setAttribute('href', 'claim.html?car=' + encodeURIComponent(carName));
+  })();
 </script>
 </body>
 </html>
