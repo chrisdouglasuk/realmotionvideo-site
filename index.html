@@ -356,28 +356,8 @@
     gap: 18px;
   }
 
-  /* Paired block — landscape + vertical cut of the same vehicle side by side.
-     Column widths are split 256 : 81 (after the gap) so the 16:9 and 9:16
-     frames come out exactly the same height. */
-  .pair-grid {
-    display: grid;
-    grid-template-columns:
-      calc((100% - 18px) * 256 / 337)
-      calc((100% - 18px) * 81 / 337);
-    gap: 18px;
-    align-items: start;
-  }
-
-  @media (max-width: 760px) {
+  @media (max-width: 860px) {
     .filmstrip-track { grid-template-columns: repeat(2, 1fr); }
-
-    .pair-grid { grid-template-columns: 1fr; }
-
-    .pair-grid .frame--portrait {
-      width: 100%;
-      max-width: 340px;
-      margin: 0 auto;
-    }
   }
 
   @media (max-width: 480px) {
@@ -540,12 +520,6 @@
     width: min(1100px, 92vw);
     max-height: 86vh;
     position: relative;
-  }
-
-  /* Vertical clips: size the lightbox to a 9:16 frame so the video fills it
-     instead of sitting in a wide black box. */
-  .video-modal-inner.portrait {
-    width: min(calc(86vh * 9 / 16), 92vw);
   }
 
   .video-modal-inner video {
@@ -738,54 +712,17 @@
     <div class="filmstrip">
       <div class="proof-stack">
 
-        <!-- NEW — first position: Phantom Motor Company · Lamborghini Huracán.
-             Landscape (website) cut + vertical (socials) cut, matched heights.
-             Videos load from videos.realmotionvideo.com; "#t=0.001" makes the
-             browser show the first frame as the still image. -->
-        <div class="pair-grid">
-          <div class="frame frame--landscape">
-            <div class="frame-media frame-media--landscape ready" data-label="Phantom Motor Company · Lamborghini Huracán (landscape)" onclick="openVideoModal(this)">
-              <video src="https://videos.realmotionvideo.com/Phantom%20Lamborghini%20Hurrican.mp4#t=0.001" loop playsinline preload="metadata"></video>
-              <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
-              <div class="frame-footer">
-                <div class="frame-spec">Huracán V10 LP 640-2 Tecnica Coupe · Petrol · LDF · Euro 6 (s/s)</div>
-                <div class="frame-caption">
-                  <span class="place">Phantom Motor Company · Lamborghini Huracán</span>
-                  <span>0:00</span>
-                </div>
-              </div>
-            </div>
-            <div class="frame-tag">
-              <span>UK · Luxury Auto</span>
-              <span class="rec">CUT 01 · LANDSCAPE</span>
-            </div>
-          </div>
-          <div class="frame frame--portrait">
-            <div class="frame-media ready" data-orientation="portrait" data-label="Phantom Motor Company · Lamborghini Huracán (vertical)" onclick="openVideoModal(this)">
-              <video src="https://videos.realmotionvideo.com/Phantom%20Lamborghini%20Huracan%20Socials.mp4#t=0.001" loop playsinline preload="metadata"></video>
-              <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
-              <div class="frame-footer">
-                <div class="frame-caption">
-                  <span class="place">Phantom · Huracán</span>
-                  <span>0:00</span>
-                </div>
-              </div>
-            </div>
-            <div class="frame-tag">
-              <span>UK · Luxury Auto</span>
-              <span class="rec">CUT 02 · VERTICAL</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Featured hero video — true 16:9, same width the vertical + landscape pair used to share -->
+        <!-- Featured hero video — Phantom Motor Company · Lamborghini Huracán.
+             Loads from videos.realmotionvideo.com; "#t=0.001" makes the browser
+             show the first frame as the still image. -->
         <div class="frame">
-          <div class="frame-media frame-media--hero ready" data-label="Phantom Motor Company · Aston Martin DB12" onclick="openVideoModal(this)">
-            <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/Phantom%20Aston%20Martin%20DB12%20YouTube.mp4" loop playsinline preload="metadata"></video>
+          <div class="frame-media frame-media--hero ready" data-label="Phantom Motor Company · Lamborghini Huracán" onclick="openVideoModal(this)">
+            <video src="https://videos.realmotionvideo.com/Phantom%20Lambourghini%20Hurrican.mp4#t=0.001" loop playsinline preload="metadata"></video>
             <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
             <div class="frame-footer">
+              <div class="frame-spec">Huracán V10 LP 640-2 Tecnica Coupe · Petrol · LDF · Euro 6 (s/s)</div>
               <div class="frame-caption">
-                <span class="place">Phantom Motor Company · Aston Martin DB12</span>
+                <span class="place">Phantom Motor Company · Lamborghini Huracán</span>
                 <span>0:00</span>
               </div>
             </div>
@@ -796,8 +733,25 @@
           </div>
         </div>
 
-        <!-- Row 1 -->
+        <!-- Regular cards — one two-up grid, so the odd card at the end
+             simply sits on its own half-width row -->
         <div class="filmstrip-track filmstrip-track--grid2">
+          <div class="frame">
+            <div class="frame-media frame-media--landscape ready" data-label="Phantom Motor Company · Aston Martin DB12" onclick="openVideoModal(this)">
+              <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/Phantom%20Aston%20Martin%20DB12%20YouTube.mp4" loop playsinline preload="metadata"></video>
+              <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
+              <div class="frame-footer">
+                <div class="frame-caption">
+                  <span class="place">Phantom Motor Company · Aston Martin DB12</span>
+                  <span>0:00</span>
+                </div>
+              </div>
+            </div>
+            <div class="frame-tag">
+              <span>UK · Luxury Auto</span>
+              <span class="rec">CUT 01 · LANDSCAPE</span>
+            </div>
+          </div>
           <div class="frame">
             <div class="frame-media frame-media--landscape ready" data-label="Amari Supercars · Ferrari" onclick="openVideoModal(this)">
               <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/AMARI%20FERRARI%20YOUTUBE.mp4" loop playsinline preload="metadata"></video>
@@ -830,10 +784,6 @@
               <span class="rec">CUT 01 · LANDSCAPE</span>
             </div>
           </div>
-        </div>
-
-        <!-- Row 2 -->
-        <div class="filmstrip-track filmstrip-track--grid2">
           <div class="frame">
             <div class="frame-media frame-media--landscape ready" data-label="Phantom Motor Company · Ferrari 488" onclick="openVideoModal(this)">
               <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/Phantom%20Ferrari%20488%20Youtube.mp4" loop playsinline preload="metadata"></video>
@@ -866,10 +816,6 @@
               <span class="rec">CUT 01 · LANDSCAPE</span>
             </div>
           </div>
-        </div>
-
-        <!-- Row 3 -->
-        <div class="filmstrip-track filmstrip-track--grid2">
           <div class="frame">
             <div class="frame-media frame-media--landscape ready" data-label="Phantom Motor Company · Rolls-Royce Dawn" onclick="openVideoModal(this)">
               <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/PHANTOM%20-%20YOUTUBE%20-%20ROLLS%20ROYCE%20DAWN.mp4" loop playsinline preload="metadata"></video>
@@ -1023,10 +969,6 @@
     var src = sourceVideo.currentSrc || sourceVideo.getAttribute('src');
     var modal = document.getElementById('videoModal');
     var player = document.getElementById('videoModalPlayer');
-    var inner = modal.querySelector('.video-modal-inner');
-
-    // Vertical clips get a 9:16-sized lightbox; everything else stays wide.
-    inner.classList.toggle('portrait', cardEl.dataset.orientation === 'portrait');
 
     player.src = src;
     modal.classList.add('active');
