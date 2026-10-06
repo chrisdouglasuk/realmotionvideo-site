@@ -349,6 +349,12 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
+  /* A lone card in the final row sits centred at normal card width */
+  .filmstrip-track.filmstrip-track--single {
+    grid-template-columns: minmax(0, calc(50% - 9px));
+    justify-content: center;
+  }
+
   /* Stacks the hero frame and the grid2 rows underneath it with even spacing */
   .proof-stack {
     display: flex;
@@ -363,6 +369,7 @@
   @media (max-width: 480px) {
     .filmstrip-track { grid-template-columns: 1fr; }
     .filmstrip-track.filmstrip-track--grid2 { grid-template-columns: 1fr; }
+    .filmstrip-track.filmstrip-track--single { grid-template-columns: 1fr; }
   }
 
   /* Landscape variant of the frame media, used for the horizontal cuts */
@@ -478,8 +485,6 @@
     border-top: 1px solid var(--hairline);
     display: flex;
     justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 4px 10px;
   }
 
   .frame-tag .rec {
@@ -711,18 +716,15 @@
 
     <div class="filmstrip">
       <div class="proof-stack">
-
-        <!-- Featured hero video — Phantom Motor Company · Lamborghini Huracán.
-             Loads from videos.realmotionvideo.com; "#t=0.001" makes the browser
-             show the first frame as the still image. -->
+        <!-- Featured hero video — true 16:9, full width -->
         <div class="frame">
-          <div class="frame-media frame-media--hero ready" data-label="Phantom Motor Company · Lamborghini Huracán" onclick="openVideoModal(this)">
-            <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/Phantom%20Lamborghini%20Huracan%20New.mp4#t=0.001" loop playsinline preload="metadata"></video>
+          <div class="frame-media frame-media--hero ready" data-label="Phantom Motor Company · Rolls-Royce Ghost" onclick="openVideoModal(this)">
+            <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/Phantom%20Rolls%20Royce%20Ghost%20Website.mp4" loop playsinline preload="metadata"></video>
             <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
             <div class="frame-footer">
-              <div class="frame-spec">Huracán V10 LP 640-2 Tecnica Coupe · Petrol · LDF · Euro 6 (s/s)</div>
+              <div class="frame-spec">6.75 V12 Saloon Petrol Auto 4WD Euro 6</div>
               <div class="frame-caption">
-                <span class="place">Phantom Motor Company · Lamborghini Huracán</span>
+                <span class="place">Phantom Motor Company · Rolls-Royce Ghost</span>
                 <span>0:00</span>
               </div>
             </div>
@@ -733,8 +735,7 @@
           </div>
         </div>
 
-        <!-- Regular cards — one two-up grid, so the odd card at the end
-             simply sits on its own half-width row -->
+        <!-- Row 1 -->
         <div class="filmstrip-track filmstrip-track--grid2">
           <div class="frame">
             <div class="frame-media frame-media--landscape ready" data-label="Phantom Motor Company · Aston Martin DB12" onclick="openVideoModal(this)">
@@ -768,6 +769,10 @@
               <span class="rec">CUT 01 · LANDSCAPE</span>
             </div>
           </div>
+        </div>
+
+        <!-- Row 2 -->
+        <div class="filmstrip-track filmstrip-track--grid2">
           <div class="frame">
             <div class="frame-media frame-media--landscape ready" data-label="Frank Dale · Rolls-Royce Wraith" onclick="openVideoModal(this)">
               <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/FRANK%20DALE%20ROLLS%20ROYCE%20WRAITH.mp4" loop playsinline preload="metadata"></video>
@@ -800,6 +805,10 @@
               <span class="rec">CUT 01 · LANDSCAPE</span>
             </div>
           </div>
+        </div>
+
+        <!-- Row 3 -->
+        <div class="filmstrip-track filmstrip-track--grid2">
           <div class="frame">
             <div class="frame-media frame-media--landscape ready" data-label="Matt Johnson Prestige Cars · Porsche Macan" onclick="openVideoModal(this)">
               <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/MATT%20JOHNSON%20PORSCHE%20MACAN%20WEBSITE.mp4" loop playsinline preload="metadata"></video>
@@ -832,6 +841,10 @@
               <span class="rec">CUT 01 · LANDSCAPE</span>
             </div>
           </div>
+        </div>
+
+        <!-- Row 4 -->
+        <div class="filmstrip-track filmstrip-track--grid2 filmstrip-track--single">
           <div class="frame">
             <div class="frame-media frame-media--landscape ready" data-label="Saxtons · Porsche 911" onclick="openVideoModal(this)">
               <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/SAXTONS%20PORSCHE%20911%20WEBSITE.mp4" loop playsinline preload="metadata"></video>
