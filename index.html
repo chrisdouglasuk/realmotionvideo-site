@@ -724,8 +724,8 @@
       <div class="proof-stack">
         <!-- Featured hero video — true 16:9, full width -->
         <div class="frame">
-          <div class="frame-media frame-media--hero ready" data-label="Phantom Motor Company · Porsche 911" onclick="openVideoModal(this)">
-            <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/Phantom%20White%20Porsche%20911%20Website%20.mp4" loop playsinline preload="metadata"></video>
+          <div class="frame-media frame-media--hero ready" data-label="Phantom Motor Company · Porsche 911" data-start="1" onclick="openVideoModal(this)">
+            <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/Phantom%20White%20Porsche%20911%20Website%20.mp4#t=1" loop playsinline preload="metadata"></video>
             <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
             <div class="frame-footer">
               <div class="frame-spec">3.7T 992 Turbo Coupe Petrol PDK 4WD Euro 6 (s/s)</div>
@@ -1027,18 +1027,19 @@
     var sourceVideo = cardEl.querySelector('video');
     if (!sourceVideo) return;
 
-    var src = sourceVideo.currentSrc || sourceVideo.getAttribute('src');
+    var src = (sourceVideo.getAttribute('src') || '').split('#')[0];
+    var start = parseFloat(cardEl.dataset.start) || 0;
     var modal = document.getElementById('videoModal');
     var player = document.getElementById('videoModalPlayer');
 
-    player.src = src;
+    player.src = start ? src + '#t=' + start : src;
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
     document.body.classList.add('modal-open');
     bgState.modalOpen = true;
     syncBgVideo();
 
-    player.currentTime = 0;
+    if (start) player.currentTime = start;
     player.play().catch(function () {});
 
     homepageNtfyPing('Video opened — ' + (cardEl.dataset.label || 'unlabeled'));
