@@ -680,6 +680,241 @@
     letter-spacing: 0.02em;
   }
 
+  /* ---------- EXIT-INTENT PILOT CTA (tracked outreach visitors only) ---------- */
+
+  .exit-cta {
+    position: fixed;
+    inset: 0;
+    z-index: 400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(10, 10, 11, 0.86);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+
+  .exit-cta[hidden] { display: none; }
+  .exit-cta.is-visible { opacity: 1; }
+
+  .exit-cta-panel {
+    position: relative;
+    width: min(560px, 100%);
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+    background: var(--panel);
+    border: 1px solid var(--hairline-strong);
+    border-radius: 6px;
+    padding: 56px 48px 40px;
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
+    transform: translateY(16px);
+    opacity: 0;
+    transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), opacity 0.35s ease;
+  }
+
+  .exit-cta.is-visible .exit-cta-panel {
+    transform: none;
+    opacity: 1;
+  }
+
+  /* short brass rule — echoes the dash on the hero eyebrow */
+  .exit-cta-panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 48px;
+    width: 72px;
+    height: 2px;
+    background: var(--brass);
+  }
+
+  .exit-cta-x {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--paper-dim);
+    font-size: 1.05rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .exit-cta-x:hover { color: var(--paper); border-color: var(--hairline-strong); }
+
+  .exit-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin-bottom: 18px;
+  }
+
+  .exit-cta h2 {
+    font-size: clamp(1.7rem, 4.2vw, 2.25rem);
+    line-height: 1.12;
+    color: var(--paper);
+  }
+
+  .exit-cta h2 em {
+    font-style: italic;
+    color: var(--brass-bright);
+  }
+
+  .exit-cta h2 em.exit-keep { white-space: nowrap; }
+
+  .exit-lede {
+    margin: 18px 0 0;
+    color: var(--paper-dim);
+    font-size: 1.02rem;
+    max-width: 44ch;
+  }
+
+  .exit-fine {
+    margin: 14px 0 0;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.74rem;
+    letter-spacing: 0.04em;
+    color: var(--paper-dim);
+  }
+
+  .exit-actions {
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+  }
+
+  .exit-cta .glow-wrap { display: block; }
+
+  .exit-primary {
+    width: 100%;
+    border: 0;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.02em;
+  }
+
+  .exit-primary:disabled {
+    cursor: progress;
+    opacity: 0.75;
+    transform: none;
+  }
+
+  .exit-secondary {
+    align-self: center;
+    background: none;
+    border: 0;
+    padding: 8px 4px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    color: var(--paper-dim);
+    text-decoration: underline;
+    text-decoration-color: var(--hairline-strong);
+    text-underline-offset: 4px;
+    transition: color 0.2s ease, text-decoration-color 0.2s ease;
+  }
+
+  .exit-secondary:hover { color: var(--paper); text-decoration-color: var(--brass); }
+
+  .exit-error {
+    margin: 16px 0 0;
+    font-size: 0.86rem;
+    color: #e8b4a8;
+    text-align: center;
+  }
+
+  .exit-error a { color: var(--brass-bright); }
+
+  #exitCtaDoneTitle:focus { outline: none; }
+
+  .exit-cta button:focus-visible,
+  .exit-cta a:focus-visible {
+    outline: 2px solid var(--brass-bright);
+    outline-offset: 3px;
+  }
+
+  .exit-tick {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid var(--brass);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 22px;
+  }
+
+  .exit-tick svg { width: 20px; height: 20px; stroke: var(--brass-bright); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  .exit-sign {
+    margin-top: 26px;
+    padding-top: 20px;
+    border-top: 1px solid var(--hairline);
+  }
+
+  .exit-sign strong {
+    display: block;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 1.15rem;
+    color: var(--paper);
+  }
+
+  .exit-sign span {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    color: var(--paper-dim);
+  }
+
+  .exit-back {
+    margin-top: 26px;
+    background: none;
+    border: 1px solid var(--hairline-strong);
+    border-radius: 3px;
+    padding: 11px 18px;
+    color: var(--paper);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.76rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+
+  .exit-back:hover { border-color: var(--brass); background: rgba(194, 154, 91, 0.08); }
+
+  /* Mobile: bottom sheet, anchored where the thumb is */
+  @media (max-width: 640px) {
+    .exit-cta { align-items: flex-end; padding: 0; }
+    .exit-cta-panel {
+      width: 100%;
+      max-height: 92vh;
+      border-radius: 16px 16px 0 0;
+      border-bottom: 0;
+      padding: 48px 24px calc(28px + env(safe-area-inset-bottom, 0px));
+      transform: translateY(40px);
+    }
+    .exit-cta-panel::before { left: 24px; }
+    .exit-cta-x { top: 10px; right: 10px; }
+    .exit-primary { padding: 17px 20px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .exit-cta, .exit-cta-panel { transition: none; }
+    .exit-cta-panel { transform: none; }
+  }
+
 </style>
 </head>
 <body>
@@ -687,7 +922,7 @@
 <nav>
   <div class="wrap nav-inner">
     <a class="wordmark" href="#top"><span class="dot"></span>RealMotionVideo</a>
-    <a class="nav-cta" href="claim.html">Request a pilot →</a>
+    <a class="nav-cta" href="claim.html">Request my film →</a>
   </div>
 </nav>
 
@@ -702,7 +937,7 @@
     <p class="sub">Send us the link to your vehicle. We send back a cinematic vertical video for Instagram, Facebook and TikTok, built entirely from the photography you've already taken.</p>
     <div class="hero-actions">
       <div class="glow-wrap">
-        <a class="btn-primary" href="claim.html" onclick="ctaClickPing('Hero CTA')">REQUEST MY PILOT →</a>
+        <a class="btn-primary" href="claim.html" onclick="ctaClickPing('Hero CTA')">REQUEST MY FILM →</a>
       </div>
       <span class="hero-note">We reply within 24 hours</span>
     </div>
@@ -922,10 +1157,10 @@
 <section class="closing">
   <div class="wrap">
     <h2 id="cta-headline">See what your own vehicle can become.</h2>
-    <p class="sub" id="cta-sub">We'll create a complimentary pilot from your existing photography. No filming. No reshoot. No commitment.</p>
+    <p class="sub" id="cta-sub">We'll create a complimentary 30-second cinematic film from your existing photography. No filming. No reshoot. No commitment.</p>
     <div class="closing-actions">
       <div class="glow-wrap">
-        <a class="btn-primary" id="cta-button" href="claim.html" onclick="ctaClickPing('Closing CTA')">REQUEST MY PILOT →</a>
+        <a class="btn-primary" id="cta-button" href="claim.html" onclick="ctaClickPing('Closing CTA')">REQUEST MY FILM →</a>
       </div>
     </div>
   </div>
@@ -943,6 +1178,36 @@
   <div class="video-modal-inner">
     <button class="video-modal-close" onclick="closeVideoModal()" aria-label="Close video">✕</button>
     <video id="videoModalPlayer" controls playsinline></video>
+  </div>
+</div>
+
+<!-- ================= EXIT-INTENT PILOT CTA (shown to tracked ?src= visitors only; hidden otherwise) ================= -->
+<div class="exit-cta" id="exitCta" role="dialog" aria-modal="true" aria-labelledby="exitCtaTitle" aria-describedby="exitCtaDesc" hidden>
+  <div class="exit-cta-panel">
+    <button type="button" class="exit-cta-x" id="exitCtaX" aria-label="Close">✕</button>
+
+    <div id="exitCtaAsk">
+      <div class="exit-eyebrow">Complimentary film · 30 seconds</div>
+      <h2 id="exitCtaTitle">Want to see your <em>car in motion</em>?</h2>
+      <p class="exit-lede" id="exitCtaDesc">We'll create a complimentary 30-second cinematic film using the photographs already on your listing.</p>
+      <p class="exit-fine">No filming. No reshoot. No obligation.</p>
+      <div class="exit-actions">
+        <div class="glow-wrap">
+          <button type="button" class="btn-primary exit-primary" id="exitCtaYes">YES — MAKE MY COMPLIMENTARY FILM</button>
+        </div>
+        <button type="button" class="exit-secondary" id="exitCtaNo">Not yet — I'll have another look around</button>
+      </div>
+      <p class="exit-error" id="exitCtaErr" role="alert" hidden>That didn't go through. Please try once more, or email <a href="mailto:chris@realmotionvideo.com">chris@realmotionvideo.com</a>.</p>
+    </div>
+
+    <div id="exitCtaDone" hidden>
+      <div class="exit-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+      <div class="exit-eyebrow">Request received</div>
+      <h2 id="exitCtaDoneTitle" tabindex="-1">Thank you — we'll take it from here.</h2>
+      <p class="exit-lede">We'll prepare your complimentary film using the vehicle photography already online.</p>
+      <div class="exit-sign"><strong>Chris</strong><span>RealMotionVideo</span></div>
+      <button type="button" class="exit-back" id="exitCtaBack">Back to the site</button>
+    </div>
   </div>
 </div>
 
@@ -1076,9 +1341,307 @@
     var button = document.getElementById('cta-button');
 
     headline.textContent = 'We already have the ' + carName + ' you came here about.';
-    sub.textContent = "No contract, no filming — just say the word and we'll build the pilot.";
-    button.textContent = 'REQUEST MY PILOT →';
+    sub.textContent = "No contract, no filming — just say the word and we'll build your complimentary film.";
+    button.textContent = 'REQUEST MY FILM →';
     button.setAttribute('href', 'claim.html?car=' + encodeURIComponent(carName));
+  })();
+</script>
+
+<script>
+  // ---------- Exit-intent pilot CTA ----------
+  // Tracked outreach visitors only (?src=<opaque id>). Separate from the visit-tracking
+  // script above; it never sends a "Homepage visited" ping and never prints the src.
+  (function () {
+    'use strict';
+
+    // Tunable rules (see the hand-off notes for what each one does)
+    var CFG = {
+      minDwellMs: 20000,              // time on page before the CTA can appear
+      minScrollDepth: 0.35,           // ...and they must have scrolled this far (bottom of viewport / page), or opened a video
+      dismissSuppressMs: 72 * 3600 * 1000, // quiet period after "Not yet"
+      maxShowsPerSrc: 2,              // lifetime cap per tracked link on this browser
+      awayMinMs: 4000,                // touch: min time away before "welcome back" counts
+      sendTimeoutMs: 7000
+    };
+
+    var STORE = 'rmv_exit_v1_';
+    var TOPIC = (typeof HOMEPAGE_NTFY_TOPIC !== 'undefined') ? HOMEPAGE_NTFY_TOPIC : 'rmv-homepage-visits-8f2k1x';
+
+    // ---- who is this? ----
+    var params = new URLSearchParams(window.location.search);
+    var src = (params.get('src') || '').trim();
+    if (!/^[A-Za-z0-9][A-Za-z0-9_-]{3,63}$/.test(src)) return; // untracked visitor: nothing runs
+
+    // Vehicle label is optional and only ever comes from ?car=. Whitelisted, rendered as text.
+    function cleanCar(v) {
+      if (!v) return '';
+      v = v.replace(/\s+/g, ' ').trim();
+      if (v.length < 2 || v.length > 60) return '';
+      try { if (!/^[\p{L}\p{N} .,'’\-\/&+()]+$/u.test(v)) return ''; } catch (e) { return ''; }
+      return v;
+    }
+    var car = cleanCar(params.get('car'));
+
+    // ---- first-party state (localStorage / sessionStorage, no cookies; memory fallback) ----
+    var memL = {}, memS = {};
+    function get(store, mem, k) {
+      var v = null;
+      try { var raw = window[store].getItem(k); v = raw ? JSON.parse(raw) : null; } catch (e) { v = null; }
+      return v || mem[k] || null;
+    }
+    function put(store, mem, k, v) {
+      mem[k] = v;
+      try { window[store].setItem(k, JSON.stringify(v)); } catch (e) {}
+    }
+    function lget(k) { return get('localStorage', memL, k); }
+    function lput(k, v) { put('localStorage', memL, k, v); }
+    function sget(k) { return get('sessionStorage', memS, k); }
+    function sput(k, v) { put('sessionStorage', memS, k, v); }
+
+    var KEY = STORE + src;
+    var DEVICE_KEY = STORE + 'requested';
+    var rec = lget(KEY) || { n: 0, shown: 0, dismissedAt: 0, requestedAt: 0 };
+    var sess = sget(KEY) || { counted: false, shown: false };
+    if (!sess.counted) { rec.n += 1; sess.counted = true; lput(KEY, rec); sput(KEY, sess); }
+
+    var startedAt = Date.now();
+    var ui = { open: false, state: 'idle', trigger: '' };
+    var requestId = null;
+    var engaged = { scrolled: false, video: false };
+    var maxDepth = 0;
+
+    // ---- elements ----
+    var root = document.getElementById('exitCta');
+    if (!root) return;
+    var elTitle = document.getElementById('exitCtaTitle');
+    var elAsk = document.getElementById('exitCtaAsk');
+    var elDone = document.getElementById('exitCtaDone');
+    var elErr = document.getElementById('exitCtaErr');
+    var btnYes = document.getElementById('exitCtaYes');
+    var btnNo = document.getElementById('exitCtaNo');
+    var btnX = document.getElementById('exitCtaX');
+    var btnBack = document.getElementById('exitCtaBack');
+    var lightbox = document.getElementById('videoModal');
+
+    function em(text, keep) { var e = document.createElement('em'); e.textContent = text; if (keep) e.className = 'exit-keep'; return e; }
+    function renderHeadline() {
+      elTitle.textContent = '';
+      if (car) {
+        elTitle.appendChild(document.createTextNode('Want us to make the '));
+        elTitle.appendChild(em(car));
+        elTitle.appendChild(document.createTextNode(' film?'));
+      } else {
+        elTitle.appendChild(document.createTextNode('Want to see your '));
+        elTitle.appendChild(em('car in motion', true));
+        elTitle.appendChild(document.createTextNode('?'));
+      }
+    }
+
+    // ---- events ----
+    // Plain-text POST to the existing ntfy topic. First line identifies the event type.
+    var EVENTS = {
+      EXIT_CTA_SHOWN:     { title: 'RMV exit CTA shown',     priority: 1, tags: 'eyes' },
+      EXIT_CTA_DISMISSED: { title: 'RMV exit CTA dismissed', priority: 1, tags: 'wave' },
+      PILOT_REQUEST:      { title: 'RMV PILOT REQUEST',      priority: 4, tags: 'fire' }
+    };
+
+    function body(type, extra) {
+      var lines = ['RMV_EVENT=' + type, 'src=' + src];
+      if (extra && extra.rid) lines.push('rid=' + extra.rid);
+      if (car) lines.push('car=' + car);
+      lines.push('trigger=' + ui.trigger);
+      if (extra && extra.how) lines.push('how=' + extra.how);
+      lines.push('visits=' + rec.n);
+      lines.push('dwell_s=' + Math.round((Date.now() - startedAt) / 1000));
+      lines.push('ts=' + new Date().toISOString());
+      return lines.join('\n');
+    }
+
+    function post(type, extra, timeoutMs) {
+      var m = EVENTS[type];
+      var url = 'https://ntfy.sh/' + TOPIC +
+        '?title=' + encodeURIComponent(m.title) + '&priority=' + m.priority + '&tags=' + m.tags;
+      var ctl = ('AbortController' in window) ? new AbortController() : null;
+      var timer = (ctl && timeoutMs) ? setTimeout(function () { ctl.abort(); }, timeoutMs) : null;
+      return fetch(url, { method: 'POST', body: body(type, extra), keepalive: true, signal: ctl ? ctl.signal : undefined })
+        .then(function (res) { if (timer) clearTimeout(timer); return res.ok; })
+        .catch(function () { if (timer) clearTimeout(timer); return false; });
+    }
+
+    function makeId() {
+      var rnd = '';
+      try {
+        var a = new Uint8Array(5); crypto.getRandomValues(a);
+        rnd = Array.prototype.map.call(a, function (b) { return ('0' + b.toString(16)).slice(-2); }).join('');
+      } catch (e) { rnd = Math.random().toString(16).slice(2, 12); }
+      return 'p' + Date.now().toString(36) + rnd;
+    }
+
+    // ---- show / hide ----
+    var lastFocus = null, prevOverflow = '';
+
+    function lightboxOpen() { return !!(lightbox && lightbox.classList.contains('active')); }
+
+    function eligible() {
+      rec = lget(KEY) || rec;
+      if (ui.open) return false;
+      if (document.visibilityState !== 'visible') return false;
+      if (lget(DEVICE_KEY) || rec.requestedAt) return false;       // already asked for a pilot
+      if (sess.shown) return false;                                // once per visit
+      if (rec.shown >= CFG.maxShowsPerSrc) return false;           // lifetime cap
+      if (rec.dismissedAt && (Date.now() - rec.dismissedAt) < CFG.dismissSuppressMs) return false;
+      if (lightboxOpen()) return false;                            // never over a playing video
+      if (Date.now() - startedAt < CFG.minDwellMs) return false;   // not on arrival
+      if (!(engaged.scrolled || engaged.video)) return false;      // has actually looked at the page
+      return true;
+    }
+
+    function setBusy(on) {
+      btnYes.disabled = on;
+      btnYes.textContent = on ? 'SENDING…' : 'YES — MAKE MY COMPLIMENTARY FILM';
+      btnYes.setAttribute('aria-busy', on ? 'true' : 'false');
+    }
+
+    function openCta() {
+      lastFocus = document.activeElement;
+      prevOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      document.body.classList.add('modal-open');
+      if (typeof bgState !== 'undefined') { bgState.modalOpen = true; if (typeof syncBgVideo === 'function') syncBgVideo(); }
+      root.hidden = false;
+      requestAnimationFrame(function () { requestAnimationFrame(function () { root.classList.add('is-visible'); }); });
+      btnYes.focus({ preventScroll: true });
+    }
+
+    function closeCta() {
+      root.classList.remove('is-visible');
+      ui.open = false;
+      document.body.style.overflow = prevOverflow;
+      document.body.classList.remove('modal-open');
+      if (typeof bgState !== 'undefined') { bgState.modalOpen = false; if (typeof syncBgVideo === 'function') syncBgVideo(); }
+      setTimeout(function () { if (!ui.open) root.hidden = true; }, 280);
+      if (lastFocus && lastFocus.focus) { try { lastFocus.focus({ preventScroll: true }); } catch (e) {} }
+    }
+
+    function show(trigger) {
+      if (!eligible()) return;
+      ui.open = true;
+      ui.trigger = trigger;
+      ui.state = 'idle';
+      sess.shown = true; sput(KEY, sess);
+      rec.shown += 1; lput(KEY, rec);
+      renderHeadline();
+      elAsk.hidden = false; elDone.hidden = true; elErr.hidden = true;
+      setBusy(false);
+      openCta();
+      post('EXIT_CTA_SHOWN', {}, 0);
+    }
+
+    function dismiss(how) {
+      if (!ui.open || ui.state === 'sending') return;
+      if (ui.state !== 'done') {
+        rec.dismissedAt = Date.now(); lput(KEY, rec);
+        post('EXIT_CTA_DISMISSED', { how: how }, 0);
+      }
+      closeCta();
+    }
+
+    function requestPilot() {
+      if (ui.state !== 'idle') return;          // blocks double-clicks / repeat taps
+      ui.state = 'sending';
+      elErr.hidden = true;
+      setBusy(true);
+      requestId = requestId || makeId();        // same rid on retry, so a retry can be de-duplicated
+      post('PILOT_REQUEST', { rid: requestId }, CFG.sendTimeoutMs).then(function (ok) {
+        if (ok) {
+          ui.state = 'done';
+          var t = Date.now();
+          rec.requestedAt = t; lput(KEY, rec);
+          lput(DEVICE_KEY, { at: t });
+          elAsk.hidden = true; elDone.hidden = false;
+          document.getElementById('exitCtaDoneTitle').focus({ preventScroll: true });
+        } else {
+          ui.state = 'idle';
+          setBusy(false);
+          elErr.hidden = false;
+        }
+      });
+    }
+
+    btnYes.addEventListener('click', requestPilot);
+    btnNo.addEventListener('click', function () { dismiss('not_yet'); });
+    btnX.addEventListener('click', function () { dismiss('close'); });
+    btnBack.addEventListener('click', function () { dismiss('done'); });
+    root.addEventListener('click', function (e) { if (e.target === root) dismiss('backdrop'); });
+
+    document.addEventListener('keydown', function (e) {
+      if (!ui.open) return;
+      if (e.key === 'Escape') { dismiss('escape'); return; }
+      if (e.key === 'Tab') {                    // keep focus inside the dialog
+        var f = Array.prototype.filter.call(
+          root.querySelectorAll('button, a[href]'),
+          function (n) { return !n.disabled && n.offsetParent !== null; });
+        if (!f.length) return;
+        var first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        else if (!root.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+      }
+    });
+
+    // ---- engagement ----
+    function docH() { return Math.max(document.documentElement.scrollHeight, 1); }
+
+    if (lightbox && 'MutationObserver' in window) {
+      new MutationObserver(function () { if (lightboxOpen()) engaged.video = true; })
+        .observe(lightbox, { attributes: true, attributeFilter: ['class'] });
+    }
+
+    var fine = !!(window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches);
+
+    // ---- desktop trigger: pointer leaves through the top of the viewport ----
+    if (fine) {
+      document.addEventListener('mouseout', function (e) {
+        if (!e.relatedTarget && e.clientY <= 5) show('desktop_exit');
+      });
+    }
+
+    // ---- touch triggers ----
+    var lastAnchorAt = 0, samples = [];
+    document.addEventListener('click', function (e) {
+      var a = e.target && e.target.closest ? e.target.closest('a[href^="#"]') : null;
+      if (a) lastAnchorAt = Date.now();         // in-page links smooth-scroll up; that is not leaving
+    }, true);
+
+    window.addEventListener('scroll', function () {
+      var y = window.scrollY, vh = window.innerHeight, t = Date.now();
+      var depth = (y + vh) / docH();
+      if (depth > maxDepth) maxDepth = depth;
+      if (maxDepth >= CFG.minScrollDepth) engaged.scrolled = true;
+      if (fine) return;
+
+      // fast upward flick, from deep in the page to the top quarter (heading for the address bar)
+      samples.push({ y: y, t: t });
+      while (samples.length && t - samples[0].t > 600) samples.shift();
+      var up = samples.length ? samples[0].y - y : 0;
+      var scrollable = Math.max(docH() - vh, 1);
+      if (up >= vh * 0.3 && maxDepth >= 0.5 && (y / scrollable) <= 0.25 && (t - lastAnchorAt) > 1500) {
+        samples = [];
+        show('mobile_scroll_up');
+      }
+    }, { passive: true });
+
+    // touch: coming back after leaving the tab/app is a decision moment
+    if (!fine) {
+      var hiddenAt = 0;
+      document.addEventListener('visibilitychange', function () {
+        if (document.visibilityState === 'hidden') { hiddenAt = Date.now(); return; }
+        if (hiddenAt && Date.now() - hiddenAt >= CFG.awayMinMs) {
+          setTimeout(function () { show('mobile_return'); }, 800);
+        }
+        hiddenAt = 0;
+      });
+    }
   })();
 </script>
 </body>
