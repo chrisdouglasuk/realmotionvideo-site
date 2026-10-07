@@ -1,0 +1,1648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RealMotionVideo — Your vehicles, already filming</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #121316;
+    --bg-alt: #1a1b1f;
+    --panel: #1e1f24;
+    --paper: #ede6d8;
+    --paper-dim: #cfc7b6;
+    --ink: #17170f;
+    --brass: #c29a5b;
+    --brass-bright: #d9b477;
+    --brass-dim: #8c7247;
+    --verdigris: #4b6a61;
+    --rec: #b23a2e;
+    --hairline: rgba(237, 230, 216, 0.12);
+    --hairline-strong: rgba(237, 230, 216, 0.22);
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--paper);
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.55;
+    overflow-x: hidden;
+  }
+
+  ::selection { background: var(--brass); color: var(--ink); }
+
+  h1, h2, h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  a { color: inherit; }
+
+  .wrap {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  @media (max-width: 640px) {
+    .wrap { padding: 0 20px; }
+  }
+
+  /* ---------- NAV ---------- */
+
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(18, 19, 22, 0.86);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 0;
+  }
+
+  .wordmark {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    letter-spacing: 0.01em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+  }
+
+  .wordmark .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--rec);
+    box-shadow: 0 0 0 3px rgba(178, 58, 46, 0.18);
+  }
+
+  .nav-cta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--paper);
+    text-decoration: none;
+    border: 1px solid var(--hairline-strong);
+    padding: 9px 16px;
+    border-radius: 3px;
+    transition: border-color 0.2s ease, background 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .nav-cta:hover {
+    border-color: var(--brass);
+    background: rgba(194, 154, 91, 0.08);
+  }
+
+  /* ---------- HERO ---------- */
+
+  header.hero {
+    padding: 84px 0 64px;
+    min-height: calc(100vh - 280px);
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--hairline);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+  }
+
+  .hero-bg-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(18, 19, 22, 0.72) 0%,
+      rgba(18, 19, 22, 0.6) 40%,
+      rgba(18, 19, 22, 0.85) 100%
+    );
+    z-index: 1;
+  }
+
+  header.hero .wrap {
+    position: relative;
+    z-index: 2;
+  }
+
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.76rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brass);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 22px;
+  }
+
+  .eyebrow::before {
+    content: '';
+    width: 18px;
+    height: 1px;
+    background: var(--brass);
+  }
+
+  h1.headline {
+    font-size: clamp(2.4rem, 5.4vw, 4.1rem);
+    line-height: 1.05;
+    max-width: 15ch;
+    color: var(--paper);
+  }
+
+  h1.headline em {
+    font-style: italic;
+    color: var(--brass-bright);
+  }
+
+  .sub {
+    margin-top: 26px;
+    max-width: 46ch;
+    font-size: 1.12rem;
+    color: var(--paper-dim);
+  }
+
+  .hero-actions {
+    margin-top: 38px;
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--brass);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.98rem;
+    text-decoration: none;
+    padding: 15px 26px;
+    border-radius: 3px;
+    display: inline-block;
+    transition: background 0.2s ease, transform 0.15s ease;
+  }
+
+  .btn-primary:hover {
+    background: var(--brass-bright);
+    transform: translateY(-1px);
+  }
+
+  /* ---------- GLOW WRAP ---------- */
+
+  .glow-wrap {
+    position: relative;
+    display: inline-block;
+    padding: 5px;
+    border-radius: 8px;
+    isolation: isolate;
+  }
+
+  @property --glow-beam-angle {
+    syntax: '<angle>';
+    inherits: false;
+    initial-value: 0deg;
+  }
+
+  .glow-wrap::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 2px;
+    background: conic-gradient(
+      from var(--glow-beam-angle),
+      transparent 0%,
+      transparent 82%,
+      var(--brass) 88%,
+      #fff6e6 92%,
+      var(--brass) 96%,
+      transparent 100%
+    );
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: glow-beam-rotate 3.5s linear infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  @keyframes glow-beam-rotate {
+    to { --glow-beam-angle: 360deg; }
+  }
+
+  /* The rotating beam repaints every frame on the main thread, so hold it
+     still while a video is playing in the lightbox */
+  body.modal-open .glow-wrap::before {
+    animation-play-state: paused;
+  }
+
+  .glow-wrap > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-note {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--paper-dim);
+    letter-spacing: 0.02em;
+  }
+
+  /* ---------- FILMSTRIP / SAMPLES ---------- */
+
+  section.reel {
+    padding: 88px 0 96px;
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  section.reel.reel-alt {
+    padding-top: 0;
+  }
+
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+    margin-bottom: 44px;
+    flex-wrap: wrap;
+  }
+
+  .section-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.76rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin-bottom: 14px;
+    display: block;
+  }
+
+  h2.section-title {
+    font-size: clamp(1.7rem, 3vw, 2.3rem);
+    max-width: 20ch;
+  }
+
+  .section-desc {
+    max-width: 34ch;
+    color: var(--paper-dim);
+    font-size: 0.98rem;
+  }
+
+  .filmstrip {
+    position: relative;
+    padding: 22px 0;
+  }
+
+  .filmstrip::before,
+  .filmstrip::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 14px;
+    background-image: repeating-linear-gradient(
+      to right,
+      var(--bg-alt) 0px,
+      var(--bg-alt) 8px,
+      transparent 8px,
+      transparent 20px
+    );
+    opacity: 0.9;
+  }
+
+  .filmstrip::before { top: 0; }
+  .filmstrip::after { bottom: 0; }
+
+  .filmstrip-track {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+  }
+
+  /* Two-up grid — the "rows of two cars" proof layout */
+  .filmstrip-track.filmstrip-track--grid2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* A lone card in the final row sits centred at normal card width */
+  .filmstrip-track.filmstrip-track--single {
+    grid-template-columns: minmax(0, calc(50% - 9px));
+    justify-content: center;
+  }
+
+  /* Stacks the hero frame and the grid2 rows underneath it with even spacing */
+  .proof-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  @media (max-width: 860px) {
+    .filmstrip-track { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 480px) {
+    .filmstrip-track { grid-template-columns: 1fr; }
+    .filmstrip-track.filmstrip-track--grid2 { grid-template-columns: 1fr; }
+    .filmstrip-track.filmstrip-track--single { grid-template-columns: 1fr; }
+  }
+
+  /* Landscape variant of the frame media, used for the horizontal cuts */
+  .frame-media.frame-media--landscape {
+    aspect-ratio: 16 / 9;
+  }
+
+  /* Hero variant — true 16:9, same width the old paired vertical+landscape
+     cards used to share, but taller than the small grid cards below it */
+  .frame-media.frame-media--hero {
+    aspect-ratio: 16 / 9;
+  }
+
+  .frame {
+    background: var(--panel);
+    border: 1px solid var(--hairline);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .frame-media {
+    aspect-ratio: 9 / 16;
+    position: relative;
+    background: linear-gradient(155deg, #23262b 0%, #16171a 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .frame-media.ready {
+    background:
+      linear-gradient(180deg, rgba(18,19,22,0) 45%, rgba(18,19,22,0.92) 100%),
+      radial-gradient(circle at 30% 20%, rgba(194,154,91,0.22), transparent 55%),
+      linear-gradient(155deg, #2b2d33 0%, #17181b 100%);
+    cursor: pointer;
+  }
+
+  .frame-media video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    inset: 0;
+  }
+
+  .play-badge {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: rgba(237, 230, 216, 0.94);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    position: relative;
+    pointer-events: none;
+    transition: transform 0.2s ease;
+  }
+
+  .frame-media:hover .play-badge {
+    transform: scale(1.08);
+  }
+
+  .play-badge svg { width: 15px; height: 15px; fill: var(--ink); margin-left: 2px; }
+
+  /* Bottom-anchored text stack for each card. Spec line (if present) and
+     caption line share one flex column with a fixed gap instead of being
+     independently absolutely-positioned, so they can't collide. */
+  .frame-footer {
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .frame-caption {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--paper);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 10px;
+  }
+
+  .frame-caption .place {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--paper);
+  }
+
+  .frame-spec {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.66rem;
+    letter-spacing: 0.01em;
+    color: var(--paper-dim);
+  }
+
+  .frame-tag {
+    padding: 10px 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--paper-dim);
+    border-top: 1px solid var(--hairline);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .frame-tag .rec {
+    color: var(--rec);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .frame-tag .rec::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--rec);
+  }
+
+  /* ---------- VIDEO MODAL (lightbox) ---------- */
+  /* Clicking any proof card opens the same clip larger and centred,
+     rather than playing inline at card size or going full-page. */
+
+  .video-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    background: rgba(10, 10, 11, 0.92);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 56px 24px;
+  }
+
+  .video-modal.active {
+    display: flex;
+  }
+
+  .video-modal-inner {
+    width: min(1100px, 92vw);
+    max-height: 86vh;
+    position: relative;
+  }
+
+  .video-modal-inner video {
+    width: 100%;
+    max-height: 86vh;
+    display: block;
+    background: #000;
+    border-radius: 4px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+  }
+
+  .video-modal-close {
+    position: absolute;
+    top: -52px;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(237, 230, 216, 0.1);
+    border: 1px solid var(--hairline-strong);
+    color: var(--paper);
+    font-size: 1.2rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease, border-color 0.2s ease;
+  }
+
+  .video-modal-close:hover {
+    background: rgba(237, 230, 216, 0.18);
+    border-color: var(--brass);
+  }
+
+  @media (max-width: 640px) {
+    .video-modal { padding: 40px 16px; }
+    .video-modal-close { top: -44px; right: 0; }
+  }
+
+  /* ---------- REVEAL LINE ---------- */
+
+  .reveal-line {
+    max-width: 640px;
+    margin: 40px auto 0;
+    text-align: center;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 1.25rem;
+    color: var(--paper);
+  }
+
+  .reveal-sub {
+    text-align: center;
+    margin-top: 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--paper-dim);
+  }
+
+  /* ---------- HOW IT WORKS ---------- */
+
+  section.process {
+    padding: 88px 0;
+    border-bottom: 1px solid var(--hairline);
+    background: var(--bg-alt);
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--hairline);
+    border: 1px solid var(--hairline);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 44px;
+  }
+
+  @media (max-width: 760px) {
+    .steps { grid-template-columns: 1fr; }
+  }
+
+  .step {
+    background: var(--bg-alt);
+    padding: 40px 32px;
+  }
+
+  .step-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--brass);
+    margin-bottom: 22px;
+  }
+
+  .step h3 {
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+
+  .step p {
+    color: var(--paper-dim);
+    font-size: 0.94rem;
+    margin: 0;
+  }
+
+  /* ---------- CLOSING CTA ---------- */
+
+  section.closing {
+    padding: 100px 0 110px;
+    text-align: center;
+  }
+
+  section.closing h2 {
+    font-size: clamp(1.9rem, 4vw, 2.9rem);
+    max-width: 22ch;
+    margin: 0 auto;
+  }
+
+  section.closing p.sub {
+    margin: 20px auto 0;
+    text-align: center;
+  }
+
+  .closing-actions { margin-top: 36px; display: flex; justify-content: center; }
+
+  /* ---------- FOOTER ---------- */
+
+  footer {
+    border-top: 1px solid var(--hairline);
+    padding: 28px 0;
+  }
+
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--paper-dim);
+    letter-spacing: 0.02em;
+  }
+
+  /* ---------- EXIT-INTENT PILOT CTA (tracked outreach visitors only) ---------- */
+
+  .exit-cta {
+    position: fixed;
+    inset: 0;
+    z-index: 400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(10, 10, 11, 0.86);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+
+  .exit-cta[hidden] { display: none; }
+  .exit-cta.is-visible { opacity: 1; }
+
+  .exit-cta-panel {
+    position: relative;
+    width: min(560px, 100%);
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+    background: var(--panel);
+    border: 1px solid var(--hairline-strong);
+    border-radius: 6px;
+    padding: 56px 48px 40px;
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
+    transform: translateY(16px);
+    opacity: 0;
+    transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), opacity 0.35s ease;
+  }
+
+  .exit-cta.is-visible .exit-cta-panel {
+    transform: none;
+    opacity: 1;
+  }
+
+  /* short brass rule — echoes the dash on the hero eyebrow */
+  .exit-cta-panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 48px;
+    width: 72px;
+    height: 2px;
+    background: var(--brass);
+  }
+
+  .exit-cta-x {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--paper-dim);
+    font-size: 1.05rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .exit-cta-x:hover { color: var(--paper); border-color: var(--hairline-strong); }
+
+  .exit-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin-bottom: 18px;
+  }
+
+  .exit-cta h2 {
+    font-size: clamp(1.7rem, 4.2vw, 2.25rem);
+    line-height: 1.12;
+    color: var(--paper);
+  }
+
+  .exit-cta h2 em {
+    font-style: italic;
+    color: var(--brass-bright);
+  }
+
+  .exit-cta h2 em.exit-keep { white-space: nowrap; }
+
+  .exit-lede {
+    margin: 18px 0 0;
+    color: var(--paper-dim);
+    font-size: 1.02rem;
+    max-width: 44ch;
+  }
+
+  .exit-fine {
+    margin: 14px 0 0;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.74rem;
+    letter-spacing: 0.04em;
+    color: var(--paper-dim);
+  }
+
+  .exit-actions {
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+  }
+
+  .exit-cta .glow-wrap { display: block; }
+
+  .exit-primary {
+    width: 100%;
+    border: 0;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.02em;
+  }
+
+  .exit-primary:disabled {
+    cursor: progress;
+    opacity: 0.75;
+    transform: none;
+  }
+
+  .exit-secondary {
+    align-self: center;
+    background: none;
+    border: 0;
+    padding: 8px 4px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    color: var(--paper-dim);
+    text-decoration: underline;
+    text-decoration-color: var(--hairline-strong);
+    text-underline-offset: 4px;
+    transition: color 0.2s ease, text-decoration-color 0.2s ease;
+  }
+
+  .exit-secondary:hover { color: var(--paper); text-decoration-color: var(--brass); }
+
+  .exit-error {
+    margin: 16px 0 0;
+    font-size: 0.86rem;
+    color: #e8b4a8;
+    text-align: center;
+  }
+
+  .exit-error a { color: var(--brass-bright); }
+
+  #exitCtaDoneTitle:focus { outline: none; }
+
+  .exit-cta button:focus-visible,
+  .exit-cta a:focus-visible {
+    outline: 2px solid var(--brass-bright);
+    outline-offset: 3px;
+  }
+
+  .exit-tick {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid var(--brass);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 22px;
+  }
+
+  .exit-tick svg { width: 20px; height: 20px; stroke: var(--brass-bright); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  .exit-sign {
+    margin-top: 26px;
+    padding-top: 20px;
+    border-top: 1px solid var(--hairline);
+  }
+
+  .exit-sign strong {
+    display: block;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 1.15rem;
+    color: var(--paper);
+  }
+
+  .exit-sign span {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    color: var(--paper-dim);
+  }
+
+  .exit-back {
+    margin-top: 26px;
+    background: none;
+    border: 1px solid var(--hairline-strong);
+    border-radius: 3px;
+    padding: 11px 18px;
+    color: var(--paper);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.76rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+
+  .exit-back:hover { border-color: var(--brass); background: rgba(194, 154, 91, 0.08); }
+
+  /* Mobile: bottom sheet, anchored where the thumb is */
+  @media (max-width: 640px) {
+    .exit-cta { align-items: flex-end; padding: 0; }
+    .exit-cta-panel {
+      width: 100%;
+      max-height: 92vh;
+      border-radius: 16px 16px 0 0;
+      border-bottom: 0;
+      padding: 48px 24px calc(28px + env(safe-area-inset-bottom, 0px));
+      transform: translateY(40px);
+    }
+    .exit-cta-panel::before { left: 24px; }
+    .exit-cta-x { top: 10px; right: 10px; }
+    .exit-primary { padding: 17px 20px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .exit-cta, .exit-cta-panel { transition: none; }
+    .exit-cta-panel { transform: none; }
+  }
+
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-inner">
+    <a class="wordmark" href="#top"><span class="dot"></span>RealMotionVideo</a>
+    <a class="nav-cta" href="claim.html">Request my film →</a>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <video class="hero-bg-video" autoplay muted loop playsinline>
+    <source src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/Phantom%20Aston%20Martin%20DB12%20YouTube.mp4" type="video/mp4">
+  </video>
+  <div class="hero-bg-overlay"></div>
+  <div class="wrap">
+    <div class="eyebrow">No filming · No editing · No new photography</div>
+    <h1 class="headline">You already have the photos.<br>We turn them <em>into video.</em></h1>
+    <p class="sub">Send us the link to your vehicle. We send back a cinematic vertical video for Instagram, Facebook and TikTok, built entirely from the photography you've already taken.</p>
+    <div class="hero-actions">
+      <div class="glow-wrap">
+        <a class="btn-primary" href="claim.html" onclick="ctaClickPing('Hero CTA')">REQUEST MY FILM →</a>
+      </div>
+      <span class="hero-note">We reply within 24 hours</span>
+    </div>
+  </div>
+</header>
+
+<!-- ================= PROOF SECTION ================= -->
+<section class="reel reel-alt" id="proof">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="section-eyebrow">Now filming luxury automobiles</span>
+        <h2 class="section-title">See what we do with ordinary dealer photography.</h2>
+      </div>
+      <p class="section-desc">No filming. No CGI car. No reshoot — every video below was created entirely from photographs already used to advertise the vehicle.</p>
+    </div>
+
+    <div class="filmstrip">
+      <div class="proof-stack">
+        <!-- Featured hero video — true 16:9, full width -->
+        <div class="frame">
+          <div class="frame-media frame-media--hero ready" data-label="Phantom Motor Company · Porsche 911" data-start="1" onclick="openVideoModal(this)">
+            <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/Phantom%20White%20Porsche%20911%20Website%20.mp4#t=1" loop playsinline preload="metadata"></video>
+            <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
+            <div class="frame-footer">
+              <div class="frame-spec">3.7T 992 Turbo Coupe Petrol PDK 4WD Euro 6 (s/s)</div>
+              <div class="frame-caption">
+                <span class="place">Phantom Motor Company · Porsche 911</span>
+                <span>0:00</span>
+              </div>
+            </div>
+          </div>
+          <div class="frame-tag">
+            <span>UK · Luxury Auto</span>
+            <span class="rec">CUT 01 · LANDSCAPE</span>
+          </div>
+        </div>
+
+        <!-- Row 1 -->
+        <div class="filmstrip-track filmstrip-track--grid2">
+          <div class="frame">
+            <div class="frame-media frame-media--landscape ready" data-label="Phantom Motor Company · Rolls-Royce Ghost" onclick="openVideoModal(this)">
+              <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/Phantom%20Rolls%20Royce%20Ghost%20Website.mp4" loop playsinline preload="metadata"></video>
+              <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
+              <div class="frame-footer">
+                <div class="frame-spec">6.75 V12 Saloon Petrol Auto 4WD Euro 6</div>
+                <div class="frame-caption">
+                  <span class="place">Phantom Motor Company · Rolls-Royce Ghost</span>
+                  <span>0:00</span>
+                </div>
+              </div>
+            </div>
+            <div class="frame-tag">
+              <span>UK · Luxury Auto</span>
+              <span class="rec">CUT 01 · LANDSCAPE</span>
+            </div>
+          </div>
+          <div class="frame">
+            <div class="frame-media frame-media--landscape ready" data-label="Phantom Motor Company · Aston Martin DB12" onclick="openVideoModal(this)">
+              <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/Phantom%20Aston%20Martin%20DB12%20YouTube.mp4" loop playsinline preload="metadata"></video>
+              <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
+              <div class="frame-footer">
+                <div class="frame-caption">
+                  <span class="place">Phantom Motor Company · Aston Martin DB12</span>
+                  <span>0:00</span>
+                </div>
+              </div>
+            </div>
+            <div class="frame-tag">
+              <span>UK · Luxury Auto</span>
+              <span class="rec">CUT 01 · LANDSCAPE</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 2 -->
+        <div class="filmstrip-track filmstrip-track--grid2">
+          <div class="frame">
+            <div class="frame-media frame-media--landscape ready" data-label="Amari Supercars · Ferrari" onclick="openVideoModal(this)">
+              <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/AMARI%20FERRARI%20YOUTUBE.mp4" loop playsinline preload="metadata"></video>
+              <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
+              <div class="frame-footer">
+                <div class="frame-caption">
+                  <span class="place">Amari Supercars · Ferrari</span>
+                  <span>0:00</span>
+                </div>
+              </div>
+            </div>
+            <div class="frame-tag">
+              <span>UK · Luxury Auto</span>
+              <span class="rec">CUT 01 · LANDSCAPE</span>
+            </div>
+          </div>
+          <div class="frame">
+            <div class="frame-media frame-media--landscape ready" data-label="Frank Dale · Rolls-Royce Wraith" onclick="openVideoModal(this)">
+              <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/FRANK%20DALE%20ROLLS%20ROYCE%20WRAITH.mp4" loop playsinline preload="metadata"></video>
+              <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
+              <div class="frame-footer">
+                <div class="frame-caption">
+                  <span class="place">Frank Dale · Rolls-Royce Wraith</span>
+                  <span>0:00</span>
+                </div>
+              </div>
+            </div>
+            <div class="frame-tag">
+              <span>UK · Luxury Auto</span>
+              <span class="rec">CUT 01 · LANDSCAPE</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 3 -->
+        <div class="filmstrip-track filmstrip-track--grid2">
+          <div class="frame">
+            <div class="frame-media frame-media--landscape ready" data-label="Phantom Motor Company · Ferrari 488" onclick="openVideoModal(this)">
+              <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/Phantom%20Ferrari%20488%20Youtube.mp4" loop playsinline preload="metadata"></video>
+              <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
+              <div class="frame-footer">
+                <div class="frame-caption">
+                  <span class="place">Phantom Motor Company · Ferrari 488</span>
+                  <span>0:00</span>
+                </div>
+              </div>
+            </div>
+            <div class="frame-tag">
+              <span>UK · Luxury Auto</span>
+              <span class="rec">CUT 01 · LANDSCAPE</span>
+            </div>
+          </div>
+          <div class="frame">
+            <div class="frame-media frame-media--landscape ready" data-label="Matt Johnson Prestige Cars · Porsche Macan" onclick="openVideoModal(this)">
+              <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/MATT%20JOHNSON%20PORSCHE%20MACAN%20WEBSITE.mp4" loop playsinline preload="metadata"></video>
+              <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
+              <div class="frame-footer">
+                <div class="frame-caption">
+                  <span class="place">Matt Johnson Prestige Cars · Porsche Macan</span>
+                  <span>0:00</span>
+                </div>
+              </div>
+            </div>
+            <div class="frame-tag">
+              <span>UK · Luxury Auto</span>
+              <span class="rec">CUT 01 · LANDSCAPE</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 4 -->
+        <div class="filmstrip-track filmstrip-track--grid2">
+          <div class="frame">
+            <div class="frame-media frame-media--landscape ready" data-label="Phantom Motor Company · Rolls-Royce Dawn" onclick="openVideoModal(this)">
+              <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/PHANTOM%20-%20YOUTUBE%20-%20ROLLS%20ROYCE%20DAWN.mp4" loop playsinline preload="metadata"></video>
+              <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
+              <div class="frame-footer">
+                <div class="frame-caption">
+                  <span class="place">Phantom Motor Company · Rolls-Royce Dawn</span>
+                  <span>0:00</span>
+                </div>
+              </div>
+            </div>
+            <div class="frame-tag">
+              <span>UK · Luxury Auto</span>
+              <span class="rec">CUT 01 · LANDSCAPE</span>
+            </div>
+          </div>
+          <div class="frame">
+            <div class="frame-media frame-media--landscape ready" data-label="Saxtons · Porsche 911" onclick="openVideoModal(this)">
+              <video src="https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/SAXTONS%20PORSCHE%20911%20WEBSITE.mp4" loop playsinline preload="metadata"></video>
+              <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
+              <div class="frame-footer">
+                <div class="frame-caption">
+                  <span class="place">Saxtons · Porsche 911</span>
+                  <span>0:00</span>
+                </div>
+              </div>
+            </div>
+            <div class="frame-tag">
+              <span>UK · Luxury Auto</span>
+              <span class="rec">CUT 01 · LANDSCAPE</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <p class="reveal-line">"Wait — they made that from the photographs we already had?"</p>
+    <p class="reveal-sub">That's the reaction we're built around</p>
+  </div>
+</section>
+
+<section class="process">
+  <div class="wrap">
+    <span class="section-eyebrow">How it works</span>
+    <h2 class="section-title">Three steps. Nothing to install.</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h3>Send the stock link</h3>
+        <p>Forward your dealer stock page, a specific listing link, or just the photos. That's the only thing we need from you.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h3>We produce the video</h3>
+        <p>Your existing photography becomes a branded vertical video — no site visit, no reshoot, no new equipment.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h3>You post it</h3>
+        <p>Delivered ready for Instagram, Facebook and TikTok. Post it yourself, or hand it to whoever runs your socials.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CLOSING CTA — tracked/generic swap ================= -->
+<section class="closing">
+  <div class="wrap">
+    <h2 id="cta-headline">See what your own vehicle can become.</h2>
+    <p class="sub" id="cta-sub">We'll create a complimentary 30-second cinematic film from your existing photography. No filming. No reshoot. No commitment.</p>
+    <div class="closing-actions">
+      <div class="glow-wrap">
+        <a class="btn-primary" id="cta-button" href="claim.html" onclick="ctaClickPing('Closing CTA')">REQUEST MY FILM →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-inner">
+    <span>RealMotionVideo</span>
+    <span>chris@realmotionvideo.com</span>
+  </div>
+</footer>
+
+<!-- ================= VIDEO LIGHTBOX ================= -->
+<div class="video-modal" id="videoModal" onclick="if (event.target === this) closeVideoModal()">
+  <div class="video-modal-inner">
+    <button class="video-modal-close" onclick="closeVideoModal()" aria-label="Close video">✕</button>
+    <video id="videoModalPlayer" controls playsinline></video>
+  </div>
+</div>
+
+<!-- ================= EXIT-INTENT PILOT CTA (shown to tracked ?src= visitors only; hidden otherwise) ================= -->
+<div class="exit-cta" id="exitCta" role="dialog" aria-modal="true" aria-labelledby="exitCtaTitle" aria-describedby="exitCtaDesc" hidden>
+  <div class="exit-cta-panel">
+    <button type="button" class="exit-cta-x" id="exitCtaX" aria-label="Close">✕</button>
+
+    <div id="exitCtaAsk">
+      <div class="exit-eyebrow">Complimentary film · 30 seconds</div>
+      <h2 id="exitCtaTitle">Want to see your <em>car in motion</em>?</h2>
+      <p class="exit-lede" id="exitCtaDesc">We'll create a complimentary 30-second cinematic film using the photographs already on your listing.</p>
+      <p class="exit-fine">No filming. No reshoot. No obligation.</p>
+      <div class="exit-actions">
+        <div class="glow-wrap">
+          <button type="button" class="btn-primary exit-primary" id="exitCtaYes">YES — MAKE MY COMPLIMENTARY FILM</button>
+        </div>
+        <button type="button" class="exit-secondary" id="exitCtaNo">Not yet — I'll have another look around</button>
+      </div>
+      <p class="exit-error" id="exitCtaErr" role="alert" hidden>That didn't go through. Please try once more, or email <a href="mailto:chris@realmotionvideo.com">chris@realmotionvideo.com</a>.</p>
+    </div>
+
+    <div id="exitCtaDone" hidden>
+      <div class="exit-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+      <div class="exit-eyebrow">Request received</div>
+      <h2 id="exitCtaDoneTitle" tabindex="-1">Thank you — we'll take it from here.</h2>
+      <p class="exit-lede">We'll prepare your complimentary film using the vehicle photography already online.</p>
+      <div class="exit-sign"><strong>Chris</strong><span>RealMotionVideo</span></div>
+      <button type="button" class="exit-back" id="exitCtaBack">Back to the site</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ---------- Homepage visit tracking ----------
+  var HOMEPAGE_NTFY_TOPIC = 'rmv-homepage-visits-8f2k1x';
+
+  function homepageNtfyPing(message) {
+    fetch('https://ntfy.sh/' + HOMEPAGE_NTFY_TOPIC, {
+      method: 'POST',
+      body: message
+    }).catch(function () {});
+  }
+
+  function detectVisitSource() {
+    var params = new URLSearchParams(window.location.search);
+    var src = params.get('src');
+    if (src) return 'Tagged link: ' + src;
+
+    var utmSource = params.get('utm_source');
+    var utmCampaign = params.get('utm_campaign');
+    if (utmSource || utmCampaign) {
+      return 'UTM: ' + (utmSource || 'unknown') + (utmCampaign ? ' / ' + utmCampaign : '');
+    }
+
+    if (document.referrer) {
+      return 'Referrer: ' + document.referrer;
+    }
+
+    return 'Direct / unknown';
+  }
+
+  (function () {
+    var source = detectVisitSource();
+    var params = new URLSearchParams(window.location.search);
+    var car = params.get('car');
+    var message = 'Homepage visited — ' + source;
+    if (car) message += ' — car: ' + decodeURIComponent(car);
+    homepageNtfyPing(message);
+  })();
+
+  function ctaClickPing(buttonLabel) {
+    var message = buttonLabel + ' clicked — ' + detectVisitSource();
+    var topicUrl = 'https://ntfy.sh/' + HOMEPAGE_NTFY_TOPIC;
+    if (navigator.sendBeacon) {
+      navigator.sendBeacon(topicUrl, message);
+    } else {
+      fetch(topicUrl, { method: 'POST', body: message, keepalive: true }).catch(function () {});
+    }
+    return true;
+  }
+
+  // ---------- Hero background video manager ----------
+  // Only one video should be decoding at a time. The looping Aston Martin
+  // behind the hero text pauses while the lightbox is open and whenever the
+  // hero is scrolled out of view, then resumes automatically.
+  var bgState = { visible: true, modalOpen: false };
+
+  function syncBgVideo() {
+    var bg = document.querySelector('.hero-bg-video');
+    if (!bg) return;
+    if (bgState.visible && !bgState.modalOpen) {
+      bg.play().catch(function () {});
+    } else {
+      bg.pause();
+    }
+  }
+
+  (function () {
+    var hero = document.querySelector('header.hero');
+    if (!hero || !('IntersectionObserver' in window)) return;
+    new IntersectionObserver(function (entries) {
+      bgState.visible = entries[0].isIntersecting;
+      syncBgVideo();
+    }, { threshold: 0.05 }).observe(hero);
+  })();
+
+  // ---------- Video lightbox ----------
+  // Clicking any proof card opens the same clip larger and centred in an
+  // overlay, rather than playing inline at card size or going full-page.
+  function openVideoModal(cardEl) {
+    var sourceVideo = cardEl.querySelector('video');
+    if (!sourceVideo) return;
+
+    var src = (sourceVideo.getAttribute('src') || '').split('#')[0];
+    var start = parseFloat(cardEl.dataset.start) || 0;
+    var modal = document.getElementById('videoModal');
+    var player = document.getElementById('videoModalPlayer');
+
+    player.src = start ? src + '#t=' + start : src;
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    document.body.classList.add('modal-open');
+    bgState.modalOpen = true;
+    syncBgVideo();
+
+    if (start) player.currentTime = start;
+    player.play().catch(function () {});
+
+    homepageNtfyPing('Video opened — ' + (cardEl.dataset.label || 'unlabeled'));
+  }
+
+  function closeVideoModal() {
+    var modal = document.getElementById('videoModal');
+    var player = document.getElementById('videoModalPlayer');
+    player.pause();
+    player.removeAttribute('src');
+    player.load();
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+    document.body.classList.remove('modal-open');
+    bgState.modalOpen = false;
+    syncBgVideo();
+  }
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeVideoModal();
+  });
+
+  // ---------- Tracked vs generic closing CTA ----------
+  // A tracked outreach link should append ?car=<model>, e.g.
+  // realmotionvideo.com/?car=Aston%20Martin%20DB12&src=email-phantom
+  (function () {
+    var params = new URLSearchParams(window.location.search);
+    var car = params.get('car');
+    if (!car) return; // generic visitor — leave the default copy/button as-is
+
+    var carName = decodeURIComponent(car);
+    var headline = document.getElementById('cta-headline');
+    var sub = document.getElementById('cta-sub');
+    var button = document.getElementById('cta-button');
+
+    headline.textContent = 'We already have the ' + carName + ' you came here about.';
+    sub.textContent = "No contract, no filming — just say the word and we'll build your complimentary film.";
+    button.textContent = 'REQUEST MY FILM →';
+    button.setAttribute('href', 'claim.html?car=' + encodeURIComponent(carName));
+  })();
+</script>
+
+<script>
+  // ---------- Exit-intent pilot CTA ----------
+  // Tracked outreach visitors only (?src=<opaque id>). Separate from the visit-tracking
+  // script above; it never sends a "Homepage visited" ping and never prints the src.
+  (function () {
+    'use strict';
+
+    // Tunable rules (see the hand-off notes for what each one does)
+    var CFG = {
+      minDwellMs: 20000,              // time on page before the CTA can appear
+      minScrollDepth: 0.35,           // ...and they must have scrolled this far (bottom of viewport / page), or opened a video
+      dismissSuppressMs: 72 * 3600 * 1000, // quiet period after "Not yet"
+      maxShowsPerSrc: 2,              // lifetime cap per tracked link on this browser
+      awayMinMs: 4000,                // touch: min time away before "welcome back" counts
+      sendTimeoutMs: 7000
+    };
+
+    var STORE = 'rmv_exit_v1_';
+    var TOPIC = (typeof HOMEPAGE_NTFY_TOPIC !== 'undefined') ? HOMEPAGE_NTFY_TOPIC : 'rmv-homepage-visits-8f2k1x';
+
+    // ---- who is this? ----
+    var params = new URLSearchParams(window.location.search);
+    var src = (params.get('src') || '').trim();
+    if (!/^[A-Za-z0-9][A-Za-z0-9_-]{3,63}$/.test(src)) return; // untracked visitor: nothing runs
+
+    // Vehicle label is optional and only ever comes from ?car=. Whitelisted, rendered as text.
+    function cleanCar(v) {
+      if (!v) return '';
+      v = v.replace(/\s+/g, ' ').trim();
+      if (v.length < 2 || v.length > 60) return '';
+      try { if (!/^[\p{L}\p{N} .,'’\-\/&+()]+$/u.test(v)) return ''; } catch (e) { return ''; }
+      return v;
+    }
+    var car = cleanCar(params.get('car'));
+
+    // ---- first-party state (localStorage / sessionStorage, no cookies; memory fallback) ----
+    var memL = {}, memS = {};
+    function get(store, mem, k) {
+      var v = null;
+      try { var raw = window[store].getItem(k); v = raw ? JSON.parse(raw) : null; } catch (e) { v = null; }
+      return v || mem[k] || null;
+    }
+    function put(store, mem, k, v) {
+      mem[k] = v;
+      try { window[store].setItem(k, JSON.stringify(v)); } catch (e) {}
+    }
+    function lget(k) { return get('localStorage', memL, k); }
+    function lput(k, v) { put('localStorage', memL, k, v); }
+    function sget(k) { return get('sessionStorage', memS, k); }
+    function sput(k, v) { put('sessionStorage', memS, k, v); }
+
+    var KEY = STORE + src;
+    var DEVICE_KEY = STORE + 'requested';
+    var rec = lget(KEY) || { n: 0, shown: 0, dismissedAt: 0, requestedAt: 0 };
+    var sess = sget(KEY) || { counted: false, shown: false };
+    if (!sess.counted) { rec.n += 1; sess.counted = true; lput(KEY, rec); sput(KEY, sess); }
+
+    var startedAt = Date.now();
+    var ui = { open: false, state: 'idle', trigger: '' };
+    var requestId = null;
+    var engaged = { scrolled: false, video: false };
+    var maxDepth = 0;
+
+    // ---- elements ----
+    var root = document.getElementById('exitCta');
+    if (!root) return;
+    var elTitle = document.getElementById('exitCtaTitle');
+    var elAsk = document.getElementById('exitCtaAsk');
+    var elDone = document.getElementById('exitCtaDone');
+    var elErr = document.getElementById('exitCtaErr');
+    var btnYes = document.getElementById('exitCtaYes');
+    var btnNo = document.getElementById('exitCtaNo');
+    var btnX = document.getElementById('exitCtaX');
+    var btnBack = document.getElementById('exitCtaBack');
+    var lightbox = document.getElementById('videoModal');
+
+    function em(text, keep) { var e = document.createElement('em'); e.textContent = text; if (keep) e.className = 'exit-keep'; return e; }
+    function renderHeadline() {
+      elTitle.textContent = '';
+      if (car) {
+        elTitle.appendChild(document.createTextNode('Want us to make the '));
+        elTitle.appendChild(em(car));
+        elTitle.appendChild(document.createTextNode(' film?'));
+      } else {
+        elTitle.appendChild(document.createTextNode('Want to see your '));
+        elTitle.appendChild(em('car in motion', true));
+        elTitle.appendChild(document.createTextNode('?'));
+      }
+    }
+
+    // ---- events ----
+    // Plain-text POST to the existing ntfy topic. First line identifies the event type.
+    var EVENTS = {
+      EXIT_CTA_SHOWN:     { title: 'RMV exit CTA shown',     priority: 1, tags: 'eyes' },
+      EXIT_CTA_DISMISSED: { title: 'RMV exit CTA dismissed', priority: 1, tags: 'wave' },
+      PILOT_REQUEST:      { title: 'RMV PILOT REQUEST',      priority: 4, tags: 'fire' }
+    };
+
+    function body(type, extra) {
+      var lines = ['RMV_EVENT=' + type, 'src=' + src];
+      if (extra && extra.rid) lines.push('rid=' + extra.rid);
+      if (car) lines.push('car=' + car);
+      lines.push('trigger=' + ui.trigger);
+      if (extra && extra.how) lines.push('how=' + extra.how);
+      lines.push('visits=' + rec.n);
+      lines.push('dwell_s=' + Math.round((Date.now() - startedAt) / 1000));
+      lines.push('ts=' + new Date().toISOString());
+      return lines.join('\n');
+    }
+
+    function post(type, extra, timeoutMs) {
+      var m = EVENTS[type];
+      var url = 'https://ntfy.sh/' + TOPIC +
+        '?title=' + encodeURIComponent(m.title) + '&priority=' + m.priority + '&tags=' + m.tags;
+      var ctl = ('AbortController' in window) ? new AbortController() : null;
+      var timer = (ctl && timeoutMs) ? setTimeout(function () { ctl.abort(); }, timeoutMs) : null;
+      return fetch(url, { method: 'POST', body: body(type, extra), keepalive: true, signal: ctl ? ctl.signal : undefined })
+        .then(function (res) { if (timer) clearTimeout(timer); return res.ok; })
+        .catch(function () { if (timer) clearTimeout(timer); return false; });
+    }
+
+    function makeId() {
+      var rnd = '';
+      try {
+        var a = new Uint8Array(5); crypto.getRandomValues(a);
+        rnd = Array.prototype.map.call(a, function (b) { return ('0' + b.toString(16)).slice(-2); }).join('');
+      } catch (e) { rnd = Math.random().toString(16).slice(2, 12); }
+      return 'p' + Date.now().toString(36) + rnd;
+    }
+
+    // ---- show / hide ----
+    var lastFocus = null, prevOverflow = '';
+
+    function lightboxOpen() { return !!(lightbox && lightbox.classList.contains('active')); }
+
+    function eligible() {
+      rec = lget(KEY) || rec;
+      if (ui.open) return false;
+      if (document.visibilityState !== 'visible') return false;
+      if (lget(DEVICE_KEY) || rec.requestedAt) return false;       // already asked for a pilot
+      if (sess.shown) return false;                                // once per visit
+      if (rec.shown >= CFG.maxShowsPerSrc) return false;           // lifetime cap
+      if (rec.dismissedAt && (Date.now() - rec.dismissedAt) < CFG.dismissSuppressMs) return false;
+      if (lightboxOpen()) return false;                            // never over a playing video
+      if (Date.now() - startedAt < CFG.minDwellMs) return false;   // not on arrival
+      if (!(engaged.scrolled || engaged.video)) return false;      // has actually looked at the page
+      return true;
+    }
+
+    function setBusy(on) {
+      btnYes.disabled = on;
+      btnYes.textContent = on ? 'SENDING…' : 'YES — MAKE MY COMPLIMENTARY FILM';
+      btnYes.setAttribute('aria-busy', on ? 'true' : 'false');
+    }
+
+    function openCta() {
+      lastFocus = document.activeElement;
+      prevOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      document.body.classList.add('modal-open');
+      if (typeof bgState !== 'undefined') { bgState.modalOpen = true; if (typeof syncBgVideo === 'function') syncBgVideo(); }
+      root.hidden = false;
+      requestAnimationFrame(function () { requestAnimationFrame(function () { root.classList.add('is-visible'); }); });
+      btnYes.focus({ preventScroll: true });
+    }
+
+    function closeCta() {
+      root.classList.remove('is-visible');
+      ui.open = false;
+      document.body.style.overflow = prevOverflow;
+      document.body.classList.remove('modal-open');
+      if (typeof bgState !== 'undefined') { bgState.modalOpen = false; if (typeof syncBgVideo === 'function') syncBgVideo(); }
+      setTimeout(function () { if (!ui.open) root.hidden = true; }, 280);
+      if (lastFocus && lastFocus.focus) { try { lastFocus.focus({ preventScroll: true }); } catch (e) {} }
+    }
+
+    function show(trigger) {
+      if (!eligible()) return;
+      ui.open = true;
+      ui.trigger = trigger;
+      ui.state = 'idle';
+      sess.shown = true; sput(KEY, sess);
+      rec.shown += 1; lput(KEY, rec);
+      renderHeadline();
+      elAsk.hidden = false; elDone.hidden = true; elErr.hidden = true;
+      setBusy(false);
+      openCta();
+      post('EXIT_CTA_SHOWN', {}, 0);
+    }
+
+    function dismiss(how) {
+      if (!ui.open || ui.state === 'sending') return;
+      if (ui.state !== 'done') {
+        rec.dismissedAt = Date.now(); lput(KEY, rec);
+        post('EXIT_CTA_DISMISSED', { how: how }, 0);
+      }
+      closeCta();
+    }
+
+    function requestPilot() {
+      if (ui.state !== 'idle') return;          // blocks double-clicks / repeat taps
+      ui.state = 'sending';
+      elErr.hidden = true;
+      setBusy(true);
+      requestId = requestId || makeId();        // same rid on retry, so a retry can be de-duplicated
+      post('PILOT_REQUEST', { rid: requestId }, CFG.sendTimeoutMs).then(function (ok) {
+        if (ok) {
+          ui.state = 'done';
+          var t = Date.now();
+          rec.requestedAt = t; lput(KEY, rec);
+          lput(DEVICE_KEY, { at: t });
+          elAsk.hidden = true; elDone.hidden = false;
+          document.getElementById('exitCtaDoneTitle').focus({ preventScroll: true });
+        } else {
+          ui.state = 'idle';
+          setBusy(false);
+          elErr.hidden = false;
+        }
+      });
+    }
+
+    btnYes.addEventListener('click', requestPilot);
+    btnNo.addEventListener('click', function () { dismiss('not_yet'); });
+    btnX.addEventListener('click', function () { dismiss('close'); });
+    btnBack.addEventListener('click', function () { dismiss('done'); });
+    root.addEventListener('click', function (e) { if (e.target === root) dismiss('backdrop'); });
+
+    document.addEventListener('keydown', function (e) {
+      if (!ui.open) return;
+      if (e.key === 'Escape') { dismiss('escape'); return; }
+      if (e.key === 'Tab') {                    // keep focus inside the dialog
+        var f = Array.prototype.filter.call(
+          root.querySelectorAll('button, a[href]'),
+          function (n) { return !n.disabled && n.offsetParent !== null; });
+        if (!f.length) return;
+        var first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        else if (!root.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+      }
+    });
+
+    // ---- engagement ----
+    function docH() { return Math.max(document.documentElement.scrollHeight, 1); }
+
+    if (lightbox && 'MutationObserver' in window) {
+      new MutationObserver(function () { if (lightboxOpen()) engaged.video = true; })
+        .observe(lightbox, { attributes: true, attributeFilter: ['class'] });
+    }
+
+    var fine = !!(window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches);
+
+    // ---- desktop trigger: pointer leaves through the top of the viewport ----
+    if (fine) {
+      document.addEventListener('mouseout', function (e) {
+        if (!e.relatedTarget && e.clientY <= 5) show('desktop_exit');
+      });
+    }
+
+    // ---- touch triggers ----
+    var lastAnchorAt = 0, samples = [];
+    document.addEventListener('click', function (e) {
+      var a = e.target && e.target.closest ? e.target.closest('a[href^="#"]') : null;
+      if (a) lastAnchorAt = Date.now();         // in-page links smooth-scroll up; that is not leaving
+    }, true);
+
+    window.addEventListener('scroll', function () {
+      var y = window.scrollY, vh = window.innerHeight, t = Date.now();
+      var depth = (y + vh) / docH();
+      if (depth > maxDepth) maxDepth = depth;
+      if (maxDepth >= CFG.minScrollDepth) engaged.scrolled = true;
+      if (fine) return;
+
+      // fast upward flick, from deep in the page to the top quarter (heading for the address bar)
+      samples.push({ y: y, t: t });
+      while (samples.length && t - samples[0].t > 600) samples.shift();
+      var up = samples.length ? samples[0].y - y : 0;
+      var scrollable = Math.max(docH() - vh, 1);
+      if (up >= vh * 0.3 && maxDepth >= 0.5 && (y / scrollable) <= 0.25 && (t - lastAnchorAt) > 1500) {
+        samples = [];
+        show('mobile_scroll_up');
+      }
+    }, { passive: true });
+
+    // touch: coming back after leaving the tab/app is a decision moment
+    if (!fine) {
+      var hiddenAt = 0;
+      document.addEventListener('visibilitychange', function () {
+        if (document.visibilityState === 'hidden') { hiddenAt = Date.now(); return; }
+        if (hiddenAt && Date.now() - hiddenAt >= CFG.awayMinMs) {
+          setTimeout(function () { show('mobile_return'); }, 800);
+        }
+        hiddenAt = 0;
+      });
+    }
+  })();
+</script>
+</body>
+</html>
