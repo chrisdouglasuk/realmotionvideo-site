@@ -1224,7 +1224,12 @@
 
   function detectVisitSource() {
     var params = new URLSearchParams(window.location.search);
+    var ref = (params.get('ref') || '').trim();
     var src = params.get('src');
+    if (ref) {
+      if (params.getAll('ref').length !== 1 || src || ref.length > 96 || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(ref)) return 'Direct / unknown';
+      return 'Dealer reference: ' + ref;
+    }
     if (src) return 'Tagged link: ' + src;
 
     var utmSource = params.get('utm_source');
@@ -1245,7 +1250,7 @@
     var params = new URLSearchParams(window.location.search);
     var car = params.get('car');
     var message = 'Homepage visited — ' + source;
-    if (car) message += ' — car: ' + decodeURIComponent(car);
+    if (car) message += ' — car: ' + car.replace(/[\r\n]/g, ' ').slice(0, 200);
     homepageNtfyPing(message);
   })();
 
@@ -1370,7 +1375,13 @@
     // ---- who is this? ----
     var params = new URLSearchParams(window.location.search);
     var src = (params.get('src') || '').trim();
-    if (!/^[A-Za-z0-9][A-Za-z0-9_-]{3,63}$/.test(src)) return; // untracked visitor: nothing runs
+    var ref = (params.get('ref') || '').trim();
+    var referenceField = 'src';
+    if (ref) {
+      if (params.getAll('ref').length !== 1 || src || ref.length > 96 || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(ref)) return;
+      src = ref;
+      referenceField = 'ref';
+    } else if (!/^[A-Za-z0-9][A-Za-z0-9_-]{3,63}$/.test(src)) return; // untracked visitor: nothing runs
 
     // Vehicle label is optional and only ever comes from ?car=. Whitelisted, rendered as text.
     function cleanCar(v) {
@@ -1398,7 +1409,7 @@
     function sget(k) { return get('sessionStorage', memS, k); }
     function sput(k, v) { put('sessionStorage', memS, k, v); }
 
-    var KEY = STORE + src;
+    var KEY = STORE + (referenceField === 'ref' ? 'ref:' : '') + src;
     var DEVICE_KEY = STORE + 'requested';
     var rec = lget(KEY) || { n: 0, shown: 0, dismissedAt: 0, requestedAt: 0 };
     var sess = sget(KEY) || { counted: false, shown: false };
@@ -1446,7 +1457,7 @@
     };
 
     function body(type, extra) {
-      var lines = ['RMV_EVENT=' + type, 'src=' + src];
+      var lines = ['RMV_EVENT=' + type, referenceField + '=' + src];
       if (extra && extra.rid) lines.push('rid=' + extra.rid);
       if (car) lines.push('car=' + car);
       lines.push('trigger=' + ui.trigger);
