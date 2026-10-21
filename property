@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RealMotionVideo — Luxury Property Films</title>
+<meta name="description" content="Cinematic walkthrough films created from the listing photography you already have. No crew, no reshoot, no extra visit to the property.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://realmotionvideo.com/property">
+<meta property="og:title" content="Your listing photography, in motion.">
+<meta property="og:description" content="Cinematic walkthrough films created from the photography you already have.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0c0d10; --bg2:#13151a; --line:#262a33;
+  --text:#f2efe9; --muted:#a7a49c; --gold:#c9a56a; --gold-ink:#16120a;
+  --serif:'Cormorant Garamond',Georgia,serif; --sans:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+img,video{display:block;max-width:100%}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 16px}
+@media(min-width:720px){.wrap{padding:0 32px}}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+/* nav */
+.nav{display:flex;justify-content:space-between;align-items:center;padding:18px 0}
+.brand{font-family:var(--serif);font-size:22px;font-weight:600;letter-spacing:.02em;text-decoration:none}
+.brand i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--gold);margin-right:10px;vertical-align:middle}
+.tag{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+
+/* buttons */
+.btn{display:inline-block;background:var(--gold);color:var(--gold-ink);font-weight:600;font-size:14px;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;padding:16px 28px;border:0;border-radius:6px;cursor:pointer;font-family:var(--sans);transition:filter .2s,transform .2s}
+.btn:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.btn[disabled]{opacity:.6;cursor:wait}
+.btn-block{width:100%;text-align:center}
+
+/* hero */
+.hero{padding:8px 0 56px;text-align:center}
+.hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(38px,7vw,72px);line-height:1.05;margin:18px auto 16px;max-width:15ch}
+.hero h1 em{color:var(--gold);font-style:italic}
+.hero p.sub{color:var(--muted);max-width:54ch;margin:0 auto 24px;font-size:17px}
+.player{position:relative;background:var(--bg2);border:1px solid var(--line);border-radius:14px;overflow:hidden;aspect-ratio:16/9}
+.player video,.player .ph{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ph{display:flex;align-items:center;justify-content:center;background:
+  radial-gradient(1200px 500px at 70% 20%,#2a2418 0,transparent 60%),linear-gradient(160deg,#171a21,#0c0d10);color:var(--muted);font-size:13px;letter-spacing:.14em;text-transform:uppercase;text-align:center;padding:16px}
+.disclosure{font-size:12.5px;color:var(--muted);margin:12px auto 0;max-width:62ch}
+.hero .btn{margin-top:26px}
+
+/* sections */
+section{padding:64px 0;border-top:1px solid var(--line)}
+.eyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+h2{font-family:var(--serif);font-weight:500;font-size:clamp(30px,5vw,46px);line-height:1.1;margin-bottom:12px}
+.lead{color:var(--muted);max-width:60ch;margin-bottom:28px}
+.center{text-align:center}.center .lead{margin-left:auto;margin-right:auto}
+
+.feat-meta{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:12px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+
+/* before/after */
+.pairs{display:grid;gap:20px}
+.pair{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:12px}
+.pair-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.shot{position:relative;aspect-ratio:4/3;border-radius:8px;overflow:hidden;background:#1b1e25}
+.shot img,.shot video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.shot .ph{font-size:10px}
+.shot button.play{position:absolute;inset:0;width:100%;height:100%;background:rgba(0,0,0,.18);border:0;cursor:pointer;color:#fff;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.shot button.play:hover{background:rgba(0,0,0,.05)}
+.shot button.play span{width:52px;height:52px;border-radius:50%;background:rgba(12,13,16,.72);border:1px solid rgba(255,255,255,.35);display:flex;align-items:center;justify-content:center;font-size:18px;padding-left:3px}
+.cap{display:flex;justify-content:space-between;font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:10px 4px 2px;color:var(--muted)}
+.cap b{color:var(--text);font-weight:500}
+.note{margin-top:20px;color:var(--muted);font-size:14px}
+
+/* benefits */
+.cards{display:grid;gap:16px}
+.card{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:24px}
+.card h3{font-family:var(--serif);font-size:24px;font-weight:600;margin-bottom:6px}
+.card p{color:var(--muted);font-size:15px}
+
+/* steps */
+.steps{display:grid;gap:28px}
+.step .n{font-family:var(--serif);font-size:44px;color:var(--gold);line-height:1}
+.step h3{font-size:18px;font-weight:600;margin:8px 0 4px}
+.step p{color:var(--muted);font-size:15px}
+
+/* promise */
+.promise{border:1px solid var(--line);border-left:3px solid var(--gold);background:var(--bg2);border-radius:8px;padding:24px;max-width:760px}
+.promise p{color:var(--muted)}
+
+/* form */
+.formwrap{max-width:620px;margin:0 auto}
+form{display:grid;gap:14px;margin-top:20px;text-align:left}
+label{font-size:13px;color:var(--muted);display:block;margin-bottom:6px}
+input[type=text],input[type=email],input[type=tel],input[type=url]{width:100%;background:var(--bg2);border:1px solid var(--line);color:var(--text);border-radius:8px;padding:14px;font:inherit;font-size:16px}
+input:focus{border-color:var(--gold);outline:none}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--muted)}
+.check input{margin-top:4px;accent-color:var(--gold);width:18px;height:18px;flex:none}
+.hp{position:absolute;left:-9999px;height:0;overflow:hidden}
+.fine{font-size:13px;color:var(--muted);text-align:center}
+.err{color:#e98a7a;font-size:14px;min-height:1.2em}
+.success{display:none;text-align:center;padding:40px 16px}
+.success h3{font-family:var(--serif);font-size:34px;font-weight:500;margin-bottom:8px}
+.success p{color:var(--muted)}
+
+footer{padding:40px 0 56px;border-top:1px solid var(--line);color:var(--muted);font-size:14px;text-align:center}
+footer a{color:var(--gold);text-decoration:none}
+
+@media(min-width:720px){
+  .cards{grid-template-columns:repeat(2,1fr)}
+  .steps{grid-template-columns:repeat(3,1fr);gap:40px}
+  .pairs{grid-template-columns:repeat(3,1fr)}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn{transition:none}}
+</style>
+</head>
+<body id="top">
+
+<div class="wrap">
+  <header class="nav">
+    <a class="brand" href="/"><i></i>RealMotionVideo</a>
+    <span class="tag">Luxury property films</span>
+  </header>
+
+  <!-- 1. HERO -->
+  <div class="hero">
+    <h1>Your listing photography, <em>in motion.</em></h1>
+    <p class="sub">Cinematic walkthrough films created from the photography you already have. No camera crew. No reshoot. No extra visit to the property.</p>
+
+    <div class="player" id="heroPlayer">
+      <div class="ph" id="heroPh">NW1 film · add hero video in CONFIG</div>
+    </div>
+    <p class="disclosure">AI-assisted cinematic visualisation created from existing listing photographs. Not filmed on location.</p>
+
+    <a class="btn" href="#sample" data-track="cta_hero">Send us a listing. See it in motion.</a>
+  </div>
+</div>
+
+<main>
+  <!-- 2. FEATURED FILM -->
+  <section>
+    <div class="wrap">
+      <div class="eyebrow">The featured project</div>
+      <h2>A London NW1 property.<br>Reimagined in motion.</h2>
+      <p class="lead">Created entirely from existing listing photography. No on-site filming.</p>
+      <div class="player" id="featPlayer">
+        <div class="ph" id="featPh">Full walkthrough · add film in CONFIG</div>
+      </div>
+      <div class="feat-meta"><span>London · NW1</span><span>Cinematic walkthrough</span></div>
+    </div>
+  </section>
+
+  <!-- 3. BEFORE / AFTER -->
+  <section>
+    <div class="wrap">
+      <div class="center">
+        <div class="eyebrow">See how it's made</div>
+        <h2>One photograph. A completely different experience.</h2>
+        <p class="lead">Tap any original to watch the film clip made from that exact photograph.</p>
+      </div>
+      <div class="pairs" id="pairs"></div>
+      <p class="note center">Same room. Same features. Every clip checked against the original photograph.</p>
+    </div>
+  </section>
+
+  <!-- 4. WHY AN AGENT SHOULD CARE -->
+  <section>
+    <div class="wrap">
+      <div class="center">
+        <div class="eyebrow">Why agents use it</div>
+        <h2>A new marketing asset from photography you already own.</h2>
+      </div>
+      <div class="cards" style="margin-top:28px">
+        <div class="card"><h3>Win the instruction</h3><p>Show a vendor a film of their own home at the pitch meeting.</p></div>
+        <div class="card"><h3>No second visit</h3><p>We work from photography already taken for the listing. No access, no filming appointment.</p></div>
+        <div class="card"><h3>Present to remote buyers</h3><p>A richer first impression for overseas and relocating buyers researching from a distance.</p></div>
+        <div class="card"><h3>Ready for your channels</h3><p>Prepared for your website, social media and compatible property portals.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. HOW IT WORKS -->
+  <section>
+    <div class="wrap">
+      <div class="center"><div class="eyebrow">How it works</div><h2>Three simple steps</h2></div>
+      <div class="steps" style="margin-top:32px">
+        <div class="step"><div class="n">01</div><h3>Send us a listing</h3><p>A listing URL or your existing photography, with permission to use the images.</p></div>
+        <div class="step"><div class="n">02</div><h3>We create your film</h3><p>We animate, edit and check the result against the original photographs.</p></div>
+        <div class="step"><div class="n">03</div><h3>You review and approve</h3><p>Nothing is released until you have signed it off.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. ACCURACY PROMISE -->
+  <section>
+    <div class="wrap">
+      <div class="eyebrow">Our accuracy promise</div>
+      <div class="promise">
+        <p>We never add, remove or restyle features. Every clip is checked against the original photography before you see it. If something doesn't match, we regenerate it.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. SAMPLE FORM -->
+  <section id="sample">
+    <div class="wrap">
+      <div class="formwrap">
+        <div class="center">
+          <div class="eyebrow">Free sample</div>
+          <h2>Send us one of your listings.</h2>
+          <p class="lead">We'll make a short sample film from your best photograph, so you can judge the result on your own property.</p>
+        </div>
+
+        <form id="sampleForm" novalidate>
+          <div><label for="agency">Agency name</label><input type="text" id="agency" name="agency" required autocomplete="organization"></div>
+          <div><label for="name">Your name</label><input type="text" id="name" name="name" required autocomplete="name"></div>
+          <div><label for="email">Work email</label><input type="email" id="email" name="email" required autocomplete="email"></div>
+          <div><label for="phone">Phone (optional)</label><input type="tel" id="phone" name="phone" autocomplete="tel"></div>
+          <div><label for="listing">Listing URL</label><input type="url" id="listing" name="listing" required placeholder="https://"></div>
+          <label class="check"><input type="checkbox" id="permission" name="permission"><span>I confirm I have permission to use the photography on this listing.</span></label>
+          <div class="hp" aria-hidden="true"><label for="website">Leave blank</label><input type="text" id="website" name="website" tabindex="-1" autocomplete="off"></div>
+          <div class="err" id="err" role="alert"></div>
+          <button class="btn btn-block" type="submit" id="submitBtn" data-track="cta_submit">Request your free 10-second sample</button>
+          <p class="fine">One listing. No obligation. Full cinematic walkthrough available after your sample.<br>Limited samples each week.</p>
+        </form>
+
+        <div class="success" id="success" role="status">
+          <h3>Request received</h3>
+          <p>Thank you. We'll review your listing and come back to you personally.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>RealMotionVideo · <a href="mailto:chris@realmotionvideo.com">chris@realmotionvideo.com</a> · <a href="tel:+447398225970">07398 225970</a></p>
+    <p style="margin-top:8px"><a href="/">Back to the main site</a></p>
+  </div>
+</footer>
+
+<script>
+/* ===== CONFIG: swap media here, nothing else needs touching ===== */
+const CONFIG = {
+  // R2 videos live at videos.realmotionvideo.com (never in the repo)
+  heroVideo:   "https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/London-NW1.mp4",  // e.g. https://videos.realmotionvideo.com/property/nw1-hero.mp4
+  heroPoster:  "",  // e.g. /img/property/nw1-hero.jpg
+  featVideo:   "https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/London-NW1.mp4",  // e.g. https://videos.realmotionvideo.com/property/nw1-full.mp4
+  featPoster:  "",
+  pairs: [
+    { label: "Exterior",  photo: "", clip: "" },
+    { label: "Living area", photo: "", clip: "" },
+    { label: "Principal bedroom", photo: "", clip: "" }
+    // photo: original listing photo. clip: 5s clip from that exact photo.
+    // Only include a pair if the clip preserves the room, architecture, finishes and views.
+  ],
+  // Reuse the existing n8n intake pattern. Confirm the Airtable target table before going live.
+  webhook: "https://vmi3486297.contaboserver.net/webhook/property-sample",
+  // Reuse the existing ntfy topic/helper from the dealer pilot template. Empty = tracking off.
+  ntfyTopic: ""
+};
+/* ================================================================= */
+
+const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function track(msg){
+  try{
+    if(!CONFIG.ntfyTopic) return;
+    fetch('https://ntfy.sh/'+CONFIG.ntfyTopic,{method:'POST',body:msg,keepalive:true}).catch(()=>{});
+  }catch(e){}
+}
+
+/* hero */
+(function(){
+  const box=document.getElementById('heroPlayer');
+  if(!CONFIG.heroVideo) return;
+  document.getElementById('heroPh').remove();
+  if(reduce){
+    if(CONFIG.heroPoster){const i=new Image();i.src=CONFIG.heroPoster;i.alt='London NW1 property';i.style.cssText='position:absolute;inset:0;width:100%;height:100%;object-fit:cover';box.appendChild(i);}
+    return;
+  }
+  const v=document.createElement('video');
+  v.src=CONFIG.heroVideo; if(CONFIG.heroPoster) v.poster=CONFIG.heroPoster;
+  v.muted=true; v.loop=true; v.autoplay=true; v.playsInline=true; v.preload='auto';
+  v.setAttribute('aria-label','London NW1 property film preview');
+  box.appendChild(v);
+  v.play().catch(()=>{});
+})();
+
+/* featured film */
+(function(){
+  const box=document.getElementById('featPlayer');
+  if(!CONFIG.featVideo) return;
+  document.getElementById('featPh').remove();
+  const v=document.createElement('video');
+  v.src=CONFIG.featVideo; if(CONFIG.featPoster) v.poster=CONFIG.featPoster;
+  v.controls=true; v.playsInline=true; v.preload='none';
+  v.style.cssText='position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#000';
+  v.addEventListener('play',()=>track('RMV property: full film played'),{once:true});
+  box.appendChild(v);
+})();
+
+/* before / after pairs */
+(function(){
+  const root=document.getElementById('pairs');
+  const valid=CONFIG.pairs;
+  valid.forEach((p,i)=>{
+    const el=document.createElement('div'); el.className='pair';
+    const grid=document.createElement('div'); grid.className='pair-grid';
+
+    const a=document.createElement('div'); a.className='shot';
+    if(p.photo){
+      const img=new Image(); img.src=p.photo; img.alt='Original photograph: '+p.label; img.loading='lazy'; a.appendChild(img);
+    } else { a.innerHTML='<div class="ph">Original photo</div>'; }
+
+    const b=document.createElement('div'); b.className='shot';
+    if(p.clip){
+      const v=document.createElement('video'); v.src=p.clip; v.muted=true; v.loop=true; v.playsInline=true; v.preload='none';
+      v.setAttribute('aria-label','Film clip: '+p.label); b.appendChild(v);
+      const btn=document.createElement('button'); btn.className='play'; btn.type='button';
+      btn.setAttribute('aria-label','Play film clip: '+p.label);
+      btn.innerHTML='<span>&#9654;</span>';
+      const start=()=>{ v.play().catch(()=>{}); btn.style.display='none'; track('RMV property: clip played – '+p.label); };
+      btn.addEventListener('click',start);
+      a.style.cursor='pointer'; a.addEventListener('click',start);
+      v.addEventListener('click',()=>{ if(v.paused) v.play(); else v.pause(); });
+      b.appendChild(btn);
+    } else { b.innerHTML='<div class="ph">Film clip</div>'; }
+
+    grid.append(a,b);
+    const cap=document.createElement('div'); cap.className='cap';
+    cap.innerHTML='<span>Original photo</span><span><b>Cinematic motion</b></span>';
+    const title=document.createElement('div'); title.className='cap'; title.style.paddingTop='4px';
+    title.innerHTML='<span>'+p.label+'</span>';
+    el.append(grid,cap,title);
+    root.appendChild(el);
+  });
+})();
+
+/* tracking */
+track('RMV property: page view');
+document.querySelectorAll('[data-track="cta_hero"]').forEach(el=>el.addEventListener('click',()=>track('RMV property: hero CTA clicked')));
+
+/* form */
+(function(){
+  const form=document.getElementById('sampleForm'), err=document.getElementById('err'),
+        btn=document.getElementById('submitBtn'), ok=document.getElementById('success');
+  const FREE=/@(gmail|googlemail|yahoo|hotmail|outlook|live|icloud|aol|proton|protonmail)\./i;
+  form.addEventListener('submit',async e=>{
+    e.preventDefault(); err.textContent='';
+    const d=Object.fromEntries(new FormData(form).entries());
+    if(d.website) return;                                  // honeypot
+    if(!d.agency||!d.name||!d.email||!d.listing){err.textContent='Please complete the required fields.';return;}
+    if(!/^\S+@\S+\.\S+$/.test(d.email)){err.textContent='Please enter a valid email address.';return;}
+    if(FREE.test(d.email)){err.textContent='Please use your agency email address.';return;}
+    try{ new URL(d.listing); }catch(_){err.textContent='Please enter the full listing URL, starting with https://';return;}
+    if(!document.getElementById('permission').checked){err.textContent='Please confirm you have permission to use the photography.';return;}
+
+    btn.disabled=true; btn.textContent='Sending…';
+    const payload={
+      type:'property', agency:d.agency, name:d.name, email:d.email, phone:d.phone||'',
+      listing:d.listing, permission:true, source:'realmotionvideo.com/property',
+      submittedAt:new Date().toISOString()
+    };
+    try{
+      const r=await fetch(CONFIG.webhook,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+      if(!r.ok) throw new Error('bad status');
+      track('RMV property: sample request – '+d.agency);
+      form.style.display='none'; ok.style.display='block'; ok.scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'});
+    }catch(ex){
+      err.textContent='Something went wrong. Please email chris@realmotionvideo.com and we will sort it personally.';
+      btn.disabled=false; btn.textContent='Request your free 10-second sample';
+    }
+  });
+})();
+</script>
+</body>
+</html>
