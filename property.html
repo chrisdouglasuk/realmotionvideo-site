@@ -101,7 +101,12 @@ h2{font-family:var(--serif);font-weight:500;font-size:clamp(30px,5vw,46px);line-
 form{display:grid;gap:14px;margin-top:20px;text-align:left}
 label{font-size:13px;color:var(--muted);display:block;margin-bottom:6px}
 input[type=text],input[type=email],input[type=tel],input[type=url]{width:100%;background:var(--bg2);border:1px solid var(--line);color:var(--text);border-radius:8px;padding:14px;font:inherit;font-size:16px}
-input:focus{border-color:var(--gold);outline:none}
+select{width:100%;background:var(--bg2);border:1px solid var(--line);color:var(--text);border-radius:8px;padding:14px;font:inherit;font-size:16px}
+input:focus,select:focus{border-color:var(--gold);outline:none}
+.radios{display:flex;gap:20px;flex-wrap:wrap;font-size:15px}
+.radios label{display:flex;align-items:center;gap:8px;margin:0;color:var(--text);font-size:15px}
+.radios input{accent-color:var(--gold);width:18px;height:18px}
+.pricenote{margin-top:20px;text-align:center;color:var(--muted);font-size:14px}
 .check{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--muted)}
 .check input{margin-top:4px;accent-color:var(--gold);width:18px;height:18px;flex:none}
 .hp{position:absolute;left:-9999px;height:0;overflow:hidden}
@@ -208,8 +213,8 @@ footer a{color:var(--gold);text-decoration:none}
       <div class="center"><div class="eyebrow">How it works</div><h2>Three simple steps</h2></div>
       <div class="steps" style="margin-top:32px">
         <div class="step"><div class="n">01</div><h3>Send us a listing</h3><p>A listing URL or your existing photography, with permission to use the images.</p></div>
-        <div class="step"><div class="n">02</div><h3>We create your film</h3><p>We animate, edit and check the result against the original photographs.</p></div>
-        <div class="step"><div class="n">03</div><h3>You review and approve</h3><p>Nothing is released until you have signed it off.</p></div>
+        <div class="step"><div class="n">02</div><h3>We create your full film</h3><p>We animate, edit and check it against your photographs. It comes with our watermark.</p></div>
+        <div class="step"><div class="n">03</div><h3>You review. Pay only if happy.</h3><p>Love it? Pay and the watermark is removed. Not happy? You owe nothing.</p></div>
       </div>
     </div>
   </section>
@@ -224,14 +229,32 @@ footer a{color:var(--gold);text-decoration:none}
     </div>
   </section>
 
-  <!-- 8. SAMPLE FORM -->
+  <!-- 7. PRICING -->
+  <section>
+    <div class="wrap">
+      <div class="center">
+        <div class="eyebrow">Pricing</div>
+        <h2>You pay only if you love it.</h2>
+        <p class="lead">For exclusive instructions of £2 million and above. We take the risk, not you.</p>
+      </div>
+      <div class="cards">
+        <div class="card"><h3>No payment upfront</h3><p>We create your complete film first, with our watermark on it. It costs you nothing to receive and review.</p></div>
+        <div class="card"><h3>Check it properly</h3><p>Compare it with your photographs. If something is not right, we will revise it once.</p></div>
+        <div class="card"><h3>Happy? Then pay</h3><p>£500 to £1,000, agreed with you before we start. The watermark is removed as soon as you pay.</p></div>
+        <div class="card"><h3>Not happy? You owe nothing</h3><p>If you are unhappy in any way, there is no charge. If you publish the film, with or without the watermark, the fee is due.</p></div>
+      </div>
+      <p class="pricenote">Please pay, or take the watermarked film down, within 7 days of delivery. Limited films each week.</p>
+    </div>
+  </section>
+
+  <!-- 8. REQUEST FORM -->
   <section id="sample">
     <div class="wrap">
       <div class="formwrap">
         <div class="center">
-          <div class="eyebrow">Free sample</div>
+          <div class="eyebrow">Your film</div>
           <h2>Send us one of your listings.</h2>
-          <p class="lead">We'll make a short sample film from your best photograph, so you can judge the result on your own property.</p>
+          <p class="lead">We'll create the full film from your best photographs, with our watermark on it. You pay only if you are happy with it.</p>
         </div>
 
         <form id="sampleForm" novalidate>
@@ -240,16 +263,27 @@ footer a{color:var(--gold);text-decoration:none}
           <div><label for="email">Work email</label><input type="email" id="email" name="email" required autocomplete="email"></div>
           <div><label for="phone">Phone (optional)</label><input type="tel" id="phone" name="phone" autocomplete="tel"></div>
           <div><label for="listing">Listing URL</label><input type="url" id="listing" name="listing" required placeholder="https://"></div>
+          <div><label for="price">Asking price</label>
+            <select id="price" name="price" required>
+              <option value="">Select…</option>
+              <option>Under £2 million</option>
+              <option>£2 million to £3 million</option>
+              <option>£3 million to £5 million</option>
+              <option>£5 million or more</option>
+            </select></div>
+          <div><label>Is this an exclusive (sole agency) instruction?</label>
+            <div class="radios"><label><input type="radio" name="exclusive" value="yes"> Yes</label><label><input type="radio" name="exclusive" value="no"> No</label></div></div>
           <label class="check"><input type="checkbox" id="permission" name="permission"><span>I confirm I have permission to use the photography on this listing.</span></label>
+          <label class="check"><input type="checkbox" id="terms" name="terms"><span>I understand there is no charge to receive and review the film, and that the fee is due if I publish it.</span></label>
           <div class="hp" aria-hidden="true"><label for="website">Leave blank</label><input type="text" id="website" name="website" tabindex="-1" autocomplete="off"></div>
           <div class="err" id="err" role="alert"></div>
-          <button class="btn btn-block" type="submit" id="submitBtn" data-track="cta_submit">Request your free 10-second sample</button>
-          <p class="fine">One listing. No obligation. Full cinematic walkthrough available after your sample.<br>Limited samples each week.</p>
+          <button class="btn btn-block" type="submit" id="submitBtn" data-track="cta_submit">Request my film. Pay only if I love it.</button>
+          <p class="fine">No payment now. One listing at a time.<br>Limited films each week.</p>
         </form>
 
         <div class="success" id="success" role="status">
           <h3>Request received</h3>
-          <p>Thank you. We'll review your listing and come back to you personally.</p>
+          <p>Thank you. We'll check the listing and come back to you personally.</p>
         </div>
       </div>
     </div>
@@ -268,13 +302,13 @@ footer a{color:var(--gold);text-decoration:none}
   <div class="pop-card">
     <button class="pop-x" id="popX" type="button" aria-label="Close">&times;</button>
     <div class="eyebrow">What the data shows</div>
-    <h2 id="popTitle">Listings with video and tours can SELL FASTER.</h2>
+    <h2 id="popTitle">Listings with video and tours get seen more.</h2>
     <p class="pop-sub">Published figures from the property industry:</p>
     <div class="stat"><b>+65%</b><span>more views, and <strong>75% more saves</strong>, for listings with a 3D tour than without<small>Zillow listing data, March to February</small></span></div>
     <div class="stat"><b>79%</b><span>of home shoppers said they wanted the option to view a virtual tour<small>Zillow survey, February</small></span></div>
     <div class="stat q"><b>12%</b><span>Only 12% of sellers say their agent used video to market their home. <strong>While up to 79% ACTUALLY WANT them? You are missing out on a HUGE opportunity!</strong><small>NAR 2025 Home Buyers and Sellers Generational Trends Report</small></span></div>
     <p class="pop-note">These figures cover video and virtual tours in general. Sources: <a href="https://www.zillow.com/research/3d-tours-virtual-tools-popular-29650/" target="_blank" rel="noopener">Zillow Research</a>, <a href="https://cms.nar.realtor/sites/default/files/2025-03/2025-home-buyers-and-sellers-generational-trends-report-04-01-2025.pdf" target="_blank" rel="noopener">NAR</a>.</p>
-    <a class="btn btn-block" href="#sample" id="popCta">See your listing in motion</a>
+    <a class="btn btn-block" href="#sample" id="popCta">Get your film. Pay only if you love it.</a>
     <button class="pop-skip" id="popSkip" type="button">Not now</button>
   </div>
 </div>
@@ -405,22 +439,25 @@ document.querySelectorAll('[data-track="cta_hero"]').forEach(el=>el.addEventList
     if(!/^\S+@\S+\.\S+$/.test(d.email)){err.textContent='Please enter a valid email address.';return;}
     if(FREE.test(d.email)){err.textContent='Please use your agency email address.';return;}
     try{ new URL(d.listing); }catch(_){err.textContent='Please enter the full listing URL, starting with https://';return;}
+    if(!d.price){err.textContent='Please select the asking price.';return;}
+    if(!d.exclusive){err.textContent='Please tell us whether this is an exclusive instruction.';return;}
     if(!document.getElementById('permission').checked){err.textContent='Please confirm you have permission to use the photography.';return;}
+    if(!document.getElementById('terms').checked){err.textContent='Please confirm you understand the pricing terms.';return;}
 
     btn.disabled=true; btn.textContent='Sending…';
     const payload={
       type:'property', agency:d.agency, name:d.name, email:d.email, phone:d.phone||'',
-      listing:d.listing, permission:true, source:'realmotionvideo.com/property',
+      listing:d.listing, askingPrice:d.price, exclusive:d.exclusive, permission:true, termsAccepted:true, source:'realmotionvideo.com/property',
       submittedAt:new Date().toISOString()
     };
     try{
       const r=await fetch(CONFIG.webhook,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
       if(!r.ok) throw new Error('bad status');
-      track('RMV property: sample request – '+d.agency);
+      track('RMV property: film request – '+d.agency);
       form.style.display='none'; ok.style.display='block'; ok.scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'});
     }catch(ex){
       err.textContent='Something went wrong. Please email chris@realmotionvideo.com and we will sort it personally.';
-      btn.disabled=false; btn.textContent='Request your free 10-second sample';
+      btn.disabled=false; btn.textContent='Request my film. Pay only if I love it.';
     }
   });
 })();
