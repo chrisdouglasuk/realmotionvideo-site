@@ -43,7 +43,7 @@ a{color:inherit}
 
 /* hero */
 .hero{padding:8px 0 56px;text-align:center}
-.hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(38px,7vw,72px);line-height:1.05;margin:18px auto 16px;max-width:15ch}
+.hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(19px,5.4vw,64px);line-height:1.1;margin:18px auto 16px;white-space:nowrap}
 .hero h1 em{color:var(--gold);font-style:italic}
 .hero p.sub{color:var(--muted);max-width:54ch;margin:0 auto 24px;font-size:17px}
 .player{position:relative;background:var(--bg2);border:1px solid var(--line);border-radius:14px;overflow:hidden;aspect-ratio:16/9}
@@ -55,6 +55,7 @@ a{color:inherit}
 
 /* sections */
 section{padding:64px 0;border-top:1px solid var(--line)}
+.oneline{white-space:nowrap;font-size:clamp(14px,4.4vw,46px)}
 .eyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
 h2{font-family:var(--serif);font-weight:500;font-size:clamp(30px,5vw,46px);line-height:1.1;margin-bottom:12px}
 .lead{color:var(--muted);max-width:60ch;margin-bottom:28px}
@@ -107,6 +108,26 @@ input:focus{border-color:var(--gold);outline:none}
 .success h3{font-family:var(--serif);font-size:34px;font-weight:500;margin-bottom:8px}
 .success p{color:var(--muted)}
 
+
+/* stats popup */
+.pop{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(6,7,9,.78);backdrop-filter:blur(3px)}
+.pop.on{display:flex;animation:popin .35s ease}
+.pop-card{position:relative;width:100%;max-width:560px;max-height:calc(100vh - 32px);overflow:auto;background:var(--bg2);border:1px solid var(--line);border-top:3px solid var(--gold);border-radius:14px;padding:28px 20px 16px}
+@media(min-width:720px){.pop-card{padding:40px 40px 32px}}
+.pop-x{position:absolute;top:10px;right:12px;width:40px;height:40px;border:0;background:none;color:var(--muted);font-size:26px;line-height:1;cursor:pointer;border-radius:8px}
+.pop-x:hover{color:var(--text)}
+.pop h2{font-size:clamp(26px,5.4vw,34px);margin-bottom:6px}
+.pop .pop-sub{color:var(--muted);font-size:15px;margin-bottom:20px}
+.stat{display:flex;gap:14px;align-items:baseline;padding:10px 0;border-top:1px solid var(--line)}
+.stat b{flex:none;min-width:80px;font-family:var(--serif);font-size:32px;font-weight:600;color:var(--gold);line-height:1}
+.stat span{font-size:15px}
+.stat small{display:block;color:var(--muted);font-size:12px;margin-top:3px}
+.pop-note{font-size:12px;color:var(--muted);margin:14px 0 20px;line-height:1.5}
+.pop-note a{color:var(--gold)}
+.pop-skip{display:block;margin:12px auto 0;background:none;border:0;color:var(--muted);font:inherit;font-size:13px;cursor:pointer;text-decoration:underline}
+@keyframes popin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.pop.on{animation:none}}
+
 footer{padding:40px 0 56px;border-top:1px solid var(--line);color:var(--muted);font-size:14px;text-align:center}
 footer a{color:var(--gold);text-decoration:none}
 
@@ -131,12 +152,6 @@ footer a{color:var(--gold);text-decoration:none}
     <h1>Your listing photography, <em>in motion.</em></h1>
     <p class="sub">Cinematic walkthrough films created from the photography you already have. No camera crew. No reshoot. No extra visit to the property.</p>
 
-    <div class="player" id="heroPlayer">
-      <div class="ph" id="heroPh">NW1 film · add hero video in CONFIG</div>
-    </div>
-    <p class="disclosure">AI-assisted cinematic visualisation created from existing listing photographs. Not filmed on location.</p>
-
-    <a class="btn" href="#sample" data-track="cta_hero">Send us a listing. See it in motion.</a>
   </div>
 </div>
 
@@ -145,12 +160,14 @@ footer a{color:var(--gold);text-decoration:none}
   <section>
     <div class="wrap">
       <div class="eyebrow">The featured project</div>
-      <h2>A London NW1 property.<br>Reimagined in motion.</h2>
+      <h2 class="oneline">A London NW1 property. Reimagined in motion.</h2>
       <p class="lead">Created entirely from existing listing photography. No on-site filming.</p>
       <div class="player" id="featPlayer">
         <div class="ph" id="featPh">Full walkthrough · add film in CONFIG</div>
       </div>
       <div class="feat-meta"><span>London · NW1</span><span>Cinematic walkthrough</span></div>
+      <p class="disclosure" style="text-align:center">Full walkthrough created from existing listing photographs. Not filmed on location.</p>
+      <div class="center" style="margin-top:28px"><a class="btn" href="#sample" data-track="cta_hero">Send us a listing. See it in motion.</a></div>
     </div>
   </section>
 
@@ -244,12 +261,27 @@ footer a{color:var(--gold);text-decoration:none}
   </div>
 </footer>
 
+
+<div class="pop" id="pop" role="dialog" aria-modal="true" aria-labelledby="popTitle" aria-hidden="true">
+  <div class="pop-card">
+    <button class="pop-x" id="popX" type="button" aria-label="Close">&times;</button>
+    <div class="eyebrow">What the data shows</div>
+    <h2 id="popTitle">Listings with video and tours can SELL FASTER.</h2>
+    <p class="pop-sub">Published figures from the property industry:</p>
+    <div class="stat"><b>+65%</b><span>more views, and <strong>75% more saves</strong>, for listings with a 3D tour than without<small>Zillow listing data, March to February</small></span></div>
+    <div class="stat"><b>79%</b><span>of home shoppers said they wanted the option to view a virtual tour<small>Zillow survey, February</small></span></div>
+    <div class="stat q"><b>12%</b><span>Only 12% of sellers say their agent used video to market their home. <strong>While up to 79% ACTUALLY WANT them? You are missing out on a HUGE opportunity!</strong><small>NAR 2025 Home Buyers and Sellers Generational Trends Report</small></span></div>
+    <p class="pop-note">These figures cover video and virtual tours in general. Sources: <a href="https://www.zillow.com/research/3d-tours-virtual-tools-popular-29650/" target="_blank" rel="noopener">Zillow Research</a>, <a href="https://cms.nar.realtor/sites/default/files/2025-03/2025-home-buyers-and-sellers-generational-trends-report-04-01-2025.pdf" target="_blank" rel="noopener">NAR</a>.</p>
+    <a class="btn btn-block" href="#sample" id="popCta">See your listing in motion</a>
+    <button class="pop-skip" id="popSkip" type="button">Not now</button>
+  </div>
+</div>
+
 <script>
 /* ===== CONFIG: swap media here, nothing else needs touching ===== */
 const CONFIG = {
   // R2 videos live at videos.realmotionvideo.com (never in the repo)
-  heroVideo:   "https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/London-NW1.mp4",  // e.g. https://videos.realmotionvideo.com/property/nw1-hero.mp4
-  heroPoster:  "",  // e.g. /img/property/nw1-hero.jpg
+  playButton:  "data:image/png;base64,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",  // generic play-button PNG (also supplied as play-button.png)
   featVideo:   "https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/London-NW1.mp4",  // e.g. https://videos.realmotionvideo.com/property/nw1-full.mp4
   featPoster:  "",
   pairs: [
@@ -275,34 +307,34 @@ function track(msg){
   }catch(e){}
 }
 
-/* hero */
-(function(){
-  const box=document.getElementById('heroPlayer');
-  if(!CONFIG.heroVideo) return;
-  document.getElementById('heroPh').remove();
-  if(reduce){
-    if(CONFIG.heroPoster){const i=new Image();i.src=CONFIG.heroPoster;i.alt='London NW1 property';i.style.cssText='position:absolute;inset:0;width:100%;height:100%;object-fit:cover';box.appendChild(i);}
-    return;
-  }
-  const v=document.createElement('video');
-  v.src=CONFIG.heroVideo; if(CONFIG.heroPoster) v.poster=CONFIG.heroPoster;
-  v.muted=true; v.loop=true; v.autoplay=true; v.playsInline=true; v.preload='auto';
-  v.setAttribute('aria-label','London NW1 property film preview');
-  box.appendChild(v);
-  v.play().catch(()=>{});
-})();
-
-/* featured film */
+/* featured film: click-to-play with sound, native controls, play-button overlay */
 (function(){
   const box=document.getElementById('featPlayer');
   if(!CONFIG.featVideo) return;
   document.getElementById('featPh').remove();
   const v=document.createElement('video');
-  v.src=CONFIG.featVideo; if(CONFIG.featPoster) v.poster=CONFIG.featPoster;
-  v.controls=true; v.playsInline=true; v.preload='none';
+  v.src=CONFIG.featVideo+'#t=0.001';               // #t asks the browser to show the first frame
+  if(CONFIG.featPoster) v.poster=CONFIG.featPoster;
+  v.controls=true; v.playsInline=true; v.preload='auto';
+  v.setAttribute('aria-label','London NW1 property film');
+  v.addEventListener('loadedmetadata',()=>{ if(v.paused && v.currentTime===0) v.currentTime=0.001; });   // nudge so the first frame paints
   v.style.cssText='position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#000';
-  v.addEventListener('play',()=>track('RMV property: full film played'),{once:true});
   box.appendChild(v);
+
+  const btn=document.createElement('button');
+  btn.type='button'; btn.setAttribute('aria-label','Play the London NW1 film');
+  btn.style.cssText='position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:clamp(68px,11vw,112px);padding:0;border:0;background:none;cursor:pointer;transition:transform .15s';
+  const img=new Image(); img.src=CONFIG.playButton; img.alt=''; img.style.cssText='width:100%;height:auto;filter:drop-shadow(0 4px 14px rgba(0,0,0,.45))';
+  btn.appendChild(img);
+  btn.addEventListener('mouseenter',()=>btn.style.transform='translate(-50%,-50%) scale(1.08)');
+  btn.addEventListener('mouseleave',()=>btn.style.transform='translate(-50%,-50%)');
+  box.appendChild(btn);
+
+  btn.addEventListener('click',()=>{ v.currentTime=0; v.muted=false; v.play().catch(()=>{}); });
+  v.addEventListener('play',()=>{ btn.style.display='none'; });
+  v.addEventListener('playing',()=>{ btn.style.display='none'; });
+  v.addEventListener('ended',()=>{ btn.style.display=''; });
+  v.addEventListener('play',()=>track('RMV property: full film played'),{once:true});
 })();
 
 /* before / after pairs */
@@ -377,6 +409,36 @@ document.querySelectorAll('[data-track="cta_hero"]').forEach(el=>el.addEventList
       btn.disabled=false; btn.textContent='Request your free 10-second sample';
     }
   });
+})();
+
+/* stats popup: shows 1s after the page has fully loaded, every page load */
+(function(){
+  const pop=document.getElementById('pop'); if(!pop) return;
+  let last=null;
+  function open(){
+    last=document.activeElement; pop.classList.add('on'); pop.setAttribute('aria-hidden','false');
+    document.body.style.overflow='hidden'; document.getElementById('popX').focus();
+    track('RMV property: stats popup shown');
+  }
+  function close(){
+    pop.classList.remove('on'); pop.setAttribute('aria-hidden','true'); document.body.style.overflow='';
+    if(last&&last.focus) last.focus();
+  }
+  pop.addEventListener('click',e=>{ if(e.target===pop) close(); });
+  document.getElementById('popX').addEventListener('click',close);
+  document.getElementById('popSkip').addEventListener('click',close);
+  document.getElementById('popCta').addEventListener('click',()=>{ track('RMV property: popup CTA clicked'); close(); });
+  document.addEventListener('keydown',e=>{
+    if(!pop.classList.contains('on')) return;
+    if(e.key==='Escape') close();
+    if(e.key==='Tab'){ // keep focus inside the dialog
+      const f=pop.querySelectorAll('a[href],button'); const a=f[0], z=f[f.length-1];
+      if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus();}
+      else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus();}
+    }
+  });
+  const go=()=>setTimeout(open,1000);
+  if(document.readyState==='complete') go(); else window.addEventListener('load',go,{once:true});
 })();
 </script>
 </body>
