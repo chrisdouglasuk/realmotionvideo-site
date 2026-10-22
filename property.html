@@ -64,16 +64,19 @@ h2{font-family:var(--serif);font-weight:500;font-size:clamp(30px,5vw,46px);line-
 .feat-meta{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:12px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
 
 /* before/after */
-.pairs{display:grid;gap:20px}
-.pair{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:12px}
-.pair-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.shot{position:relative;aspect-ratio:4/3;border-radius:8px;overflow:hidden;background:#1b1e25}
-.shot img,.shot video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.pairs{display:grid;gap:24px}
+.pair{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:16px}
+.pair-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:600px){.pair-grid{grid-template-columns:1fr;gap:12px}}
+.shot{position:relative;aspect-ratio:16/9;border-radius:8px;overflow:hidden;background:#1b1e25}
+.shot img,.shot video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 45%}
+.shot video{object-fit:contain;background:#000}
 .shot .ph{font-size:10px}
 .shot button.play{position:absolute;inset:0;width:100%;height:100%;background:rgba(0,0,0,.18);border:0;cursor:pointer;color:#fff;display:flex;align-items:center;justify-content:center;transition:background .2s}
 .shot button.play:hover{background:rgba(0,0,0,.05)}
 .shot button.play span{width:52px;height:52px;border-radius:50%;background:rgba(12,13,16,.72);border:1px solid rgba(255,255,255,.35);display:flex;align-items:center;justify-content:center;font-size:18px;padding-left:3px}
-.cap{display:flex;justify-content:space-between;font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:10px 4px 2px;color:var(--muted)}
+.cap{display:grid;grid-template-columns:1fr 1fr;gap:16px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:12px 4px 2px;color:var(--muted)}
+@media(max-width:600px){.cap{grid-template-columns:1fr;gap:4px}}
 .cap b{color:var(--text);font-weight:500}
 .note{margin-top:20px;color:var(--muted);font-size:14px}
 
@@ -134,7 +137,6 @@ footer a{color:var(--gold);text-decoration:none}
 @media(min-width:720px){
   .cards{grid-template-columns:repeat(2,1fr)}
   .steps{grid-template-columns:repeat(3,1fr);gap:40px}
-  .pairs{grid-template-columns:repeat(3,1fr)}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn{transition:none}}
 </style>
