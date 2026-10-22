@@ -321,6 +321,14 @@ function track(msg){
   v.style.cssText='position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#000';
   box.appendChild(v);
 
+  // cover image shown over the video until it is played (does not depend on the browser's poster handling)
+  let cover=null;
+  if(CONFIG.featPoster){
+    cover=new Image(); cover.src=CONFIG.featPoster; cover.alt='London NW1 property';
+    cover.style.cssText='position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none';
+    cover.onerror=()=>{ cover.remove(); cover=null; };   // if the file is missing, fall back to the video's own first frame
+    box.appendChild(cover);
+  }
   const btn=document.createElement('button');
   btn.type='button'; btn.setAttribute('aria-label','Play the London NW1 film');
   btn.style.cssText='position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:clamp(68px,11vw,112px);padding:0;border:0;background:none;cursor:pointer;transition:transform .15s';
@@ -331,8 +339,9 @@ function track(msg){
   box.appendChild(btn);
 
   btn.addEventListener('click',()=>{ v.currentTime=0; v.muted=false; v.play().catch(()=>{}); });
-  v.addEventListener('play',()=>{ btn.style.display='none'; });
-  v.addEventListener('playing',()=>{ btn.style.display='none'; });
+  const hideCover=()=>{ if(cover) cover.style.display='none'; };
+  v.addEventListener('play',()=>{ btn.style.display='none'; hideCover(); });
+  v.addEventListener('playing',()=>{ btn.style.display='none'; hideCover(); });
   v.addEventListener('ended',()=>{ btn.style.display=''; });
   v.addEventListener('play',()=>track('RMV property: full film played'),{once:true});
 })();
