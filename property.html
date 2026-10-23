@@ -391,8 +391,8 @@ const CONFIG = {
   featPoster:  PRES_POSTER,
   pairs: [
     { label: "Exterior",  photo: NW1_PHOTO, clip: "https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/newexterior.mp4?v=3" },
-    { label: "Living area", photo: LOUNGE_PHOTO, clip: "https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/newlounge2.mp4" },
-    { label: "Main bedroom", photo: BEDROOM_PHOTO, clip: "https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/newbedroom2.mp4" }
+    { label: "Living area", photo: LOUNGE_PHOTO, clip: "https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/newlounge3.mp4" },
+    { label: "Main bedroom", photo: BEDROOM_PHOTO, clip: "https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/newbedroom3.mp4" }
     // photo: original listing photo. clip: 5s clip from that exact photo.
     // Only include a pair if the clip preserves the room, architecture, finishes and views.
   ],
@@ -467,7 +467,7 @@ function track(msg){
 
     const b=document.createElement('div'); b.className='shot';
     if(p.clip){
-      const v=document.createElement('video'); v.src=p.clip; v.muted=true; v.loop=true; v.playsInline=true; v.preload='none';
+      const v=document.createElement('video'); v.src=p.clip; v.muted=true; v.loop=true; v.playsInline=true; v.preload='auto';
       v.setAttribute('aria-label','Film clip: '+p.label); b.appendChild(v);
       const btn=document.createElement('button'); btn.className='play'; btn.type='button';
       btn.setAttribute('aria-label','Play film clip: '+p.label);
