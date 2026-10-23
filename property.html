@@ -70,7 +70,7 @@ h2{font-family:var(--serif);font-weight:500;font-size:clamp(30px,5vw,46px);line-
 @media(max-width:600px){.pair-grid{grid-template-columns:1fr;gap:12px}}
 .shot{position:relative;aspect-ratio:16/9;border-radius:8px;overflow:hidden;background:#1b1e25}
 .shot img,.shot video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 45%}
-.shot video{object-fit:contain;background:#000}
+.shot video{object-fit:cover;object-position:center 45%;background:#000}
 .shot .ph{font-size:10px}
 .shot button.play{position:absolute;inset:0;width:100%;height:100%;background:rgba(0,0,0,.18);border:0;cursor:pointer;color:#fff;display:flex;align-items:center;justify-content:center;transition:background .2s}
 .shot button.play:hover{background:rgba(0,0,0,.05)}
