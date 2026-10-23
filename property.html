@@ -540,7 +540,7 @@ document.querySelectorAll('[data-track="cta_hero"]').forEach(el=>el.addEventList
   });
 })();
 
-/* stats popup: shows 1s after the page has fully loaded, every page load */
+/* stats popup: appears once per page load, after the visitor scrolls past the intro video or it ends */
 (function(){
   const pop=document.getElementById('pop'); if(!pop) return;
   let last=null;
@@ -566,8 +566,14 @@ document.querySelectorAll('[data-track="cta_hero"]').forEach(el=>el.addEventList
       else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus();}
     }
   });
-  const go=()=>setTimeout(open,1000);
-  if(document.readyState==='complete') go(); else window.addEventListener('load',go,{once:true});
+  // never covers the intro video: opens once, when the visitor scrolls past it or when it finishes
+  let done=false;
+  const trigger=()=>{ if(done) return; if(document.getElementById('vmodal').classList.contains('on')) return; done=true; setTimeout(open,600); };
+  const box=document.getElementById('featPlayer');
+  if(box&&'IntersectionObserver' in window){
+    new IntersectionObserver(es=>{ const e=es[0]; if(!e.isIntersecting && e.boundingClientRect.bottom<0) trigger(); },{threshold:0}).observe(box);
+  } else { window.addEventListener('scroll',()=>{ if(window.scrollY>700) trigger(); },{passive:true}); }
+  if(window.__introVideo) window.__introVideo.addEventListener('ended',trigger);
 })();
 
 /* exit offer: desktop only, once per visit, only after 50% of the intro video has been watched
