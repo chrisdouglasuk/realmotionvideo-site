@@ -324,7 +324,7 @@ footer a{color:var(--gold);text-decoration:none}
           <div><label for="agency">Agency name</label><input type="text" id="agency" name="agency" required autocomplete="organization"></div>
           <div><label for="name">Your name</label><input type="text" id="name" name="name" required autocomplete="name"></div>
           <div><label for="email">Work email</label><input type="email" id="email" name="email" required autocomplete="email"></div>
-          <div><label for="phone">Phone (optional)</label><input type="tel" id="phone" name="phone" autocomplete="tel"></div>
+          <div><label for="phone">Phone</label><input type="tel" id="phone" name="phone" required autocomplete="tel" placeholder="Mobile or direct line"></div>
           <div><label for="photos">Listing photographs (optional)</label><input type="file" id="photos" name="photos" accept="image/jpeg,image/png,image/webp" multiple>
             <p class="fine" style="text-align:left;margin-top:6px">Only if we can&rsquo;t retrieve the photos from your listing link. Up to 10 images, 20MB in total.</p></div>
           <label class="check"><input type="checkbox" id="authority" name="authority"><span>I am authorised to commission marketing for this property and, if I approve the preview, I intend to purchase the package I have selected at the listed price.</span></label>
@@ -390,9 +390,9 @@ const CONFIG = {
   featVideo:   "https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/NW1-New.mp4",  // e.g. https://videos.realmotionvideo.com/property/nw1-full.mp4
   featPoster:  PRES_POSTER,
   pairs: [
-    { label: "Exterior",  photo: NW1_PHOTO, clip: "https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/Exterior.mp4" },
-    { label: "Living area", photo: LOUNGE_PHOTO, clip: "https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/Lounge.mp4" },
-    { label: "Main bedroom", photo: BEDROOM_PHOTO, clip: "https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/mainbedroom2.mp4" }
+    { label: "Exterior",  photo: NW1_PHOTO, clip: "https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/newexterior.mp4?v=3" },
+    { label: "Living area", photo: LOUNGE_PHOTO, clip: "https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/newlounge2.mp4" },
+    { label: "Main bedroom", photo: BEDROOM_PHOTO, clip: "https://pub-9ad9bd3a8d2d4cc4be62624c3f83d268.r2.dev/newbedroom2.mp4" }
     // photo: original listing photo. clip: 5s clip from that exact photo.
     // Only include a pair if the clip preserves the room, architecture, finishes and views.
   ],
@@ -504,6 +504,7 @@ document.querySelectorAll('[data-track="cta_hero"]').forEach(el=>el.addEventList
     if(d.website) return;                                  // honeypot
     if(!d.package){err.textContent='Please choose a package.';return;}
     if(!d.agency||!d.name||!d.email||!d.listing){err.textContent='Please complete the required fields.';return;}
+    if(!d.phone||d.phone.replace(/\D/g,'').length<9){err.textContent='Please enter a phone number we can reach you on.';return;}
     if(!/^\S+@\S+\.\S+$/.test(d.email)){err.textContent='Please enter a valid email address.';return;}
     if(FREE.test(d.email)){err.textContent='Please use your agency email address.';return;}
     try{ new URL(d.listing); }catch(_){err.textContent='Please enter the full listing URL, starting with https://';return;}
@@ -517,7 +518,7 @@ document.querySelectorAll('[data-track="cta_hero"]').forEach(el=>el.addEventList
 
     btn.disabled=true; btn.textContent='Sending\u2026';
     const payload={
-      type:'property', package:d.package, agency:d.agency, name:d.name, email:d.email, phone:d.phone||'',
+      type:'property', package:d.package, agency:d.agency, name:d.name, email:d.email, phone:d.phone.trim(),
       listing:d.listing, askingPrice:d.price, purchasingAuthority:true, conditionalPurchaseIntent:true,
       permission:true, termsAccepted:true, photoCount:files.length, source:'realmotionvideo.com/property',
       submittedAt:new Date().toISOString()
