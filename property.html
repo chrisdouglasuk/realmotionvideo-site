@@ -210,6 +210,16 @@ footer a{color:var(--gold);text-decoration:none}
 .pop-btns{display:flex;flex-direction:column;gap:10px}
 @media(min-width:620px){.pop-btns{flex-direction:row}.pop-btns .btn{flex:1;text-align:center}}
 .btn-ghost{background:transparent;color:var(--gold);border:1px solid var(--gold)}
+#exlb{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(4,5,7,.94)}
+#exlb.on{display:flex}
+#exlb .lb-in{position:relative;width:100%;max-width:1100px;display:flex;flex-direction:column;gap:12px}
+#exlb .lb-v{width:100%;max-height:calc(100vh - 170px);aspect-ratio:16/9;background:#000;border-radius:8px;display:block}
+#exlb .lb-x{position:absolute;top:-46px;right:0;width:40px;height:40px;border:0;background:none;color:var(--text);font-size:32px;line-height:1;cursor:pointer}
+#exlb .lb-bar{display:flex;align-items:center;justify-content:center;gap:18px;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+#exlb .lb-n{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--text);font-size:22px;cursor:pointer}
+#exlb .lb-n:hover{border-color:var(--gold);color:var(--gold)}
+#exlb .lb-t{min-width:150px;text-align:center}
+#exlb .lb-cta{align-self:center}
 </style>
 </head>
 <body id="top">
@@ -677,20 +687,25 @@ function card(it,i,small){
   b.innerHTML='<img src="'+it.poster+'" alt="" loading="lazy"><span class="pl"></span><span class="exl"><b>'+it.label+'</b><span>'+it.dur+'</span></span>';
   return b;
 }
-function play(i){
-  const c=grid.children[i]; if(!c) return;
-  [...grid.children].forEach(x=>{const v=x.querySelector('video'); if(v&&x!==c){v.pause();}});
-  let v=c.querySelector('video');
-  if(!v){ v=document.createElement('video'); v.src=EX[i].clip; v.controls=true; v.playsInline=true; v.preload='auto'; v.poster=EX[i].poster; c.appendChild(v); c.classList.add('on'); c.style.cursor='default'; }
-  v.play().catch(()=>{});
-  try{ if(typeof track==='function') track('RMV property: example played '+EX[i].label); }catch(_){}
-}
-EX.forEach((it,i)=>{ const c=card(it,i); c.addEventListener('click',e=>{ if(c.classList.contains('on')) return; play(i); }); grid.appendChild(c);
-  if(pg){ const t=card(it,i,true); t.addEventListener('click',()=>{ window.rmvOpenExample(i); }); pg.appendChild(t); } });
+const lb=document.createElement('div'); lb.id='exlb'; lb.setAttribute('role','dialog'); lb.setAttribute('aria-modal','true'); lb.setAttribute('aria-hidden','true');
+lb.innerHTML='<div class="lb-in"><button type="button" class="lb-x" aria-label="Close">&times;</button><video class="lb-v" controls playsinline></video><div class="lb-bar"><button type="button" class="lb-n lb-p" aria-label="Previous film">&#8249;</button><span class="lb-t"></span><button type="button" class="lb-n lb-nx" aria-label="Next film">&#8250;</button></div><a class="btn lb-cta" href="#sample">Request my free 20-second preview</a></div>';
+document.body.appendChild(lb);
+const lv=lb.querySelector('.lb-v'),lt=lb.querySelector('.lb-t'); let cur=0,prevFocus=null;
+function show(i){ cur=(i+EX.length)%EX.length; lv.pause(); lv.poster=EX[cur].poster; lv.src=EX[cur].clip; lt.textContent=EX[cur].label+' \u00b7 '+EX[cur].dur; lv.play().catch(()=>{});
+  try{ if(typeof track==='function') track('RMV property: example played '+EX[cur].label); }catch(_){} }
+function openLb(i){ prevFocus=document.activeElement; lb.classList.add('on'); lb.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; show(i); lb.querySelector('.lb-x').focus(); }
+function closeLb(){ lv.pause(); lv.removeAttribute('src'); lv.load(); lb.classList.remove('on'); lb.setAttribute('aria-hidden','true'); document.body.style.overflow=''; if(prevFocus&&prevFocus.focus) prevFocus.focus(); }
+lb.addEventListener('click',e=>{ if(e.target===lb) closeLb(); });
+lb.querySelector('.lb-x').onclick=closeLb; lb.querySelector('.lb-p').onclick=()=>show(cur-1); lb.querySelector('.lb-nx').onclick=()=>show(cur+1);
+lb.querySelector('.lb-cta').addEventListener('click',closeLb);
+document.addEventListener('keydown',e=>{ if(!lb.classList.contains('on')) return; if(e.key==='Escape') closeLb(); else if(e.key==='ArrowLeft') show(cur-1); else if(e.key==='ArrowRight') show(cur+1); });
+function play(i){ openLb(i); }
+EX.forEach((it,i)=>{ const c=card(it,i); c.addEventListener('click',()=>play(i)); grid.appendChild(c);
+  if(pg){ const t=card(it,i,true); t.addEventListener('click',()=>{ const x=document.getElementById('popX'); if(x) x.click(); play(i); }); pg.appendChild(t); } });
 window.rmvOpenExample=function(i){
   const x=document.getElementById('popX'); if(x) x.click();
   const sec=document.getElementById('examples'); if(sec) sec.scrollIntoView({behavior:'smooth',block:'start'});
-  if(typeof i==='number') setTimeout(()=>play(i),500);
+  
 };
 const w=document.getElementById('popWatch'); if(w) w.addEventListener('click',()=>window.rmvOpenExample());
 })();
