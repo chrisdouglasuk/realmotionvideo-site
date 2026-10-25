@@ -224,7 +224,9 @@ footer a{color:var(--gold);text-decoration:none}
 /* conversion upgrades */
 .trust{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 22px;margin-top:16px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 .trust span::before{content:"\2713";color:var(--gold);margin-right:7px}
-.forwho{display:none;margin:0 auto 14px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold);border-radius:99px;padding:6px 14px;width:max-content;max-width:100%}
+.forwho{display:none;margin:4px auto 20px;font-size:15px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-ink);background:var(--gold);border-radius:99px;padding:12px 28px;width:max-content;max-width:100%;box-shadow:0 0 0 6px rgba(201,165,106,.18)}
+#invband{display:none;background:var(--gold);color:var(--gold-ink);text-align:center;font-size:14px;font-weight:600;letter-spacing:.06em;padding:11px 16px}
+#invband b{font-family:var(--serif);font-size:18px;letter-spacing:.02em}
 .stepno{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);text-align:center;margin-bottom:14px}
 .linkbtn{display:block;margin:12px auto 0;background:none;border:0;color:var(--muted);font:inherit;font-size:13px;cursor:pointer;text-decoration:underline}
 .agreebox{border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin:6px 0 16px;font-size:13px;color:var(--muted)}
@@ -249,6 +251,7 @@ footer a{color:var(--gold);text-decoration:none}
 </style>
 </head>
 <body id="top">
+<div id="invband" role="note"></div>
 
 <div class="wrap">
   <header class="nav">
@@ -744,7 +747,10 @@ const w=document.getElementById('popWatch'); if(w) w.addEventListener('click',()
 const q=new URLSearchParams(location.search), $=id=>document.getElementById(id);
 // personalise from outreach links: ?agency=&name=&email=&listing=
 [['agency','agency'],['name','name'],['email','email'],['listing','listing']].forEach(([k,id])=>{const v=q.get(k); if(v&&$(id)) $(id).value=v.slice(0,200);});
-const ag=q.get('agency'); if(ag&&$('forwho')){ $('forwho').textContent='Prepared for '+ag.slice(0,60); $('forwho').style.display='block'; }
+const ag=q.get('agency'), nm=q.get('name');
+if(ag&&$('forwho')){ const A=ag.slice(0,60), N=nm?nm.slice(0,40):'';
+  $('forwho').textContent='An invitation for '+A; $('forwho').style.display='block';
+  const band=$('invband'); if(band){ band.textContent=''; band.append((N?'Hello '+N+' \u2014 ':'')+'this page has been prepared for '); const b=document.createElement('b'); b.textContent=A; band.append(b); band.style.display='block'; } }
 // two-step form
 const s1=$('step1'),s2=$('step2'),no=$('stepno'),err=$('err');
 const FREE=/@(gmail|googlemail|yahoo|hotmail|outlook|live|icloud|aol|proton|protonmail)\./i;
