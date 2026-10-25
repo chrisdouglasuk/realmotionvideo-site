@@ -248,6 +248,17 @@ footer a{color:var(--gold);text-decoration:none}
 @media(max-width:620px){#stickybar span{display:none}#stickybar .btn{width:100%;text-align:center}}
 @media(prefers-reduced-motion:reduce){#stickybar{transition:none}}
 .herolabel{text-align:center;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin:0 0 12px}
+
+/* glowing band around the personalised badge */
+@property --ga{syntax:"<angle>";initial-value:0deg;inherits:false}
+.forwho{position:relative;isolation:isolate;box-shadow:0 0 18px 2px rgba(201,165,106,.45);animation:gpulse 2.4s ease-in-out infinite}
+.forwho::before,.forwho::after{content:"";position:absolute;inset:-6px;border-radius:99px;z-index:-1;pointer-events:none;
+  background:conic-gradient(from var(--ga),rgba(201,165,106,0) 0 40%,#c9a56a 58%,#fff7de 72%,#c9a56a 86%,rgba(201,165,106,0) 100%);animation:gspin 2.6s linear infinite}
+.forwho::before{padding:3px;-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+.forwho::after{inset:-8px;filter:blur(12px);opacity:.75}
+@keyframes gspin{to{--ga:360deg}}
+@keyframes gpulse{0%,100%{box-shadow:0 0 14px 1px rgba(201,165,106,.35)}50%{box-shadow:0 0 30px 6px rgba(201,165,106,.6)}}
+@media(prefers-reduced-motion:reduce){.forwho,.forwho::before,.forwho::after{animation:none}.forwho::before{background:#c9a56a}}
 </style>
 </head>
 <body id="top">
