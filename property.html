@@ -498,7 +498,8 @@ const CONFIG = {
   // Reuse the existing n8n intake pattern. Confirm the Airtable target table before going live.
   webhook: "https://vmi3486297.contaboserver.net/webhook/property-sample",
   // Reuse the existing ntfy topic/helper from the dealer pilot template. Empty = tracking off.
-  ntfyTopic: ""
+  ntfyTopic: "",
+  eventsWebhook: "https://vmi3486297.contaboserver.net/webhook/property-event"
 };
 /* ================================================================= */
 
@@ -506,6 +507,13 @@ const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 function track(msg){
   try{
+    // first-party event log (n8n): which step of the journey, from which outreach batch
+    if(CONFIG.eventsWebhook){
+      const q=new URLSearchParams(location.search);
+      fetch(CONFIG.eventsWebhook,{method:'POST',headers:{'Content-Type':'application/json'},keepalive:true,
+        body:JSON.stringify({event:String(msg).replace(/^RMV property: /,'').slice(0,120),ref:q.get('ref')||q.get('src')||'',agency:(q.get('agency')||'').slice(0,60),
+          path:location.pathname,w:innerWidth,t:new Date().toISOString()})}).catch(()=>{});
+    }
     if(!CONFIG.ntfyTopic) return;
     fetch('https://ntfy.sh/'+CONFIG.ntfyTopic,{method:'POST',body:msg,keepalive:true}).catch(()=>{});
   }catch(e){}
@@ -780,6 +788,16 @@ $('backBtn').onclick=()=>step(1);
 const bar=$('stickybar'), form=$('sample');
 function upd(){ const y=scrollY>innerHeight*0.9; let hide=false; if(form){ const r=form.getBoundingClientRect(); hide=r.top<innerHeight*0.7&&r.bottom>0; } bar.classList.toggle('on',y&&!hide); bar.setAttribute('aria-hidden',(y&&!hide)?'false':'true'); }
 addEventListener('scroll',upd,{passive:true}); addEventListener('resize',upd); upd();
+})();
+</script>
+<script>
+/* journey events: page view, hero play, examples seen, form started */
+(function(){
+  const once=(k,fn)=>{ try{ if(sessionStorage.getItem(k)) return; sessionStorage.setItem(k,'1'); }catch(_){} fn(); };
+  const ex=document.getElementById('examples');
+  if(ex&&'IntersectionObserver' in window){ const io=new IntersectionObserver(es=>{ if(es[0].isIntersecting){ once('rmv_ex',()=>track('RMV property: examples seen')); io.disconnect(); } },{threshold:.3}); io.observe(ex); }
+  const f=document.getElementById('listing'); if(f) f.addEventListener('focus',()=>once('rmv_fs',()=>track('RMV property: form started')),{once:true});
+  document.querySelectorAll('[data-track="cta_sticky"],[data-track="cta_examples"]').forEach(el=>el.addEventListener('click',()=>track('RMV property: CTA clicked '+el.dataset.track)));
 })();
 </script>
 </body>
