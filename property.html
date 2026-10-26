@@ -674,6 +674,15 @@ document.querySelectorAll('[data-track="cta_hero"]').forEach(el=>el.addEventList
   });
 })();
 
+/* the visitor is "at the form" when it is on screen or a field has focus or text: never interrupt them with a pop-up */
+window.__formBusy=function(){
+  try{
+    const f=document.getElementById('sample'); if(f){ const r=f.getBoundingClientRect(); if(r.top<innerHeight*0.9 && r.bottom>0) return true; }
+    const ae=document.activeElement; if(ae&&/^(INPUT|TEXTAREA|SELECT)$/.test(ae.tagName)&&f&&f.contains(ae)) return true;
+    const l=document.getElementById('listing'); if(l&&l.value.trim()) return true;
+  }catch(_){}
+  return false;
+};
 /* stats popup: appears once per page load, after the visitor scrolls past the intro video or it ends */
 (function(){
   const pop=document.getElementById('pop'); if(!pop) return;
@@ -702,7 +711,13 @@ document.querySelectorAll('[data-track="cta_hero"]').forEach(el=>el.addEventList
   });
   // never covers the intro video: opens once, when the visitor scrolls past it or when it finishes
   let done=false;
-  const trigger=()=>{ if(done) return; if(document.getElementById('vmodal').classList.contains('on')) return; done=true; setTimeout(open,600); };
+  // a click on any "request my preview" button means they want the form: the pop-up is then off for this visit
+  document.addEventListener('click',e=>{ const t=e.target.closest&&e.target.closest('a[href="#sample"]'); if(t&&t.id!=='popCta') done=true; },true);
+  window.addEventListener('hashchange',()=>{ if(location.hash==='#sample') done=true; });
+  const trigger=()=>{ if(done) return; if(document.getElementById('vmodal').classList.contains('on')) return;
+    if(window.__formBusy()){ done=true; return; }
+    try{ if(sessionStorage.getItem('rmv_requested')==='1'){ done=true; return; } }catch(_){}
+    done=true; setTimeout(()=>{ if(window.__formBusy()) return; open(); },600); };
   const box=document.getElementById('featPlayer');
   if(box&&'IntersectionObserver' in window){
     new IntersectionObserver(es=>{ const e=es[0]; if(!e.isIntersecting && e.boundingClientRect.bottom<0) trigger(); },{threshold:0}).observe(box);
@@ -742,6 +757,7 @@ document.querySelectorAll('[data-track="cta_hero"]').forEach(el=>el.addEventList
       if(e.clientY>0||shown||flag('rmv_exit')||flag('rmv_requested')) return;
       if(m.classList.contains('on')||document.getElementById('pop').classList.contains('on')) return;
       if(!CONFIG.explainerVideo||!watchedEnough()) return;
+      if(window.__formBusy&&window.__formBusy()) return;
       open();
     });
   }
