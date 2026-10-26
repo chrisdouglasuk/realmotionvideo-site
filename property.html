@@ -498,7 +498,7 @@ const CONFIG = {
   // Reuse the existing n8n intake pattern. Confirm the Airtable target table before going live.
   webhook: "https://vmi3486297.contaboserver.net/webhook/property-sample",
   // Reuse the existing ntfy topic/helper from the dealer pilot template. Empty = tracking off.
-  ntfyTopic: "",
+  ntfyTopic: "rmv-prop-g1mf9w9227av",
   eventsWebhook: "https://vmi3486297.contaboserver.net/webhook/property-event"
 };
 /* ================================================================= */
@@ -514,8 +514,37 @@ function track(msg){
         body:JSON.stringify({event:String(msg).replace(/^RMV property: /,'').slice(0,120),ref:q.get('ref')||q.get('src')||'',agency:(q.get('agency')||'').slice(0,60),
           path:location.pathname,w:innerWidth,t:new Date().toISOString()})}).catch(()=>{});
     }
+    ntfyNotify(msg);
+  }catch(e){}
+}
+
+/* phone alerts (ntfy): only for visitors who arrive from an outreach link (?ref=...) */
+function ntfyNotify(msg){
+  try{
     if(!CONFIG.ntfyTopic) return;
-    fetch('https://ntfy.sh/'+CONFIG.ntfyTopic,{method:'POST',body:msg,keepalive:true}).catch(()=>{});
+    const q=new URLSearchParams(location.search);
+    const ref=(q.get('ref')||'').slice(0,40); if(!ref) return;
+    try{ if(q.get('self')==='1') localStorage.setItem('rmv_self','1'); if(localStorage.getItem('rmv_self')==='1') return; }catch(_){}
+    const m=String(msg).replace(/^RMV property: /,'');
+    // [pattern, wording, priority, emoji tag, delay-until-visible-ms, include detail]
+    const RULES=[
+      [/^page view/,'viewed your page',3,'eyes',4000,false],
+      [/^intro video played/,'played the intro film',3,'movie_camera',0,false],
+      [/^example played|^clip played/,'is watching the examples',3,'clapper',0,false],
+      [/CTA clicked/,'clicked a call to action',3,'point_right',0,false],
+      [/^form started/,'started the request form',4,'pencil2',0,false],
+      [/^form step 1 complete/,'completed step 1 of the form',4,'writing_hand',0,false],
+      [/^preview request/,'REQUESTED A PREVIEW',5,'tada',0,true]
+    ];
+    const r=RULES.find(x=>x[0].test(m)); if(!r) return;
+    if(r[2]<5){ try{ const k='rmv_n_'+r[1]; if(sessionStorage.getItem(k)) return; sessionStorage.setItem(k,'1'); }catch(_){} }
+    let who=(q.get('agency')||'').replace(/[-_+]+/g,' ').trim();
+    if(!who){ const g=/^((?:[A-Z][a-z0-9]+)+)-\d+$/.exec(ref); if(g) who=g[1].replace(/([a-z0-9])([A-Z])/g,'$1 $2'); }
+    const send=()=>fetch('https://ntfy.sh/',{method:'POST',keepalive:true,
+      body:JSON.stringify({topic:CONFIG.ntfyTopic,title:(who||'A visitor')+' '+r[1],message:'Ref '+ref+(r[5]?' \u00b7 '+m:''),priority:r[2],tags:[r[3],ref]})}).catch(()=>{});
+    if(!r[4]) return send();
+    const go=()=>setTimeout(send,r[4]);
+    if(document.visibilityState==='visible') go(); else document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='visible') go(); },{once:true});
   }catch(e){}
 }
 
@@ -768,7 +797,9 @@ const q=new URLSearchParams(location.search), $=id=>document.getElementById(id);
 // personalise from outreach links: ?agency=&name=&email=&listing=
 const tidy=v=>v?String(v).replace(/[-_+]+/g,' ').replace(/\s+/g,' ').trim():v;
 [['agency','agency'],['name','name'],['email','email'],['listing','listing']].forEach(([k,id])=>{let v=q.get(k); if(k==='agency'||k==='name') v=tidy(v); if(v&&$(id)) $(id).value=v.slice(0,200);});
-const ag=tidy(q.get('agency')), nm=tidy(q.get('name'));
+let ag=tidy(q.get('agency')); const nm=tidy(q.get('name'));
+if(!ag){ const m=/^((?:[A-Z][a-z0-9]+)+)-\d+$/.exec(q.get('ref')||''); if(m) ag=m[1].replace(/([a-z0-9])([A-Z])/g,'$1 $2'); }
+if(ag&&$('agency')&&!$('agency').value) $('agency').value=ag.slice(0,200);
 if(ag&&$('forwho')){ const A=ag.slice(0,60), N=nm?nm.slice(0,40):'';
   $('forwho').textContent='An invitation for '+A; $('forwho').style.display='block';
   const band=$('invband'); if(band){ band.textContent=''; band.append((N?'Hello '+N+' \u2014 ':'')+'this page has been prepared for '); const b=document.createElement('b'); b.textContent=A; band.append(b); band.style.display='block'; } }
