@@ -915,6 +915,64 @@
     .exit-cta-panel { transform: none; }
   }
 
+
+  /* ---------- FOR REAL ESTATE: big button with a permanent running ring of light ---------- */
+  .re-wrap { margin: 0 0 40px; }
+  a.re-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    padding: 22px 42px;
+    border-radius: 999px;
+    overflow: hidden;
+    isolation: isolate;
+    text-decoration: none;
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 500;
+    font-size: clamp(0.95rem, 2.4vw, 1.2rem);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-align: center;
+    color: #fff;
+    background: #0d0e11;
+    box-shadow: 0 0 22px rgba(255, 210, 122, 0.55), 0 0 60px rgba(255, 210, 122, 0.28);
+    animation: re-pulse 2.2s ease-in-out infinite;
+    transition: transform 0.2s ease;
+  }
+  a.re-btn:hover { transform: scale(1.03); }
+  /* the ring: a bright arc that circles the button forever */
+  a.re-btn::before {
+    content: '';
+    position: absolute;
+    left: 50%; top: 50%;
+    width: 260%; aspect-ratio: 1 / 1;
+    translate: -50% -50%;
+    background: conic-gradient(from 0deg, transparent 0deg, rgba(255, 210, 122, 0) 40deg, #ffd27a 120deg, #ffffff 160deg, #ffd27a 200deg, rgba(255, 210, 122, 0) 280deg, transparent 360deg);
+    animation: re-spin 2.6s linear infinite;
+    z-index: -2;
+  }
+  /* the button face, inset so only a bright rim of the ring shows */
+  a.re-btn::after {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border-radius: 999px;
+    background: linear-gradient(180deg, #1c1d22, #0d0e11);
+    z-index: -1;
+  }
+  a.re-btn .re-arrow { color: var(--brass-bright); font-size: 1.3em; line-height: 1; }
+  @keyframes re-spin { to { transform: rotate(360deg); } }
+  @keyframes re-pulse {
+    0%, 100% { box-shadow: 0 0 18px rgba(255, 210, 122, 0.45), 0 0 46px rgba(255, 210, 122, 0.2); }
+    50%      { box-shadow: 0 0 32px rgba(255, 210, 122, 0.85), 0 0 84px rgba(255, 210, 122, 0.4); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    a.re-btn::before { animation: none; }
+    a.re-btn { animation: none; }
+  }
+  @media (max-width: 520px) { a.re-btn { padding: 18px 26px; width: 100%; } }
 </style>
 </head>
 <body>
@@ -932,6 +990,9 @@
   </video>
   <div class="hero-bg-overlay"></div>
   <div class="wrap">
+    <div class="re-wrap">
+      <a class="re-btn" id="reBtn" href="/property" onclick="try{ctaClickPing('FOR REAL ESTATE button')}catch(e){}">For real estate click here <span class="re-arrow">&rarr;</span></a>
+    </div>
     <div class="eyebrow">No filming · No editing · No new photography</div>
     <h1 class="headline">You already have the photos.<br>We turn them <em>into video.</em></h1>
     <p class="sub">Send us the link to your vehicle. We send back a cinematic vertical video for Instagram, Facebook and TikTok, built entirely from the photography you've already taken.</p>
@@ -1656,5 +1717,8 @@
   })();
 </script>
 <!-- Cloudflare Web Analytics --><script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "df8f7b12d2ca4c80a1c6d54d139445f6"}'></script><!-- End Cloudflare Web Analytics -->
+<script>
+(function(){ try{ var b=document.getElementById('reBtn'); if(b && location.search) b.href='/property'+location.search; }catch(e){} })();
+</script>
 </body>
 </html>
