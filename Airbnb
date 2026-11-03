@@ -44,11 +44,12 @@ a{color:inherit}
 
 /* hero */
 .hero{padding:8px 0 28px;text-align:center}
-.hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(30px,6.2vw,60px);line-height:1.1;margin:18px auto 14px;max-width:18ch}
+.hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(28px,3.7vw,48px);line-height:1.12;margin:18px auto 14px;text-wrap:balance}
 .herologo{display:block;width:min(100%,440px);height:auto;margin:6px auto 18px;border-radius:12px}
-.hero h2.sh{font-family:var(--serif);font-weight:500;font-style:italic;color:var(--gold);font-size:clamp(20px,3.6vw,30px);margin:0 auto 14px}
+@media(min-width:900px){.hero h1{white-space:nowrap;font-size:min(3.1vw,40px);margin-top:22px}.hero p.sub{max-width:none}}
+.hero h2.sh{font-family:var(--serif);font-weight:500;font-style:italic;color:var(--gold);font-size:clamp(20px,2.7vw,34px);margin:0 auto 16px}
 .hero h1 em{color:var(--gold);font-style:italic}
-.hero p.sub{color:var(--muted);max-width:54ch;margin:0 auto 24px;font-size:17px}
+.hero p.sub{color:var(--muted);max-width:86ch;margin:0 auto 24px;font-size:clamp(16px,1.5vw,19px);text-wrap:balance}
 .player{position:relative;background:var(--bg2);border:1px solid var(--line);border-radius:14px;overflow:hidden;aspect-ratio:16/9}
 .player video,.player .ph{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .ph{display:flex;align-items:center;justify-content:center;background:
