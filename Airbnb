@@ -58,6 +58,16 @@ a{color:inherit}
 .disclosure{font-size:12.5px;color:var(--muted);margin:12px auto 0;max-width:62ch}
 .hero .btn{margin-top:26px}
 
+/* hero background film (same treatment as the car page: muted loop behind the text, dark overlay) */
+.herozone{position:relative;overflow:hidden;isolation:isolate}
+.hero-bg-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;background:#0c0d10}
+.hero-bg-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(12,13,16,.72) 0%,rgba(12,13,16,.6) 40%,rgba(12,13,16,.88) 100%)}
+.herozone>.wrap{position:relative;z-index:2}
+.herozone{padding-bottom:12px}
+.soundbtn{position:absolute;right:16px;bottom:16px;z-index:3;display:flex;align-items:center;gap:8px;background:rgba(12,13,16,.72);color:#fff;border:1px solid var(--gold);border-radius:99px;padding:10px 16px;font:600 12px var(--sans);letter-spacing:.12em;text-transform:uppercase;cursor:pointer;backdrop-filter:blur(4px)}
+.soundbtn:hover{background:rgba(12,13,16,.9)}
+@media(max-width:600px){.soundbtn{right:10px;bottom:10px;padding:9px 13px}}
+
 /* sections */
 section{padding:64px 0;border-top:1px solid var(--line)}
 .oneline{white-space:nowrap;font-size:clamp(14px,4.4vw,46px)}
@@ -269,6 +279,12 @@ footer a{color:var(--gold);text-decoration:none}
 <body id="top">
 <div id="invband" role="note"></div>
 
+<div class="herozone">
+<video class="hero-bg-video" id="heroBg" autoplay muted loop playsinline preload="auto" aria-hidden="true">
+  <source src="https://videos.realmotionvideo.com/AIRBNBNueva%20Andaluc%C3%ADa%5D.mp4" type="video/mp4">
+</video>
+<div class="hero-bg-overlay"></div>
+<button type="button" class="soundbtn" id="soundBtn" aria-pressed="false" aria-label="Turn the film sound on"><span id="soundIcon">&#128263;</span><span id="soundTxt">Sound on</span></button>
 <div class="wrap">
   <header class="nav">
     <a class="brand" href="/"><i></i>RealMotionVideo</a>
@@ -285,6 +301,7 @@ footer a{color:var(--gold);text-decoration:none}
     <a class="btn" href="#sample" data-track="cta_hero">Request my free 20-second preview</a>
     <div class="trust"><span>Free</span><span>No obligation</span><span>Created from your existing property photographs</span></div>
   </div>
+</div>
 </div>
 
 <main>
@@ -637,6 +654,19 @@ function ntfyNotify(msg){
     title.innerHTML='<span>'+p.label+'</span>';
     el.append(grid,cap,title);
     root.appendChild(el);
+  });
+})();
+
+/* hero film: muted autoplay (browsers block sound until a tap), button turns sound on/off */
+(function(){
+  const v=document.getElementById('heroBg'), b=document.getElementById('soundBtn'); if(!v||!b) return;
+  if(reduce){ v.removeAttribute('autoplay'); v.pause(); }
+  const ic=document.getElementById('soundIcon'), tx=document.getElementById('soundTxt');
+  b.addEventListener('click',()=>{
+    v.muted=!v.muted; if(!v.muted){ v.volume=1; v.play().catch(()=>{}); }
+    ic.innerHTML=v.muted?'&#128263;':'&#128266;'; tx.textContent=v.muted?'Sound on':'Sound off';
+    b.setAttribute('aria-pressed',String(!v.muted)); b.setAttribute('aria-label',v.muted?'Turn the film sound on':'Turn the film sound off');
+    try{ track('RMV property: hero sound '+(v.muted?'off':'on')); }catch(_){}
   });
 })();
 
