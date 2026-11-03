@@ -549,7 +549,7 @@ function ntfyNotify(msg){
     ];
     const r=RULES.find(x=>x[0].test(m)); if(!r) return;
     if(r[2]<5){ try{ const k='rmv_n_'+r[1]; if(sessionStorage.getItem(k)) return; sessionStorage.setItem(k,'1'); }catch(_){} }
-    let who=(q.get('agency')||'').replace(/[-_+]+/g,' ').trim(); if(!who&&ref==='Airbnb visit') who='Airbnb visit';
+    let who=(q.get('agency')||'').replace(/[-_+]+/g,' ').trim(); if(!who&&ref==='Airbnb visit') who='Airbnb visit'; const pm=/^preview request . (.*?) \u00b7/.exec(m); if(pm) who=pm[1].slice(0,60);
     if(!who){ const g=/^((?:[A-Z][a-z0-9]+)+)-\d+$/.exec(ref); if(g) who=g[1].replace(/([a-z0-9])([A-Z])/g,'$1 $2'); }
     // affiliate links: ?ref=TO-KnightFrank (also accepts to-, TO_, TO KnightFrank); you are always alerted too
     const topics=[CONFIG.ntfyTopic];
@@ -681,7 +681,7 @@ document.querySelectorAll('[data-track="cta_hero"]').forEach(el=>el.addEventList
         r=await fetch(CONFIG.webhook,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
       }
       if(!r.ok) throw new Error('bad status');
-      track('RMV property: preview request – '+d.package+' – '+d.agency);
+      track('RMV property: preview request – '+d.agency+' · '+d.name+' · '+d.price+' · '+d.listing);
       try{sessionStorage.setItem('rmv_requested','1');}catch(_){} form.style.display='none'; ok.style.display='block'; ok.scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'});
     }catch(ex){
       err.textContent='Something went wrong. Please email chris@realmotionvideo.com and we will sort it personally.';
