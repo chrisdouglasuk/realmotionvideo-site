@@ -507,7 +507,7 @@ const CONFIG = {
   // Reuse the existing n8n intake pattern. Confirm the Airtable target table before going live.
   webhook: "https://vmi3486297.contaboserver.net/webhook/property-sample",
   // Reuse the existing ntfy topic/helper from the dealer pilot template. Empty = tracking off.
-  ntfyTopic: "rmv-prop-g1mf9w9227av",
+  ntfyTopic: "rmv-airbnb-visits-copper-falcon-47",
   // Affiliate topics: links with ?ref=TO-<identifier> also alert this topic. Empty = only you are alerted.
   affiliateTopics: { TO: "realmotion-to-thistle-raven-heron-31" },
   eventsWebhook: "https://vmi3486297.contaboserver.net/webhook/property-event"
