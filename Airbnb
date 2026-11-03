@@ -821,7 +821,7 @@ const grid=document.getElementById('exgrid'),pg=document.getElementById('pgrid')
 if(!grid) return;
 function card(it,i,small){
   const b=document.createElement('button'); b.type='button'; b.className='exc'; b.dataset.i=i; b.setAttribute('aria-label','Play film: '+it.label);
-  const media=it.poster?'<img src="'+it.poster+'" alt="" loading="lazy">':'<video src="'+it.clip+'#t=0.001" muted playsinline preload="metadata"></video>';
+  const media=it.poster?'<img src="'+it.poster+'" alt="" loading="lazy">':'<video src="'+it.clip+'#t=3" muted playsinline preload="metadata"></video>';
   b.innerHTML=media+'<span class="pl"></span><span class="exl"><b>'+it.label+'</b>'+(it.dur?'<span>'+it.dur+'</span>':'')+'</span>';
   return b;
 }
