@@ -534,7 +534,7 @@ function ntfyNotify(msg){
   try{
     if(!CONFIG.ntfyTopic) return;
     const q=new URLSearchParams(location.search);
-    const ref=(q.get('ref')||'').slice(0,40); if(!ref) return;
+    const ref=(q.get('ref')||'').slice(0,40)||'Airbnb visit';   // every visitor reports in; no ?ref= = plain Airbnb visit
     try{ if(q.get('self')==='1') localStorage.setItem('rmv_self','1'); if(localStorage.getItem('rmv_self')==='1') return; }catch(_){}
     const m=String(msg).replace(/^RMV property: /,'');
     // [pattern, wording, priority, emoji tag, delay-until-visible-ms, include detail]
@@ -549,7 +549,7 @@ function ntfyNotify(msg){
     ];
     const r=RULES.find(x=>x[0].test(m)); if(!r) return;
     if(r[2]<5){ try{ const k='rmv_n_'+r[1]; if(sessionStorage.getItem(k)) return; sessionStorage.setItem(k,'1'); }catch(_){} }
-    let who=(q.get('agency')||'').replace(/[-_+]+/g,' ').trim();
+    let who=(q.get('agency')||'').replace(/[-_+]+/g,' ').trim(); if(!who&&ref==='Airbnb visit') who='Airbnb visit';
     if(!who){ const g=/^((?:[A-Z][a-z0-9]+)+)-\d+$/.exec(ref); if(g) who=g[1].replace(/([a-z0-9])([A-Z])/g,'$1 $2'); }
     // affiliate links: ?ref=TO-KnightFrank (also accepts to-, TO_, TO KnightFrank); you are always alerted too
     const topics=[CONFIG.ntfyTopic];
@@ -557,7 +557,7 @@ function ntfyNotify(msg){
     if(aff){ const id=(aff[1]||'').replace(/\s+/g,''); if(!q.get('agency')) who='TO-'+(id||'(no identifier)');
       const t=(CONFIG.affiliateTopics||{}).TO; if(t) topics.push(t); }
     const send=()=>topics.forEach(tp=>fetch('https://ntfy.sh/',{method:'POST',keepalive:true,
-      body:JSON.stringify({topic:tp,title:(who||'A visitor')+' '+r[1],message:'Ref '+ref+' \u00b7 AIRBNB PAGE'+(r[5]?' \u00b7 '+m:''),priority:r[2],tags:[r[3],ref]})}).catch(()=>{}));
+      body:JSON.stringify({topic:tp,title:(who||'A visitor')+' '+r[1],message:'Ref '+ref+' \u00b7 AIRBNB PAGE'+(r[5]?' \u00b7 '+m:''),priority:r[2],tags:[r[3],ref,'Airbnb visit'].filter((t,i,a)=>a.indexOf(t)===i)})}).catch(()=>{}));
     if(!r[4]) return send();
     const go=()=>setTimeout(send,r[4]);
     if(document.visibilityState==='visible') go(); else document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='visible') go(); },{once:true});
