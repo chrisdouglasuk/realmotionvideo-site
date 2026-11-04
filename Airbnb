@@ -820,14 +820,11 @@ window.__formBusy=function(){
 </script>
 <script>
 (function(){
-const EX=[{label:"Cocoa Beach, Florida",dur:"",clip:"https://videos.realmotionvideo.com/AIRBNBCocoa%20Beach%20Florida.mp4",poster:""},
-{label:"La Quinta",dur:"",clip:"https://videos.realmotionvideo.com/AIRBNBLa%20Quinta.mp4",poster:""},
+const EX=[{label:"La Quinta",dur:"",clip:"https://videos.realmotionvideo.com/AIRBNBLa%20Quinta.mp4",poster:""},
 {label:"Le Palare, Italy",dur:"",clip:"https://videos.realmotionvideo.com/AIRBNBLe%20Palare%20-%20Italy.mp4",poster:""},
-{label:"Minnesota",dur:"",clip:"https://videos.realmotionvideo.com/AIRBNBMinnesota.mp4",poster:""},
 {label:"Nueva Andalucía",dur:"",clip:"https://videos.realmotionvideo.com/AIRBNBNueva%20Andaluc%C3%ADa%5D.mp4",poster:""},
 {label:"Paxos",dur:"",clip:"https://videos.realmotionvideo.com/AIRBNBPaxos.mp4",poster:""},
-{label:"San Diego",dur:"",clip:"https://videos.realmotionvideo.com/AIRBNBSan%20Diego.mp4",poster:""},
-{label:"Ullswater",dur:"",clip:"https://videos.realmotionvideo.com/AIRBNBUllswater.mp4",poster:"",t:9}];
+{label:"San Diego",dur:"",clip:"https://videos.realmotionvideo.com/AIRBNBSan%20Diego.mp4",poster:""}];
 const grid=document.getElementById('exgrid'),pg=document.getElementById('pgrid');
 if(!grid) return;
 function card(it,i,small){
