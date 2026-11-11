@@ -118,10 +118,9 @@
   /* ---------- HERO ---------- */
 
   header.hero {
-    padding: 84px 0 64px;
-    min-height: calc(100vh - 280px);
+    padding: 44px 0 52px;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     border-bottom: 1px solid var(--hairline);
     position: relative;
     overflow: hidden;
@@ -162,7 +161,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-bottom: 22px;
+    margin-bottom: 16px;
   }
 
   .eyebrow::before {
@@ -173,7 +172,7 @@
   }
 
   h1.headline {
-    font-size: clamp(2.4rem, 5.4vw, 4.1rem);
+    font-size: clamp(2.1rem, 4.4vw, 3.3rem);
     line-height: 1.05;
     max-width: none;
     color: var(--paper);
@@ -185,14 +184,14 @@
   }
 
   .sub {
-    margin-top: 26px;
+    margin-top: 18px;
     max-width: 46ch;
-    font-size: 1.12rem;
+    font-size: 1.05rem;
     color: var(--paper-dim);
   }
 
   .hero-actions {
-    margin-top: 38px;
+    margin-top: 24px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -274,6 +273,35 @@
 
   /* hero intro text spans the full content width, matching the proof section below */
   header.hero .sub { max-width: none; }
+
+  /* ---------- HERO REEL: three sample films above the fold ---------- */
+  .hero-reel {
+    margin-top: 34px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+  .hero-reel .frame {
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+  .hero-reel .frame:hover {
+    transform: translateY(-3px);
+    border-color: var(--brass-dim);
+  }
+  @media (max-width: 860px) {
+    .hero-reel {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 14px;
+      margin-right: -20px;
+      padding-right: 20px;
+      padding-bottom: 6px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .hero-reel .frame { flex: 0 0 78%; scroll-snap-align: start; }
+  }
 
   .hero-note {
     font-family: 'IBM Plex Mono', monospace;
@@ -946,6 +974,35 @@
       </div>
       <span class="hero-note">We reply within 24 hours</span>
     </div>
+    <div class="hero-reel" id="heroReel">
+      <div class="frame">
+        <div class="frame-media frame-media--landscape ready" data-label="Phantom Motor Company · Porsche 911" data-start="1" onclick="openVideoModal(this)">
+          <video src="https://videos.realmotionvideo.com/Phantom%20White%20Porsche%20911%20Website%20.mp4#t=1" muted loop playsinline preload="metadata"></video>
+          <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
+          <div class="frame-footer">
+            <div class="frame-caption"><span class="place">Phantom Motor Company · Porsche 911</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="frame">
+        <div class="frame-media frame-media--landscape ready" data-label="Phantom Motor Company · Rolls-Royce Ghost" onclick="openVideoModal(this)">
+          <video src="https://videos.realmotionvideo.com/Phantom%20Rolls%20Royce%20Ghost%20Website.mp4#t=0.5" muted loop playsinline preload="metadata"></video>
+          <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
+          <div class="frame-footer">
+            <div class="frame-caption"><span class="place">Phantom Motor Company · Rolls-Royce Ghost</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="frame">
+        <div class="frame-media frame-media--landscape ready" data-label="Amari Supercars · Ferrari" onclick="openVideoModal(this)">
+          <video src="https://videos.realmotionvideo.com/AMARI%20FERRARI%20YOUTUBE.mp4#t=0.5" muted loop playsinline preload="metadata"></video>
+          <div class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8V4z"/></svg></div>
+          <div class="frame-footer">
+            <div class="frame-caption"><span class="place">Amari Supercars · Ferrari</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </header>
 
@@ -1293,6 +1350,17 @@
       bgState.visible = entries[0].isIntersecting;
       syncBgVideo();
     }, { threshold: 0.05 }).observe(hero);
+  })();
+
+  // ---------- Hero reel: preview on hover (desktop); tap opens the lightbox ----------
+  (function () {
+    var reel = document.getElementById('heroReel');
+    if (!reel || !window.matchMedia || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    Array.prototype.forEach.call(reel.querySelectorAll('.frame-media'), function (card) {
+      var v = card.querySelector('video');
+      card.addEventListener('mouseenter', function () { if (!bgState.modalOpen) v.play().catch(function () {}); });
+      card.addEventListener('mouseleave', function () { v.pause(); });
+    });
   })();
 
   // ---------- Video lightbox ----------
